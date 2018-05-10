@@ -3,6 +3,8 @@ package start;
 
 import java.util.Scanner;
 
+import gameplusmoins.GamePlusMoins;
+
 
 public class Board {
 	int mod;
@@ -62,6 +64,7 @@ public class Board {
 			case 1:
 
 				System.out.println("Vous avez choisi le mode Challenger !");
+				new GamePlusMoins();
 				break;
 
 			case 2:

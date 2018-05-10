@@ -5,27 +5,32 @@ import java.util.Scanner;
 public class GamePlusMoins  {
 
 	String NUser;
-	static String NPC;
-	static int optM;
+	String NPC;
+	int optM = 4;
 	Scanner sc = new Scanner(System.in);
 
 	public GamePlusMoins() {
-		
+
 		System.out.println("------------------------------");
 		System.out.println("---------- Mode +/- ----------");
 		System.out.println("------------------------------");
-		
-    }
 
-	public static String NPC() 
-	{
+		NPC();
+
+		System.out.println(NPC);
+	}
+
+	private void NPC() {
+		
 		for(int i= 0;i< optM;i++) 
 		{
-			NPC = ""+(int) (Math.random()*10);
+			NPC = (""+(int) (Math.random()*10));
 		}
-		return NPC;
+		
+		
 	}
-	
+
+
 	public void NUser()
 	{
 		do {
