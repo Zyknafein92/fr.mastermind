@@ -64,7 +64,6 @@ public class Board {
 			case 1:
 
 				System.out.println("Vous avez choisi le mode Challenger !");
-				new GamePlusMoins();
 				break;
 
 			case 2:
@@ -90,7 +89,23 @@ public class Board {
 			}
 			sc.close();
 		} while (mod == 0 || mod > 4);
-	
+
+	}
+
+	public int getMod() {
+		return mod;
+	}
+
+	public void setMod(int mod) {
+		this.mod = mod;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
 	}
 }
 

@@ -6,16 +6,11 @@ import java.util.Scanner;
 public class TestUni {
 	public static void main(String[] args) {
 
+		String str1 = "1254"; // choix u
+		String str2 = "1234"; // choix pc
 		int optM = 4;
-		String PC;
 
-		for(int i= 0;i< optM;i++) 
-		{
-
-			PC = ""+(int) (Math.random()*10);
-
-
-			System.out.print(PC);
-		}
+for(int i= 0; i < str1.length(); i++)
+System.out.println(str1.substring(0,i).compareTo(str2.substring(0,i)));
 	}
 }
