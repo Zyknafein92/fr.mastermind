@@ -3,7 +3,6 @@ package gameplusmoins;
 import java.util.Scanner;
 
 import start.Board;
-import typegame.Challenger;
 
 
 

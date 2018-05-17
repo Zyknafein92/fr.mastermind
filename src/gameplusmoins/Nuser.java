@@ -7,7 +7,6 @@ import start.Board;
 public class Nuser {
 	
 	int [] Player;
-	int optM = Board.optM;
 	Scanner sc = new Scanner(System.in);
 	
 	protected Nuser()
@@ -17,10 +16,10 @@ public class Nuser {
 			String userc = "";
 
 			do {
-				System.out.println("Veuillez entrer " + +optM + " chiffres");
+				System.out.println("Veuillez entrer " + +Board.optM + " chiffres");
 				userc = sc.nextLine();
 
-				if (userc.length() != optM) 
+				if (userc.length() != Board.optM) 
 				{
 					System.out.println("Attention, vous n'avez pas sélectionné le bon nombre de chiffre !");
 				}  
@@ -33,7 +32,7 @@ public class Nuser {
 						System.out.println(Player[i]);
 					}
 				}
-			} while (userc.length() != optM);
+			} while (userc.length() != Board.optM);
 			sc.close();
 		}
 	}
