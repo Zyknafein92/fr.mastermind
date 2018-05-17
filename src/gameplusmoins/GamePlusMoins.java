@@ -2,16 +2,27 @@ package gameplusmoins;
 
 import java.util.Scanner;
 
-public class GamePlusMoins  {
+import start.Board;
+import typegame.Challenger;
 
 
 
-	public GamePlusMoins() {
+public class GamePlusMoins {
+	int mod = Board.mod;
 
-		System.out.println("------------------------------");
+	public GamePlusMoins(int mod) {
+
 		System.out.println("---------- Mode +/- ----------");
-		System.out.println("------------------------------");
 
+		if (mod == 1) {
+			System.out.println(Challenger.ruleschallenger());
+            PC.getPC();
+            
+		}else if (mod == 2) {
+
+		}else if (mod == 3) {
+
+		}
 	}
 
 }

@@ -3,12 +3,16 @@ package start;
 
 import java.util.Scanner;
 
+import gamemastermind.GameMastermind;
 import gameplusmoins.GamePlusMoins;
 
 
 public class Board {
-	int mod;
-	int type;
+	
+	public static int mod;
+	public static int type;
+	public static int optM = 4;
+
 
 	public Board() {
 
@@ -34,7 +38,8 @@ public class Board {
 			switch (type) {
 			case 1:
 
-				System.out.println("Vous avez choisi le mode + / -");	
+				System.out.println("Vous avez choisi le mode + / -");
+				
 				break;
 
 			case 2:
@@ -54,7 +59,7 @@ public class Board {
 		System.out.println("1.Mode Challenger");
 		System.out.println("2.Mode Défenseur");
 		System.out.println("3.Mode Duel");
-		System.out.println("4.Menu principal");
+		System.out.println("4.Quitter");
 
 		mod = sc.nextInt();
 
@@ -64,16 +69,29 @@ public class Board {
 			case 1:
 
 				System.out.println("Vous avez choisi le mode Challenger !");
+				
+				if (type == 1)
+				    new GamePlusMoins(mod);
+				else
+					new GameMastermind();
 				break;
 
 			case 2:
 
 				System.out.println(" Vous avez choisi le mode Défenseur !");
+				if (type == 1)
+					new GamePlusMoins(mod);
+				else
+					new GameMastermind();
 				break;
 
 			case 3:
 
 				System.out.println("Vous avez choisi le mode Duel !");
+				if (type == 1)
+					new GamePlusMoins(mod);
+				else
+					new GameMastermind();
 				break;
 
 			case 4:
@@ -97,15 +115,15 @@ public class Board {
 	}
 
 	public void setMod(int mod) {
-		this.mod = mod;
+		Board.mod = mod;
 	}
 
-	public int getType() {
-		return type;
+	protected int getOptM() {
+		return optM;
 	}
 
-	public void setType(int type) {
-		this.type = type;
+	protected void setOptM(int optM) {
+		Board.optM = optM;
 	}
 }
 

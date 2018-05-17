@@ -3,14 +3,24 @@ package testuni;
 import java.util.Random;
 import java.util.Scanner;
 
+import gameplusmoins.PC;
+
 public class TestUni {
 	public static void main(String[] args) {
 
-		String str1 = "1254"; // choix u
-		String str2 = "1234"; // choix pc
+		int[]PC = {4,5,4,3};
+		int[]Nuser = {2,4,5,3};
 		int optM = 4;
+		String[] Soluc = new String[optM];
 
-for(int i= 0; i < str1.length(); i++)
-System.out.println(str1.substring(0,i).compareTo(str2.substring(0,i)));
-	}
+	
+
+			
+				
+			}
+			System.out.print("Proposition ->" + Nuser + "Résultat : " + Soluc);
+
+
+
+}	
 }
