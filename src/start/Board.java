@@ -4,6 +4,7 @@ package start;
 import java.util.Scanner;
 
 import gamemastermind.GameMastermind;
+import gameplusmoins.GamePlusMoins;
 import typegame.Challenger;
 
 
@@ -12,8 +13,9 @@ public class Board {
 	public static int mod;
 	public static int type;
 	public static int optM = 4;
+    private GamePlusMoins modgame;
 
-
+    
 	public void doGame() {
 
 
@@ -71,7 +73,7 @@ public class Board {
 				System.out.println("Vous avez choisi le mode Challenger !");
 				
 				if (type == 1)
-				    Challenger.compareplusmoins();
+				   modgame = new Challenger(); 
 				else
 					new GameMastermind();
 				break;
@@ -100,9 +102,9 @@ public class Board {
 				System.out.println("Veuillez choisir un mode valide !");
 				break;
 			}
-			sc.close();
+			
 		} while (mod == 0 || mod > 4);
-
+           modgame.
 	}
 
 	

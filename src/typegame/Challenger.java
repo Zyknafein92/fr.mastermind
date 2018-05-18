@@ -7,35 +7,36 @@ import start.Board;
 
 public class Challenger extends GamePlusMoins {
 
-	static String[] Soluc = new String[Board.optM];
+	private String[] Soluc = new String[Board.optM];
 
-	public Challenger(int[] PC) {
-		super(PC);	
-		compareplusmoins();
+	public Challenger() {
+		
+		this.generateSecretCombo();
+	
 	}
 
 
 
-	public static  void compareplusmoins() {
+	public void comparePlusMoins() {
 
 		
 		
 		for (int i = 0; i <Board.optM; i++) {
 
 
-			if(PC()[i] < Player[i]) {
+			if(this.getSecretCombo()[i] < this.getPlayerCombo()[i]) {
 				Soluc[i] = ""+ "-";
-			}else if (PC()[i] > Player[i]) {
+			}else if (this.getSecretCombo()[i] > this.getPlayerCombo()[i]) {
 				Soluc[i] = ""+ "+";
 			}else  {
 				Soluc[i] = ""+ "=";
 			}
-			System.out.print("Proposition ->" + Player[i] + "Résultat : " + Soluc[i]);
+			System.out.print("Proposition ->" + this.getPlayerCombo()[i] + "Résultat : " + Soluc[i]);
 		}
 
 	}
 
-	public static  String ruleschallenger() {
+	public static  String rulesChallenger() {
 		String str1 = "";
 
 		str1 = ("\r\n------------------------------");
