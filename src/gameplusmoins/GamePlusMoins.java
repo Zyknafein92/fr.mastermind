@@ -1,27 +1,30 @@
 package gameplusmoins;
 
-import java.util.Scanner;
-
 import start.Board;
 
 
 
-public class GamePlusMoins {
-	int mod = Board.mod;
+public abstract class GamePlusMoins {
 
-	public GamePlusMoins(int mod) {
+	static int mod = Board.mod;
 
-		System.out.println("---------- Mode +/- ----------");
 
-		if (mod == 1) {
-			System.out.println(Challenger.ruleschallenger());
-            PC.getPC();
-            
-		}else if (mod == 2) {
 
-		}else if (mod == 3) {
+	public GamePlusMoins(int []PC) {
+
+		PC = PC();
+
+	}	
+
+	public static int[] PC () {
+		int PC[] = new int [Board.optM];
+
+		for(int i= 0;i< Board.optM;i++) 
+		{
+			PC[i] = (int) (Math.random()*10); 
 
 		}
+		return PC();
 	}
-
+	
 }

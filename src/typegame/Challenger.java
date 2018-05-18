@@ -1,38 +1,40 @@
-package gameplusmoins;
+package typegame;
+
+import gameplusmoins.GamePlusMoins;
 
 import start.Board;
-import gameplusmoins.PC;
 
 
-public class Challenger {
+public class Challenger extends GamePlusMoins {
 
-	
 	static String[] Soluc = new String[Board.optM];
-    PC pc = new PC();
-   
-    
-   Challenger (PC PC) {
-	 this.pc = PC;
-	  }
-	 
-  
-	
-protected static void compareplusmoins() {
-		
-do {
-		for (int i = 0; i < PC.length; i++) {
 
-			if(PC[i] < Nuser[i]) {
+	public Challenger(int[] PC) {
+		super(PC);	
+		compareplusmoins();
+	}
+
+
+
+	public static  void compareplusmoins() {
+
+		
+		
+		for (int i = 0; i <Board.optM; i++) {
+
+
+			if(PC()[i] < Player[i]) {
 				Soluc[i] = ""+ "-";
-			}else if (PC[i] > Nuser[i]) {
+			}else if (PC()[i] > Player[i]) {
 				Soluc[i] = ""+ "+";
 			}else  {
 				Soluc[i] = ""+ "=";
-			}	
+			}
+			System.out.print("Proposition ->" + Player[i] + "Résultat : " + Soluc[i]);
 		}
-	while ()
+
 	}
-*/
+
 	public static  String ruleschallenger() {
 		String str1 = "";
 
@@ -46,8 +48,7 @@ do {
 		return str1;
 	}
 
-
-	}
+}
 
 
 

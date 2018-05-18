@@ -4,12 +4,12 @@ import java.util.Scanner;
 
 import start.Board;
 
-public class Nuser {
+public class Player {
 	
-	int [] Player;
+	
 	Scanner sc = new Scanner(System.in);
 	
-	protected Nuser()
+	public Player()
 	{
 		{
 			Scanner sc = new Scanner(System.in);
@@ -35,5 +35,5 @@ public class Nuser {
 			} while (userc.length() != Board.optM);
 			sc.close();
 		}
-	}
+	}	
 }
