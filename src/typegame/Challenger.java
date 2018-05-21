@@ -1,55 +1,100 @@
 package typegame;
 
-import gameplusmoins.GamePlusMoins;
+import java.util.Arrays;
 
+import gameplusmoins.GamePlusMoins;
 import start.Board;
 
 
 public class Challenger extends GamePlusMoins {
 
 	private String[] Soluc = new String[Board.optM];
+	boolean win = false;
+
+
 
 	public Challenger() {
-		
-		this.generateSecretCombo();
+
+		this.generateComputerCombo();
 	
+		ChallengerPlusMoins();
 	}
 
 
 
-	public void comparePlusMoins() {
-
-		
-		
-		for (int i = 0; i <Board.optM; i++) {
+	public void ChallengerPlusMoins() {
+		this.getSecretCombo();
 
 
-			if(this.getSecretCombo()[i] < this.getPlayerCombo()[i]) {
-				Soluc[i] = ""+ "-";
-			}else if (this.getSecretCombo()[i] > this.getPlayerCombo()[i]) {
-				Soluc[i] = ""+ "+";
-			}else  {
-				Soluc[i] = ""+ "=";
+		System.out.println(rulesChallengerPlusMoins());
+		System.out.println(Arrays.toString(this.getSecretCombo()));
+
+		do {		
+			this.generatePlayerCombo();
+
+			for (int i = 0; i <Board.optM; i++) {
+
+
+				if(this.getSecretCombo()[i] < this.getPlayerCombo()[i]) {
+					Soluc[i] = ""+ "-";
+				}else if (this.getSecretCombo()[i] > this.getPlayerCombo()[i]) {
+					Soluc[i] = ""+ "+";
+				}else {
+					Soluc[i] = ""+ "=";
+				}
+
 			}
-			System.out.print("Proposition ->" + this.getPlayerCombo()[i] + "RÈsultat : " + Soluc[i]);
-		}
+			Board.tried++;
 
+			System.out.print("Proposition ->" +Arrays.toString(this.getPlayerCombo())  + "R√©sultat : " +Arrays.toString(Soluc));
+			win();
+
+			if (win == true) {
+				
+				System.out.println("Bravo, vous avez gagn√© en "+Board.tried + " tentative(s) !");
+		
+			}else if (Board.tried < Board.life) {
+				
+				System.out.println("Mauvaise combinaison !");
+
+			}else {
+				
+				System.out.println("Vous avez perdu, retour au menu principal");
+			}
+			
+		} while (Board.tried < Board.life && win == false);
 	}
 
-	public static  String rulesChallenger() {
+	public boolean win () {
+
+		for (int i = 0;i < this.getSecretCombo().length; i++) {
+			if (this.getSecretCombo()[i] == this.getPlayerCombo()[i]) {
+				win = true;
+			}
+			else win = false;
+			}
+		return win;
+		}
+		
+	
+
+
+	public static  String rulesChallengerPlusMoins() {
 		String str1 = "";
 
 		str1 = ("\r\n------------------------------");
 		str1 +=("\r\n--------- Challenger ---------");
 		str1 +=("\r\n------------------------------");
-		str1 +=("\r\nVous devez trouver la combinaison mystËre de votre adversaire !");
-		str1 +=("\r\nElle est composÈe de "+Board.optM + " chiffres compris entre 0 et 9.");
-		str1 +=("\r\nVous avez le droit a (life) tentatives !");
+		str1 +=("\r\nVous devez trouver la combinaison myst√®re de votre adversaire !");
+		str1 +=("\r\nElle est compos√©e de "+Board.optM + " chiffres compris entre 0 et 9.");
+		str1 +=("\r\nVous avez le droit a "+Board.life + " tentatives !");
 		str1 +=("\r\nA vous de jouer !");
 		return str1;
 	}
 
 }
+
+
 
 
 

@@ -3,40 +3,35 @@ package gameplusmoins;
 import java.util.Scanner;
 
 import start.Board;
+import start.Game;
 
 
 
-public abstract class GamePlusMoins {
+public abstract class GamePlusMoins extends Game{
 
-	private int[] secretCombo;
+	private int[] computerCombo;
     private int[] playerCombo;
     
-    
-	public GamePlusMoins() {
 
-		
-	}	
-
-	public void generateSecretCombo () {
+	public void generateComputerCombo () {
 		
 		int sC[] = new int [Board.optM];
 
 		for(int i= 0;i< Board.optM;i++) 
 		{
 			sC[i] = (int) (Math.random()*10); 
-
 		}
-		this.secretCombo = sC;
+		this.computerCombo = sC;
 	}
 
-	public void generateSecretPlayer()
+	public void generatePlayerCombo()
 	{
 		
 			Scanner sc = new Scanner(System.in);
 			String userc = "";
 			int[] pC = new int[Board.optM];
 			do {
-				System.out.println("Veuillez entrer " + +Board.optM + " chiffres");
+				System.out.println("\r\nVeuillez entrer " + +Board.optM + " chiffres");
 				userc = sc.nextLine();
 
 				if (userc.length() != Board.optM) 
@@ -49,7 +44,6 @@ public abstract class GamePlusMoins {
 					for ( int i=0; i<userc.length(); i++)
 					{
 						pC[i]=Integer.parseInt(""+userc.charAt(i));
-						System.out.println(pC[i]);
 					}
 				}
 			} while (userc.length() != Board.optM);
@@ -58,7 +52,7 @@ public abstract class GamePlusMoins {
 	}
 
 	public int[] getSecretCombo() {
-		return secretCombo;
+		return computerCombo;
 	}
 
 	public int[] getPlayerCombo() {
