@@ -1,13 +1,14 @@
 package start;
 
 import typegame.Challenger;
+import typegame.Defenseur;
 
 public class Main {
 
 	public static void main(String[] args) {
-	
-     new Challenger();
 
+		Board Menu = new Board();
+		Menu.doGame();
 
-}
+	}
 }

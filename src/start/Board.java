@@ -6,17 +6,22 @@ import java.util.Scanner;
 import gamemastermind.GameMastermind;
 import gameplusmoins.GamePlusMoins;
 import typegame.Challenger;
+import typegame.Defenseur;
+import typegame.Duel;
 
 
 public class Board {
 
-	public static int mod;
-	public static int type;
-	public static int optM = 4;
-	private GamePlusMoins modgame;
-	public static int tried = 0;
-    public static int life = 5;
+	public static int mod; // sert à définir le mod de jeu
+	public static int type; // sert à définir le type de jeu
+	public static int optM = 4; // sert à définir le nombre de chiffres/couleurss a découvrir
+	private GamePlusMoins modgame; 
+	public static int tried = 0; // sert à définir le nombre de tentative
+    public static int life = 5; // // sert à définir le nombre de vie du joueur
 
+    
+    
+    
 			public void doGame() {
 
 
@@ -36,9 +41,9 @@ public class Board {
 
 				do { // boucle choix du mode de jeu.
 					System.out.println("Choisissez votre mode de jeu :");
-					type = sc.nextInt();
+					mod = sc.nextInt();
 
-					switch (type) {
+					switch (mod) {
 					case 1:
 
 						System.out.println("Vous avez choisi le mode + / -");
@@ -56,24 +61,26 @@ public class Board {
 						break;
 
 					}
-				} while (type != 1 && type != 2);
+				} while (mod != 1 && mod != 2); //fin de la boucle du type de jeu
 
+				
+				//choix du type de jeu
 				System.out.println("Veuillez choisir un type de jeu !");
 				System.out.println("1.Mode Challenger");
 				System.out.println("2.Mode Défenseur");
 				System.out.println("3.Mode Duel");
 				System.out.println("4.Quitter");
 
-				mod = sc.nextInt();
+				type = sc.nextInt();
 
-				do {
-					switch (mod) {
+				do { // boucle du type de jeu
+					switch (type) {
 
 					case 1:
 
 						System.out.println("Vous avez choisi le mode Challenger !");
 
-						if (type == 1)
+						if (mod == 1)
 							modgame = new Challenger(); 
 						else
 							new GameMastermind();
@@ -82,14 +89,16 @@ public class Board {
 					case 2:
 
 						System.out.println(" Vous avez choisi le mode Défenseur !");
-
+						if (mod == 1)
+							modgame = new Defenseur(); 
+						else
+							new GameMastermind();
 						break;
 
 					case 3:
 
 						System.out.println("Vous avez choisi le mode Duel !");
-
-
+			
 						break;
 
 					case 4:
@@ -104,18 +113,18 @@ public class Board {
 						break;
 					}
 
-				} while (mod == 0 || mod > 4);
+				} while (type == 0 || type > 4); // fin de la boucle du type de jeu
 
 			}
 
 
 
 			public int getMod() {
-				return mod;
+				return type;
 			}
 
 			public void setMod(int mod) {
-				Board.mod = mod;
+				Board.type = mod;
 			}
 
 			protected int getOptM() {
@@ -129,7 +138,7 @@ public class Board {
 
 
 			/**
-			 * @return the tried
+			 * @return return try var
 			 */
 			public static int getTried() {
 				return tried;

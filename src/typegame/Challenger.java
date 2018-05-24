@@ -1,5 +1,7 @@
 package typegame;
 
+
+
 import java.util.Arrays;
 
 import gameplusmoins.GamePlusMoins;
@@ -8,15 +10,15 @@ import start.Board;
 
 public class Challenger extends GamePlusMoins {
 
-	private String[] Soluc = new String[Board.optM];
-	boolean win = false;
+	private String[] Soluc = new String[Board.optM]; // sert à informer le joueur si le nbr est + grand, + petit ou = a valeur[i]
+	boolean win = false; // booléen définissant la victoire ou non du joueur.
 
 
 
 	public Challenger() {
 
 		this.generateComputerCombo();
-	
+
 		ChallengerPlusMoins();
 	}
 
@@ -42,41 +44,39 @@ public class Challenger extends GamePlusMoins {
 				}else {
 					Soluc[i] = ""+ "=";
 				}
-
+				win();
 			}
+
 			Board.tried++;
 
 			System.out.print("Proposition ->" +Arrays.toString(this.getPlayerCombo())  + "Résultat : " +Arrays.toString(Soluc));
-			win();
+
 
 			if (win == true) {
-				
+
 				System.out.println("Bravo, vous avez gagné en "+Board.tried + " tentative(s) !");
-		
+
 			}else if (Board.tried < Board.life) {
-				
+
 				System.out.println("Mauvaise combinaison !");
 
 			}else {
-				
+
 				System.out.println("Vous avez perdu, retour au menu principal");
 			}
-			
+
 		} while (Board.tried < Board.life && win == false);
 	}
 
-	public boolean win () {
+	private boolean win () {
 
-		for (int i = 0;i < this.getSecretCombo().length; i++) {
-			if (this.getSecretCombo()[i] == this.getPlayerCombo()[i]) {
-				win = true;
-			}
-			else win = false;
-			}
-		return win;
+		if (Arrays.equals(this.getPlayerCombo(),this.getSecretCombo())) {
+			win = true;
+		}else {
+			win = false;
 		}
-		
-	
+		return win;
+	}
 
 
 	public static  String rulesChallengerPlusMoins() {

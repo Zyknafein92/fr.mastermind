@@ -9,8 +9,8 @@ import start.Game;
 
 public abstract class GamePlusMoins extends Game{
 
-	private int[] computerCombo;
-    private int[] playerCombo;
+	private int[] computerCombo; // sert à définir la combinaison aléatoire de l'ordinateur
+    private int[] playerCombo; // sert à définir la combinnaison du joueur
     
 
 	public void generateComputerCombo () {
@@ -30,6 +30,7 @@ public abstract class GamePlusMoins extends Game{
 			Scanner sc = new Scanner(System.in);
 			String userc = "";
 			int[] pC = new int[Board.optM];
+			
 			do {
 				System.out.println("\r\nVeuillez entrer " + +Board.optM + " chiffres");
 				userc = sc.nextLine();
