@@ -6,9 +6,10 @@ import java.util.Arrays;
 
 import gameplusmoins.GamePlusMoins;
 import start.Board;
+import start.Game;
 
 
-public class Challenger extends GamePlusMoins {
+public class Challenger {
 
 	private String[] Soluc = new String[Board.optM]; // sert à informer le joueur si le nbr est + grand, + petit ou = a valeur[i]
 	boolean win = false; // booléen définissant la victoire ou non du joueur.
@@ -90,6 +91,14 @@ public class Challenger extends GamePlusMoins {
 		str1 +=("\r\nVous avez le droit a "+Board.life + " tentatives !");
 		str1 +=("\r\nA vous de jouer !");
 		return str1;
+	}
+
+
+
+	@Override
+	public void Jeu() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -7,57 +7,53 @@ import start.Game;
 
 
 
-public abstract class GamePlusMoins extends Game{
+public class GamePlusMoins extends Game {
 
-	private int[] computerCombo; // sert à définir la combinaison aléatoire de l'ordinateur
-    private int[] playerCombo; // sert à définir la combinnaison du joueur
+    Scanner sc = new Scanner(System.in);
+    private Integer randomPlayer[] = new Integer [Board.optM];
+    private Integer randomComputer[] = new Integer [Board.optM];
     
+   public GamePlusMoins () {
+	   super();
+	   
+   }
 
-	public void generateComputerCombo () {
+   
+     public Integer[] inputPlayer() {
 		
-		int sC[] = new int [Board.optM];
+		String userc = "";
+		Integer[] pC = new Integer [Board.optM];
+		
+		do {
+			System.out.println("\r\nVeuillez entrer " + +Board.optM + " chiffres");
+			userc = sc.nextLine();
+
+			if (userc.length() != Board.optM) 
+			{
+				System.out.println("Attention, vous n'avez pas sélectionné le bon nombre de chiffre !");
+			}  
+			else 
+			{	
+				for ( int i=0; i<userc.length(); i++)
+				{
+					pC[i]=Integer.parseInt(""+userc.charAt(i));
+				}
+			}
+		} while (userc.length() != Board.optM);
+		return this.randomPlayer = pC;
+	}	  
+		
+
+	public Integer[] randomComputer() {
+		Integer sC[] = new Integer [Board.optM];
 
 		for(int i= 0;i< Board.optM;i++) 
 		{
 			sC[i] = (int) (Math.random()*10); 
 		}
-		this.computerCombo = sC;
-	}
-
-	public void generatePlayerCombo()
-	{
+		return this.randomComputer = sC;
 		
-			Scanner sc = new Scanner(System.in);
-			String userc = "";
-			int[] pC = new int[Board.optM];
-			
-			do {
-				System.out.println("\r\nVeuillez entrer " + +Board.optM + " chiffres");
-				userc = sc.nextLine();
-
-				if (userc.length() != Board.optM) 
-				{
-					System.out.println("Attention, vous n'avez pas sélectionné le bon nombre de chiffre !");
-				}  
-				else 
-				{
-				
-					for ( int i=0; i<userc.length(); i++)
-					{
-						pC[i]=Integer.parseInt(""+userc.charAt(i));
-					}
-				}
-			} while (userc.length() != Board.optM);
-			this.playerCombo = pC;
-		  
 	}
 
-	public int[] getSecretCombo() {
-		return computerCombo;
-	}
-
-	public int[] getPlayerCombo() {
-		return playerCombo;
-	}	
 }
 	

@@ -5,7 +5,7 @@ import java.util.Arrays;
 import gameplusmoins.GamePlusMoins;
 import start.Board;
 
-public class Defenseur extends GamePlusMoins {
+public class Defenseur  {
 
 	boolean win = false;
     int tempComputer[] = new int [Board.optM];
