@@ -78,7 +78,7 @@ public class Challenger {
 		}
 		return win;
 	}
-a
+
 
 	public static  String rulesChallengerPlusMoins() {
 		String str1 = "";
