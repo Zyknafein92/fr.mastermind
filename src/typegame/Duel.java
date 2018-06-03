@@ -2,76 +2,74 @@ package typegame;
 
 import java.util.Arrays;
 
-import gameplusmoins.GamePlusMoins;
+import option.BotRoll;
 import start.Board;
+import start.Game;
 
-public class Duel {
+public class Duel extends Game {
 
-	private int playerSecret[] = new int [Board.optM];
-	private int computerSecret[] = new int [Board.optM];
-	private int combinaisonPlayer[] =  new int [Board.optM];
-	private int combinaisonComputer[] =   new int [Board.optM];
 
-	private String Soluc[] = new String [Board.optM];
-
-	private boolean win = false;
-	private boolean loose = false;
-
+	private static final String[] Soluc = new String [Board.optM];
+	
+	private Integer[] combinaisonBOT = new Integer[Board.optM];
+	private Integer[] secretPlayer = new Integer[Board.optM];
+	private Integer[] secretBOT = new Integer[Board.optM];
+	BotRoll combinaisonbot = new BotRoll();
+	
 	public Duel () {
 
-		System.out.println(rulesDuelPlusMoins());
-		playerSecret = this.generatePlayerCombo();
-		computerSecret = this.generateComputerCombo();
-
-	}
-
-	public void duelPlusMoins () {
+		this.secretBOT = this.generateBotRoll();
 		
-		System.out.println(Arrays.toString(playerSecret)+ "CombiSJ");
-		System.out.println(Arrays.toString(computerSecret)+ "CombiS PC");
-		System.out.println(Arrays.toString(combinaisonComputer)+ "Combi TryPC");
+	}
+	public void duelPlusMoins () {
+	
+		System.out.println(rulesDuelPlusMoins());
+		System.out.println("Entrez votre combinaison secrète :");
+		this.secretPlayer = this.generateInputPlayer();
+	
 		// 1e tour
 		System.out.println("A présent, tentez de découvrir la combinaison de l'ordinateur !");
 		
-	do {
-		System.out.println("---- Tour Joueur ----");
-		System.out.println("Faites une proposition de "+Board.optM + " chiffres !" );
-		
-		getCombinaisonPlayer();
-		
-		
-		for (int i = 0; i <Board.optM; i++) {
+		System.out.println(Arrays.toString(secretPlayer));
+		System.out.println(Arrays.toString(secretBOT));
+		do {
+			System.out.println("---- Tour Joueur ----");
+			System.out.println("Faites une proposition de "+Board.optM + " chiffres !" );
+			this.combinaison = this.generateInputPlayer();
 
 
-			if(this.getComputerSecret()[i] < this.getCombinaisonPlayer()[i]) {
-				Soluc[i] = ""+ "-";
-			}else if (getComputerSecret()[i] > this.getCombinaisonPlayer()[i]) {
-				Soluc[i] = ""+ "+";
-			}else {
-				Soluc[i] = ""+ "=";
-			}
-			
-			win();
-		}
-
-		System.out.println("Proposition ->" +Arrays.toString(this.getCombinaisonPlayer())  + "Résultat : " +Arrays.toString(Soluc));
-
-		System.out.println("---- Tour Ordinateur ----");
-	
-		
-			
-			for(int i = 0; i < combinaisonComputer.length; i++ ) {
-				if (this.getPlayerSecret()[i] > combinaisonComputer[i]) {
-				combinaisonComputer[i]++;}
-				if (this.getPlayerSecret()[i] < combinaisonComputer[i]) {
-				combinaisonComputer[i]--;}
+			for (int i = 0; i <Board.optM; i++) {
+				if(this.combinaison[i] < this.secretBOT[i]) {
+					Soluc[i] = ""+ "-";
+				}else if (this.combinaison[i] > this.secretBOT[i]) {
+					Soluc[i] = ""+ "+";
+				}else {
+					Soluc[i] = ""+ "=";
 				}
+				this.secret = this.secretBOT;
+				win(combinaison, secret);
+			}
+			System.out.println("Proposition ->" +Arrays.toString(this.secretBOT)  + "Résultat : " +Arrays.toString(Soluc));
+
+			System.out.println("---- Tour Ordinateur ----");
 			
-			
-			System.out.println("Tour" +Board.tried +Arrays.toString(combinaisonComputer));
-			loose();
-			
-			if (loose == true) {
+			this.combinaisonBOT = this.combinaison;
+
+
+			for(int i = 0; i < secretPlayer.length; i++ ) {
+				if (this.combinaison[i] > this.secretPlayer[i]) {
+					this.combinaison[i]++;}
+				if (this.combinaison[i] < this.secretPlayer[i]) {
+					this.combinaison[i]--;}
+				
+			}
+		
+            this.secret = this.secretPlayer;
+			System.out.println("Tour" +Board.tried +Arrays.toString(combinaison));
+
+			win(combinaison,secret);
+
+			if (win == true) {
 
 				System.out.println("Perdu ! L'ordinateur a trouvé votre combinaison  en "+Board.tried + " tentative(s) !  Retour au menu principal");
 
@@ -83,33 +81,12 @@ public class Duel {
 
 				System.out.println("Vous avez gagné ! L'ordinateur n'a pas trouvé votre combinaison ! Retour au menu principal");
 			}
-		
-		
-		Board.tried++;
-	} while (Board.tried < Board.life && win == false && loose == false);
+
+
+			Board.tried++;
+		} while (Board.tried < Board.life && win == false && win == false);
 
 	}
-
-	
-	private boolean win () {
-
-		if (Arrays.equals(this.getCombinaisonPlayer(),this.computerSecret)) {
-			win = true;
-		}else {
-			win = false;
-		}
-		return win;
-
-	}
-	private boolean loose () {
-		if (Arrays.equals(this.combinaisonComputer, this.playerSecret))
-			loose = true;
-		else
-			loose = false;
-
-		return loose;
-	}
-
 
 	public static  String rulesDuelPlusMoins() {
 		String str1 = "";
@@ -123,6 +100,54 @@ public class Duel {
 		str1 +=("\r\nVous avez le droit a "+Board.life + " tentatives !");
 		str1 +=("\r\nA vous de jouer ! Veuillez choisir votre combinaison secrète :");
 		return str1;
+	}
+	/**
+	 * @return the combinaison
+	 */
+	public Integer[] getCombinaison() {
+		return combinaison;
+	}
+	/**
+	 * @return the combinaisonBOT
+	 */
+	public Integer[] getCombinaisonBOT() {
+		return combinaisonBOT;
+	}
+	/**
+	 * @return the secretPlayer
+	 */
+	public Integer[] getSecretPlayer() {
+		return secretPlayer;
+	}
+	/**
+	 * @return the secretBOT
+	 */
+	public Integer[] getSecretBOT() {
+		return secretBOT;
+	}
+	/**
+	 * @param combinaison the combinaison to set
+	 */
+	public void setCombinaison(Integer[] combinaison) {
+		this.combinaison = combinaison;
+	}
+	/**
+	 * @param combinaisonBOT the combinaisonBOT to set
+	 */
+	public void setCombinaisonBOT(Integer[] combinaisonBOT) {
+		this.combinaisonBOT = combinaisonBOT;
+	}
+	/**
+	 * @param secretPlayer the secretPlayer to set
+	 */
+	public void setSecretPlayer(Integer[] secretPlayer) {
+		this.secretPlayer = secretPlayer;
+	}
+	/**
+	 * @param secretBOT the secretBOT to set
+	 */
+	public void setSecretBOT(Integer[] secretBOT) {
+		this.secretBOT = secretBOT;
 	}
 
 }

@@ -2,41 +2,36 @@ package typegame;
 
 import java.util.Arrays;
 
-import gameplusmoins.GamePlusMoins;
 import start.Board;
+import start.Game;
 
-public class Defenseur  {
+public class Defenseur extends Game  {
 
-	boolean win = false;
-    int tempComputer[] = new int [Board.optM];
+
 
 public Defenseur () {
 	
-	this.generateComputerCombo();
-	playdefenseur();
+	this.secret = this.generateInputPlayer();
+	this.combinaison = this.generateBotRoll();
 }
 
 public void playdefenseur() {
 	
 	System.out.println(rulesDefenseur());
+	System.out.println(" Votre combinaison secrète est :"+Arrays.toString(secret));
 	
-	this.generatePlayerCombo();
-	this.generateComputerCombo();
-
-	System.out.println(" Votre combinaison est :"+Arrays.toString(getPlayerCombo()));
-	tempComputer = this.getSecretCombo();
 	do {
 		
-		for(int i = 0; i < tempComputer.length; i++ ) {
-			if (this.getPlayerCombo()[i] > tempComputer[i]) {
-			tempComputer[i]++;}
-			if (this.getPlayerCombo()[i] < tempComputer[i]) {
-			tempComputer[i]--;}
+		for(int i = 0; i < combinaison.length; i++ ) {
+			if (this.secret[i] > combinaison[i]) {
+				combinaison[i]++;}
+			if (this.secret[i] < combinaison[i]) {
+				combinaison[i]--;}
 			}
 		
 		Board.tried++;
-		System.out.println("Tour" +Board.tried +Arrays.toString(tempComputer));
-		win();
+		System.out.println("Tour" +Board.tried +Arrays.toString(combinaison));
+		win(secret, combinaison);
 		
 		if (win == true) {
 
@@ -52,25 +47,13 @@ public void playdefenseur() {
 		}
 	
 	}while (Board.tried < Board.life && win == false);
-     Board Menu = new Board();
-	 Menu.doGame();
-}
-
-private boolean win () {
-
-	if (Arrays.equals(this.getPlayerCombo(),tempComputer)) {
-		win = true;
-	}else {
-		win = false;
-	}
-	return win;
 }
 
 private static  String rulesDefenseur() {
 	String str1 = "";
 
 	str1 = ("\r\n------------------------------");
-	str1 +=("\r\n--------- Defenseur ---------");
+	str1 +=("\r\n--------- Defenseur ----------");
 	str1 +=("\r\n------------------------------");
 	str1 +=("\r\nVous devez entrer une combinaison mystère que l'ordinateur va devoir trouver.");
 	str1 +=("\r\nElle est composée de "+Board.optM + " chiffres compris entre 0 et 9.");
