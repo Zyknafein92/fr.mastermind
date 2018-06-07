@@ -1,8 +1,6 @@
 package start;
 
-import java.util.Arrays;
-
-import option.BotRoll;
+import typegame.Challenger;
 
 public class Main {
 
@@ -11,16 +9,17 @@ public class Main {
 	//	Board Menu = new Board();
 	//	Menu.doGame();
 
-   // Challenger Jeu = new Challenger();
-   //Jeu.ChallengerPlusMoins();
-		
+  Challenger Jeu = new Challenger();
+  Jeu.ChallengerMastermind();
+  //Defenseur def = new Defenseur();
+  //def.playdefenseur();
 	//Duel jeu = new Duel();
 	//jeu.duelPlusMoins();
-		
-	BotRoll BOT = new BotRoll();
-	BotRoll Secret = new BotRoll();
-	System.out.println(BOT);
-	System.out.println(Secret);
+	//	
+	//BotRoll BOT = new BotRoll();
+	//BotRoll Secret = new BotRoll();
+	//System.out.println(BOT);
+	//System.out.println(Secret);
 	
 		
 	}

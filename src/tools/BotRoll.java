@@ -1,4 +1,4 @@
-package option;
+package tools;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -10,7 +10,7 @@ public class BotRoll {
 	
 	public BotRoll () {
 	
-		generateBotRoll();
+		BotRoll = generateBotRoll();
 
 	}
 
@@ -18,7 +18,7 @@ public class BotRoll {
 		Random random = new Random();
 		for(int i= 0;i< Board.optM;i++) 
 		{
-			BotRoll[i] = (random.nextInt(9) +1) ;
+			BotRoll[i] = (random.nextInt(9)) ;
 		}
 		return BotRoll;
 	
@@ -34,7 +34,7 @@ public class BotRoll {
 	/**
 	 * @param botRoll the botRoll to set
 	 */
-	public void setBotRoll(Integer[] botRoll) {
+	public void setBotRoll(int[] botRoll) {
 		BotRoll = generateBotRoll();
 	}
 	public String toString() {

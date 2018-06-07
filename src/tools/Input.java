@@ -1,21 +1,21 @@
-package option;
+package tools;
 
 import java.util.Arrays;
 import java.util.Scanner;
 
 import start.Board;
 
-public class PlayerInput {
+public class Input {
 	Scanner sc = new Scanner(System.in);
-	private Integer[] playerInput = new Integer[Board.optM];
+	private Integer[] Input = new Integer[Board.optM];
 
-	public PlayerInput() {
+	public Input() {
 
-		generatePlayerInput();
+		generateInput();
 
 	}
 
-	public Integer[] generatePlayerInput() {
+	public Integer[] generateInput() {
 		String userc = "";
 		do {
 			System.out.println("\r\nVeuillez entrer " + +Board.optM + " chiffres");
@@ -30,23 +30,23 @@ public class PlayerInput {
 				for ( int i=0; i<userc.length(); i++)
 				{
 
-					playerInput[i]=Integer.parseInt(""+userc.charAt(i));
+					Input[i]=Integer.parseInt(""+userc.charAt(i));
 				}
 			}
 		} while (userc.length() != Board.optM);
-		return playerInput;
+		return Input;
 	}
 
-	public Integer[] getPlayerInput() {
-		return playerInput;
+	public Integer[] getInput() {
+		return Input;
 	}
 
-	public void setPlayerInput(Integer[] playerInput) {
-		this.playerInput = generatePlayerInput();
+	public void setInput(Integer[] playerInput) {
+		this.Input = generateInput();
 	}
 	
 	public String toString() {
-		return Arrays.toString(playerInput);
+		return Arrays.toString(Input);
 	}
 
 }

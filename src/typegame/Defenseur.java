@@ -4,21 +4,26 @@ import java.util.Arrays;
 
 import start.Board;
 import start.Game;
+import tools.BotRoll;
+import tools.Input;
 
 public class Defenseur extends Game  {
 
 
-
+	BotRoll PC = new BotRoll();
+	
 public Defenseur () {
 	
-	this.secret = this.generateInputPlayer();
-	this.combinaison = this.generateBotRoll();
+	
+	this.combinaison = PC.getBotRoll();
 }
 
 public void playdefenseur() {
 	
 	System.out.println(rulesDefenseur());
-	System.out.println(" Votre combinaison secrète est :"+Arrays.toString(secret));
+	Input player = new Input();
+	this.secret = player.getInput();
+	System.out.println(" Votre nombre secret est :"+Arrays.toString(secret));
 	
 	do {
 		
@@ -31,7 +36,7 @@ public void playdefenseur() {
 		
 		Board.tried++;
 		System.out.println("Tour" +Board.tried +Arrays.toString(combinaison));
-		win(secret, combinaison);
+		iswin();
 		
 		if (win == true) {
 
@@ -46,7 +51,7 @@ public void playdefenseur() {
 			System.out.println("Vous avez gagné ! L'ordinateur n'a pas trouvé votre combinaison ! Retour au menu principal");
 		}
 	
-	}while (Board.tried < Board.life && win == false);
+	}while (Board.tried <= Board.life && win == false);
 }
 
 private static  String rulesDefenseur() {
@@ -55,9 +60,9 @@ private static  String rulesDefenseur() {
 	str1 = ("\r\n------------------------------");
 	str1 +=("\r\n--------- Defenseur ----------");
 	str1 +=("\r\n------------------------------");
-	str1 +=("\r\nVous devez entrer une combinaison mystère que l'ordinateur va devoir trouver.");
-	str1 +=("\r\nElle est composée de "+Board.optM + " chiffres compris entre 0 et 9.");
-	str1 +=("\r\nL'ordinateur à le droit a "+Board.life + " tentative(s) !");
+	str1 +=("\r\nVous devez entrer un nombre mystère que l'ordinateur va devoir trouver.");
+	str1 +=("\r\nIl est composé de "+Board.optM + " chiffres compris entre 0 et 9.");
+	str1 +=("\r\nL'ordinateur à le droit à "+Board.life + " tentative(s) !");
 	str1 +=("\r\nA vous de jouer !");
 	return str1;
 }
