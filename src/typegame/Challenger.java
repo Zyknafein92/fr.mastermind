@@ -12,6 +12,8 @@ import tools.Input;
 
 public class Challenger extends Game {
 
+	private static int present = 0;
+
 	BotRoll PC = new BotRoll();
 
 
@@ -56,34 +58,38 @@ public class Challenger extends Game {
 
 		} while (Board.tried <= Board.life && this.win == false);
 	}
-	
+
 	StringBuilder sb = new StringBuilder();
-	
+
 	String Temp = sb.toString();
 
+
+
 	public void ChallengerMastermind() {
-	
+
 		System.out.println("Règles");
 		System.out.println(Arrays.toString(this.secret));
-   
-		do {
 
+		do {
 			int position = 0;
-			int present = 0;
+
+
 			Input player = new Input();
 			this.combinaison = player.getInput();
 
 			for (int i = 0; i < secret.length; i++) {
 				if(this.combinaison[i] == this.secret[i])
 					position++;
-		
-			}
+			}	
+
+		   compareMasterMind(secret,combinaison);
 			
-			
+
+
 			Board.tried++;
 			System.out.println("Proposition ->" +Arrays.toString(this.combinaison) + " || Résultat : " + +present + " présent(s), "  + +position + " bonne(s) position(s) ");
 			iswin();
-			
+
 			if (this.win == true) {
 				System.out.println("Bravo, vous avez gagné en "+Board.tried + " tentative(s) !");
 			}else if (Board.tried < Board.life) {
@@ -91,19 +97,21 @@ public class Challenger extends Game {
 			}else {
 				System.out.println("Vous avez perdu, retour au menu principal");
 			}
-			
+
 		} while (Board.tried <= Board.life && this.win == false);
-		
-	}
-
-	public void MastermindCompare () {
-		
 
 	}
 
+	public int compareMasterMind(Integer[]secret, Integer[]combinaison) {
+		int from = 0;
 
-
-
+		for (int i = 0; i < combinaison.length; i++) {
+			 present = Arrays.binarySearch(secret, from, combinaison.length, combinaison);
+			if (present >= 0)
+				present++;
+		}
+		return present;
+	}
 	public static  String rulesChallengerPlusMoins() {
 		String str1 = "";
 
@@ -116,5 +124,4 @@ public class Challenger extends Game {
 		str1 +=("\r\nA vous de jouer !");
 		return str1;
 	}
-
 }
