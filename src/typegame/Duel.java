@@ -124,7 +124,7 @@ public class Duel extends Game{
 			
 			Board.tried++;
 			
-		} while(Board.tried <= Board.life || (isloose == false && iswin == false));
+		} while (Board.tried <= Board.life && iswin == false && isloose == false);
 		this.notifyObserver();
 		
 	}
