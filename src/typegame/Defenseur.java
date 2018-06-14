@@ -5,9 +5,10 @@ import java.util.Arrays;
 import start.Board;
 import start.Game;
 import tools.BotRoll;
+import tools.IObserver;
 import tools.Input;
 
-public class Defenseur extends Game  {
+public class Defenseur extends Game {
 
 
 	BotRoll PC = new BotRoll();
@@ -26,13 +27,13 @@ public class Defenseur extends Game  {
 		System.out.println(" Votre nombre secret est :"+Arrays.toString(secret));
 
 		do {
-			
+
 			compareDefenseur(this.secret,this.combinaison);
 
 			System.out.println(resultat(combinaison,Soluc));
 
 			iswin(this.secret,this.combinaison);
-			
+
 			if (iswin == true) {
 				System.out.println("Perdu ! L'ordinateur a trouvé votre combinaison  en "+Board.tried + " tentative(s) !  Retour au menu principal");
 			}else if (Board.tried < Board.life) {
@@ -41,7 +42,8 @@ public class Defenseur extends Game  {
 				System.out.println("Vous avez gagné ! L'ordinateur n'a pas trouvé votre combinaison ! Retour au menu principal");
 			}
 			Board.tried++;
-		}while (Board.tried <= Board.life && iswin == false);
+		} while (Board.tried <= Board.life && iswin == false);
+		this.notifyObserver();
 	}
 
 	public void playDefenseurMastermind() {
@@ -52,13 +54,13 @@ public class Defenseur extends Game  {
 		System.out.println(" Votre nombre secret est :"+Arrays.toString(secret));
 		do {
 			System.out.println(Arrays.toString(combinaison));
-				
+
 			compareDefenseurMastermind(secret,combinaison);
-			
+
 			System.out.println(resultat(combinaison, present, position));
-			
+
 			iswin(secret,combinaison);
-			 
+
 			if (iswin == true) {
 				System.out.println("Perdu ! L'ordinateur a trouvé votre combinaison  en "+Board.tried + " tentative(s) !  Retour au menu principal");
 			}else if (Board.tried < Board.life) {
@@ -68,8 +70,9 @@ public class Defenseur extends Game  {
 			}
 
 			Board.tried++;
-		
+
 		} while (Board.tried <= Board.life && iswin == false);
+		this.notifyObserver();
 	}
 
 	private static  String rulesDefenseur() {
@@ -84,4 +87,19 @@ public class Defenseur extends Game  {
 		str1 +=("\r\nA vous de jouer !");
 		return str1;
 	}
+
+	@Override
+	public void addObserver(IObserver obs) {
+		listObserver.add(obs);
+		
+	}
+
+	@Override
+	public void notifyObserver() {
+		for(IObserver obs : listObserver) {
+			obs.update();
+		}
+		
+	}
 }
+

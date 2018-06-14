@@ -5,9 +5,10 @@ import java.util.Arrays;
 import start.Board;
 import start.Game;
 import tools.BotRoll;
+import tools.IObserver;
 import tools.Input;
 
-public class Duel extends Game {
+public class Duel extends Game{
 
 	BotRoll rollCombiBot = new BotRoll();
 	BotRoll rollSecretBot = new BotRoll();
@@ -62,7 +63,7 @@ public class Duel extends Game {
 				System.out.println("Perdu ! L'ordinateur a trouvé votre combinaison  en "+Board.tried + " tentative(s) !  Retour au menu principal");
 			} 
 			else if (iswin == true) {
-				System.out.println("Bravo, vous avez trouvé votre combinaison  en "+Board.tried +" tentative(s) !  Retour au menu principal ");
+				System.out.println("Bravo, vous avez trouvé la combinaison de l'ordinateur en "+Board.tried +" tentative(s) !  Retour au menu principal ");
 			}
 			else {
 				System.out.println("Tour suivant !");
@@ -70,9 +71,10 @@ public class Duel extends Game {
 			
 			Board.tried++;
 			
-		} while (Board.tried <= Board.life ||iswin ||isloose);
+		} while (Board.tried <= Board.life && iswin == false && isloose == false);
 		
 		System.out.println("Fin de partie, retour au menu principal !");
+		this.notifyObserver();
 	}
 
 	public void playDuelMastermind () {
@@ -114,7 +116,7 @@ public class Duel extends Game {
 			} 
 			
 			else if (iswin == true) {
-				System.out.println("Bravo, vous avez trouvé votre combinaison  en "+Board.tried +" tentative(s) !  Retour au menu principal ");
+				System.out.println("Bravo, vous avez trouvé la combinaison de l'ordinateur en "+Board.tried +" tentative(s) !  Retour au menu principal ");
 			}
 			else {
 				System.out.println("Tour suivant !");
@@ -122,7 +124,8 @@ public class Duel extends Game {
 			
 			Board.tried++;
 			
-		} while(Board.tried <= Board.life || isloose == true || iswin == true); // TODO : A revoir
+		} while(Board.tried <= Board.life || (isloose == false && iswin == false));
+		this.notifyObserver();
 		
 	}
 
@@ -209,5 +212,20 @@ public class Duel extends Game {
 	 */
 	public void setSecretPlayer(Integer[] secretPlayer) {
 		this.secretPlayer = secretPlayer;
+	}
+
+
+	@Override
+	public void addObserver(IObserver obs) {
+		listObserver.add(obs);
+		
+	}
+
+	@Override
+	public void notifyObserver() {
+		for(IObserver obs : listObserver) {
+			obs.update();
+		}
+		
 	}
 }

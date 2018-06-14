@@ -1,9 +1,13 @@
 package start;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public abstract class Game {
+import tools.IObservable;
+import tools.IObserver;
+
+public abstract class Game implements IObservable{
 
 	protected String[] Soluc = new String [Board.optM];
 	protected Integer[] combinaison = new Integer[Board.optM];
@@ -12,8 +16,8 @@ public abstract class Game {
 	protected boolean ispresent = false;
 	protected int present;
 	protected int position;
-	Scanner sc = new Scanner(System.in); 
-
+	protected ArrayList<IObserver> listObserver = new ArrayList <IObserver>();
+	Scanner sc = new Scanner(System.in);
 
 	public void compareChallenger (Integer[]secret, Integer[]combinaison) {
 
@@ -36,7 +40,7 @@ public abstract class Game {
 		for(int i = 0; i < secret.length; i++) {
 			if(secret[i].equals(combinaison[i]))
 				position++;
-		
+
 			for(int y = 0; y < secret.length; y++) {
 				if(secret[i].equals(combinaison[y]) && ((secret[i] > combinaison[i]) || (secret[i] < combinaison[i]))) {
 					present++;
@@ -73,7 +77,7 @@ public abstract class Game {
 		for(int i = 0; i < secret.length; i++) {
 			if(secret[i].equals(combinaison[i]))
 				position++;
-		
+
 			for(int y = 0; y < secret.length; y++) {
 				if(secret[i].equals(combinaison[y]) && ((secret[i] > combinaison[i]) || (secret[i] < combinaison[i]))) {
 					present++;
@@ -169,6 +173,20 @@ public abstract class Game {
 	 */
 	public void setPresent(boolean present) {
 		this.ispresent = present;
+	}
+	
+	@Override
+	public void addObserver(IObserver obs) {
+		listObserver.add(obs);
+		
+	}
+
+	@Override
+	public void notifyObserver() {
+		for(IObserver obs : listObserver) {
+			obs.update();
+		}
+		
 	}
 
 }

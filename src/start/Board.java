@@ -3,14 +3,20 @@ package start;
 
 import java.util.Scanner;
 
+import tools.IObserver;
+import typegame.Challenger;
+import typegame.Defenseur;
+import typegame.Duel;
 
-public class Board {
-   
+
+public class Board implements IObserver {
+
 	public static int mod; // sert à définir le mod de jeu
 	public static int type; // sert à définir le type de jeu
 	public static int optM = 4; // sert à définir le nombre de chiffres/couleurss a découvrir
 	public static int tried = 1; // sert à définir le nombre de tentative
 	public static int life = 5; // // sert à définir le nombre de vie du joueur
+	
 
 
 	public void Menu() {
@@ -26,7 +32,7 @@ public class Board {
 		// choix du mode de jeu.
 		System.out.println("1.Mode +/-");
 		System.out.println("2.Mode Mastermind");
-
+		System.out.println("3.Quitter");
 
 		do { // boucle choix du mode de jeu.
 			System.out.println("Choisissez votre mode de jeu :");
@@ -43,6 +49,13 @@ public class Board {
 
 				System.out.println(" Vous avez choisi le mode Mastermind");
 				break;
+				
+			case 3:
+
+				System.out.println("Au revoir, à bientôt !");
+				System.exit(0);
+				break;
+
 
 			default:
 
@@ -50,7 +63,7 @@ public class Board {
 				break;
 
 			}
-		} while (mod != 1 && mod != 2); //fin de la boucle du type de jeu
+		} while (mod != 1 && mod != 2 && mod != 3); //fin de la boucle du type de jeu
 
 
 		//choix du type de jeu
@@ -58,8 +71,7 @@ public class Board {
 		System.out.println("1.Mode Challenger");
 		System.out.println("2.Mode Défenseur");
 		System.out.println("3.Mode Duel");
-		System.out.println("4.Quitter");
-
+		
 		type = sc.nextInt();
 
 		do { // boucle du type de jeu
@@ -68,22 +80,53 @@ public class Board {
 			case 1:
 
 				System.out.println("Vous avez choisi le mode Challenger !");
+				if (mod == 1) {
+					Challenger jeu = new Challenger();
+					jeu.addObserver(this);
+					jeu.playChallengerPlusMoins();
+					
+				}
+				else {
+					Challenger jeu = new Challenger();
+					jeu.addObserver(this);
+					jeu.playChallengerMastermind();
+					
+				}
+
 				break;
 
 			case 2:
 
 				System.out.println(" Vous avez choisi le mode Défenseur !");
+				if (mod == 1) {
+					Defenseur jeu = new Defenseur();
+					jeu.addObserver(this);
+					jeu.playDefenseurPlusMoins();
+				
+				}
+				else {
+					Defenseur jeu = new Defenseur();
+					jeu.addObserver(this);
+					jeu.playDefenseurMastermind();
+				
+				}
 				break;
 
 			case 3:
 
 				System.out.println("Vous avez choisi le mode Duel !");
-				break;
-
-			case 4:
-
-				System.out.println("Au revoir, à bientôt !");
-				System.exit(0);
+				if (mod == 1) {
+					Duel jeu = new Duel();
+					jeu.addObserver(this);
+					jeu.playDuelPlusMoins();
+					
+				}
+				else {
+					Duel jeu = new Duel();
+					jeu.addObserver(this);
+					jeu.playDuelMastermind();
+					
+				}
 				break;
 
 			default:
@@ -92,7 +135,7 @@ public class Board {
 				break;
 			}
 
-		} while (type == 0 || type > 4); // fin de la boucle du type de jeu
+		} while (type == 0 || type > 3); // fin de la boucle du type de jeu
 
 	}
 
@@ -115,7 +158,6 @@ public class Board {
 	}
 
 
-
 	/**
 	 * @return return try var
 	 */
@@ -123,8 +165,7 @@ public class Board {
 		return tried;
 	}
 
-
-
+	
 	/**
 	 * @param tried the tried to set
 	 */
@@ -142,14 +183,20 @@ public class Board {
 	}
 
 
-
 	/**
 	 * @param life the life to set
 	 */
 	public static void setLife(int life) {
 		Board.life = life;
 	}
+	
+	
+	public void update() {
+		Board newGame = new Board();
+		newGame.Menu();
+	}
 }
+
 
 
 
