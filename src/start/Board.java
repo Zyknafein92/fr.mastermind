@@ -9,7 +9,7 @@ public class Board {
 	public static int mod; // sert à définir le mod de jeu
 	public static int type; // sert à définir le type de jeu
 	public static int optM = 4; // sert à définir le nombre de chiffres/couleurss a découvrir
-	public static int tried = 0; // sert à définir le nombre de tentative
+	public static int tried = 1; // sert à définir le nombre de tentative
 	public static int life = 5; // // sert à définir le nombre de vie du joueur
 
 
