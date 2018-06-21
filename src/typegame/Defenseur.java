@@ -15,7 +15,6 @@ public class Defenseur extends Game {
 
 	public Defenseur () {
 
-
 		this.combinaison = PC.getBotRoll();
 	}
 
