@@ -9,12 +9,12 @@ import java.util.LinkedList;
 
 public class testdeux {
 
-	int numberOBalls = 4; // indique le nombre de boule a trouver.
-	public Integer[] secret = {2,4,6,2}; // Le nombre a trouver.
+	int numberOBalls = 9; // indique le nombre de boule a trouver.
+	public Integer[] secret = {5,2,6,2,8,9,4,3,6}; // Le nombre a trouver.
 	public Integer[] testcolor  = new Integer[numberOBalls];
 	boolean check = true;
-	public LinkedList<Integer> temp = new LinkedList<Integer>();
-	public LinkedList<Integer> combinaison = new LinkedList<Integer>();
+	public ArrayList<Integer> combinaison = new ArrayList<Integer>();
+	
 	int COLORS = 8; // indique le nombre de couleur maximum
 	int present = 0;
 	int inposition = 0;
@@ -32,51 +32,51 @@ public class testdeux {
 
 		for(int y = 0; y < numberOBalls; y++) {
 			testcolor[y]=color;
-			combinaison.add(1);
-			temp.add(0);
+			combinaison.add(0);
 		}
-       boucle++;
+		boucle++;
 		do { 
 
 			for(int i = 0; i < numberOBalls; i++) {
 				testcolor[i]=color;
 				if(check == true) {
-					temp.set(i, color);
+					combinaison.set(i, color);
 				}	
 			}
 
 			inposition = compareinposition(secret, testcolor, numberOBalls);
 			present = comparepresent(secret, testcolor, numberOBalls)- inposition;
 			int ballcolor = inposition + present;
-
 			if(ballcolor > 0) {
-				addToCombinaison(temp,color,ballcolor);
+				addToCombinaison(combinaison,color,ballcolor);
 			}
-			moveBallCombinaison2(temp,secret);
+			if(pos == numberOBalls) {
+				moveBallCombinaison2(combinaison,secret);
+			}
 			gPosition = compareinposition(secret, combinaison, numberOBalls);
-			wPosition = comparepresent(secret, temp, numberOBalls) - gPosition;
+			wPosition = comparepresent(secret, combinaison, numberOBalls) - gPosition;
 			System.out.println(+boucle +" boucle ");
 			System.out.println(+gPosition +" position || "+wPosition +" présent");
-			System.out.println(temp+ " temp");
-			System.out.println(combinaison + " comb");
+			System.out.println(combinaison+ " temp");
+			//System.out.println(combinaison + " comb");
 			boucle++;
 			color++;
 
-		} while (compareinposition(secret, combinaison, numberOBalls) < numberOBalls && boucle < 15);
+		} while (compareinposition(secret, combinaison, numberOBalls) < numberOBalls && boucle < 150);
 	}
 
-	private int compareinposition(Integer[] secret, LinkedList<Integer> temp, int numberOBalls) {
+	private int compareinposition(Integer[] secret, ArrayList<Integer> combinaison, int numberOBalls) {
 
 		int inposition = 0;
 		for (int i = 0; i < numberOBalls; i++) {
-			if (temp.get(i).equals(secret[i])) {
+			if (combinaison.get(i).equals(secret[i])) {
 				inposition++;
 			}
 		}
 		return inposition;
 	}
 
-	private int comparepresent(Integer[] secret, LinkedList<Integer> temp, int numberOBalls) {
+	private int comparepresent(Integer[] secret, ArrayList<Integer>combinaison, int numberOBalls) {
 		int ispresent = 0;
 		boolean found = false;
 
@@ -84,7 +84,7 @@ public class testdeux {
 			int j = 0;
 			found = false;
 			do {
-				if (secret[i] == temp.get(j)) {
+				if (secret[i] == combinaison.get(j)) {
 					ispresent++;
 					found = true;
 				}
@@ -95,7 +95,7 @@ public class testdeux {
 	}
 
 
-	public void addToCombinaison (LinkedList<Integer> temp, int color, int ballcolor) {
+	public void addToCombinaison (ArrayList<Integer> temp, int color, int ballcolor) {
 
 		int x = 0;
 		while(ballcolor > x) {
@@ -103,25 +103,26 @@ public class testdeux {
 			check = false;
 			x++;
 			ballFound++;
+			pos++;
 		}
 	}
 
-	public LinkedList<Integer> moveBallCombinaison2 (LinkedList<Integer> temp,Integer[]secret) {
+	public ArrayList<Integer> moveBallCombinaison2 (ArrayList<Integer> combinaison, Integer[]secret) {
 
-		int last = numberOBalls;
-		boolean found = false;
-		 
-		Collections.rotate(temp, 1);
-		for(int i = 0; i < numberOBalls; i++) {
-			if(temp.get(index)==secret[i]) {
-				combinaison.set(i,secret[i]);
-				found = true;
-			}else{
-				if(found = false) {
-					combinaison.set(i,color++);
+
+
+		for(int i=0; i < numberOBalls; i++) {
+			boolean found = false;
+			for(int j = 0; j < numberOBalls;j++) {
+				if(combinaison.get(i)==secret[i]) {
+					found = true;
+				} else {
+					Collections.swap(combinaison, i, j);	
 				}
 			}
-		}	
+		}
+
+
 		return combinaison;
 	}
 

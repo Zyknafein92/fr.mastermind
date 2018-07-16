@@ -46,6 +46,7 @@ public class Challenger extends Game  {
 			}
 			Board.tried++;
 		} while (Board.tried <= Board.life && iswin == false);
+		
 		this.notifyObserver();
 	}
 
@@ -59,10 +60,10 @@ public class Challenger extends Game  {
 
 			Input player = new Input();
 			this.combinaison = player.getInput();	
-			compareChallengerMasterMind(secret,combinaison);
+			compareinposition(secret,combinaison);
+            comparepresent(secret,combinaison);
 
-
-			System.out.println(resultat(secret,present,position));
+			System.out.println(resultat(combinaison));
 
 			iswin(this.secret,this.combinaison);
 
@@ -85,7 +86,7 @@ public class Challenger extends Game  {
 		str1 +=("\r\n--------- Challenger ---------");
 		str1 +=("\r\n------------------------------");
 		str1 +=("\r\nVous devez trouver la combinaison mystère de votre adversaire !");
-		str1 +=("\r\nElle est composée de "+Board.optM + " chiffres compris entre 0 et 9.");
+		str1 +=("\r\nElle est composée de "+Board.pawns + " chiffres compris entre 0 et 9.");
 		str1 +=("\r\nVous avez le droit a "+Board.life + " tentatives !");
 		str1 +=("\r\nA vous de jouer !");
 		return str1;
@@ -98,7 +99,7 @@ public class Challenger extends Game  {
 		str1 +=("\r\n--------- Challenger ---------");
 		str1 +=("\r\n------------------------------");
 		str1 +=("\r\nVous devez trouver la combinaison mystère de votre adversaire !");
-		str1 +=("\r\nElle est composée de "+Board.optM + " chiffres compris entre 0 et 9.");
+		str1 +=("\r\nElle est composée de "+Board.pawns + " chiffres compris entre 0 et 9.");
 		str1 +=("\r\nVous avez le droit a "+Board.life + " tentatives !");
 		str1 +=("\r\nA vous de jouer !");
 		return str1;

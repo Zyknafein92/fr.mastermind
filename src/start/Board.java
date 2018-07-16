@@ -13,10 +13,10 @@ public class Board implements IObserver {
 
 	public static int mod; // sert à définir le mod de jeu
 	public static int type; // sert à définir le type de jeu
-	public static int optM = 4; // sert à définir le nombre de chiffres/couleurss a découvrir
+	public static int pawns = 4; // sert à définir le nombre de chiffres/couleurss a découvrir
 	public static int tried = 1; // sert à définir le nombre de tentative
 	public static int life = 5; // // sert à définir le nombre de vie du joueur
-	
+
 
 
 	public void Menu() {
@@ -49,7 +49,7 @@ public class Board implements IObserver {
 
 				System.out.println(" Vous avez choisi le mode Mastermind");
 				break;
-				
+
 			case 3:
 
 				System.out.println("Au revoir, à bientôt !");
@@ -71,7 +71,7 @@ public class Board implements IObserver {
 		System.out.println("1.Mode Challenger");
 		System.out.println("2.Mode Défenseur");
 		System.out.println("3.Mode Duel");
-		
+
 		type = sc.nextInt();
 
 		do { // boucle du type de jeu
@@ -84,13 +84,13 @@ public class Board implements IObserver {
 					Challenger jeu = new Challenger();
 					jeu.addObserver(this);
 					jeu.playChallengerPlusMoins();
-					
+
 				}
 				else {
 					Challenger jeu = new Challenger();
 					jeu.addObserver(this);
 					jeu.playChallengerMastermind();
-					
+
 				}
 
 				break;
@@ -102,13 +102,13 @@ public class Board implements IObserver {
 					Defenseur jeu = new Defenseur();
 					jeu.addObserver(this);
 					jeu.playDefenseurPlusMoins();
-				
+
 				}
 				else {
 					Defenseur jeu = new Defenseur();
 					jeu.addObserver(this);
 					jeu.playDefenseurMastermind();
-				
+
 				}
 				break;
 
@@ -119,13 +119,13 @@ public class Board implements IObserver {
 					Duel jeu = new Duel();
 					jeu.addObserver(this);
 					jeu.playDuelPlusMoins();
-					
+
 				}
 				else {
 					Duel jeu = new Duel();
 					jeu.addObserver(this);
 					jeu.playDuelMastermind();
-					
+
 				}
 				break;
 
@@ -139,8 +139,6 @@ public class Board implements IObserver {
 
 	}
 
-
-
 	public int getMod() {
 		return type;
 	}
@@ -149,15 +147,6 @@ public class Board implements IObserver {
 		Board.type = mod;
 	}
 
-	protected int getOptM() {
-		return optM;
-	}
-
-	protected void setOptM(int optM) {
-		Board.optM = optM;
-	}
-
-
 	/**
 	 * @return return try var
 	 */
@@ -165,15 +154,12 @@ public class Board implements IObserver {
 		return tried;
 	}
 
-	
 	/**
 	 * @param tried the tried to set
 	 */
 	public static void setTried(int tried) {
 		Board.tried = tried;
 	}
-
-
 
 	/**
 	 * @return the life
@@ -182,19 +168,25 @@ public class Board implements IObserver {
 		return life;
 	}
 
-
 	/**
 	 * @param life the life to set
 	 */
 	public static void setLife(int life) {
 		Board.life = life;
 	}
-	
-	
+
 	public void update() {
 		Board newGame = new Board();
 		newGame.Menu();
 	}
+
+	/**
+	 * @return the numberOfPawns
+	 */
+	protected static int getNumberOfPawns() {
+		return pawns;
+	}
+
 }
 
 

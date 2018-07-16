@@ -12,6 +12,7 @@ public class Defenseur extends Game {
 
 
 	BotRoll PC = new BotRoll();
+	
 
 	public Defenseur () {
 
@@ -50,30 +51,50 @@ public class Defenseur extends Game {
 		System.out.println(rulesDefenseur());
 		Input player = new Input();
 		this.secret = player.getInput();
+		
 		System.out.println(" Votre nombre secret est :"+Arrays.toString(secret));
-		do {
-			System.out.println(Arrays.toString(combinaison));
-
-			compareDefenseurMastermind(secret,combinaison);
-
-			System.out.println(resultat(combinaison, present, position));
-
-			iswin(secret,combinaison);
-
-			if (iswin == true) {
-				System.out.println("Perdu ! L'ordinateur a trouvé votre combinaison  en "+Board.tried + " tentative(s) !  Retour au menu principal");
-			}else if (Board.tried < Board.life) {
-				System.out.println("Mauvaise combinaison ! Essaye encore !");
-			}else {
-				System.out.println("Vous avez gagné ! L'ordinateur n'a pas trouvé votre combinaison ! Retour au menu principal");
+		
+			for(int y = 0; y < Board.pawns; y++) {
+				testcolor[y]=color;
+				combinaisonIA.add(0);
 			}
-
+			
 			Board.tried++;
+			
+			do { 
 
-		} while (Board.tried <= Board.life && iswin == false);
-		this.notifyObserver();
-	}
+				for(int i = 0; i < Board.pawns; i++) {
+					testcolor[i]=color;
+					if(check == true) {
+					combinaisonIA.set(i, color);
+					}	
+				}
 
+				int inposition = compareinposition(secret, testcolor);
+				ispresent = comparepresent(secret, testcolor);
+				int ballcolor = inposition + ispresent;
+				if(ballcolor > 0) {
+					addToCombinaison(combinaisonIA,color,ballcolor);
+				}
+				if(pos == Board.pawns) {
+					moveBallCombinaison(combinaisonIA,secret);
+				}
+				
+				compareinpositionIA(secret, combinaisonIA);
+				comparepresentIA(secret, combinaisonIA);
+				
+				System.out.println(resultat(combinaisonIA));
+				
+				Board.tried++;
+				color++;
+
+			} while (compareinpositionIA(secret, combinaisonIA) < Board.pawns && Board.tried < 15);
+			
+			this.notifyObserver();
+			
+		}
+		
+	
 	private static  String rulesDefenseur() {
 		String str1 = "";
 
@@ -81,7 +102,7 @@ public class Defenseur extends Game {
 		str1 +=("\r\n--------- Defenseur ----------");
 		str1 +=("\r\n------------------------------");
 		str1 +=("\r\nVous devez entrer un nombre mystère que l'ordinateur va devoir trouver.");
-		str1 +=("\r\nIl est composé de "+Board.optM + " chiffres compris entre 0 et 9.");
+		str1 +=("\r\nIl est composé de "+Board.pawns + " chiffres compris entre 0 et 9.");
 		str1 +=("\r\nL'ordinateur à le droit à "+Board.life + " tentative(s) !");
 		str1 +=("\r\nA vous de jouer !");
 		return str1;

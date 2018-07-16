@@ -6,7 +6,7 @@ import start.Board;
 
 public class BotRoll {
 
-	private Integer[] BotRoll = new Integer [Board.optM];
+	private Integer[] BotRoll = new Integer [Board.pawns];
 	
 	public BotRoll () {
 	
@@ -16,7 +16,7 @@ public class BotRoll {
 
 	public Integer[] generateBotRoll() {
 		Random random = new Random();
-		for(int i= 0;i< Board.optM;i++) 
+		for(int i= 0;i< Board.pawns;i++) 
 		{
 			BotRoll[i] = (random.nextInt(9)) ;
 		}

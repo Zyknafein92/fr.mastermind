@@ -12,10 +12,10 @@ public class Duel extends Game{
 
 	BotRoll rollCombiBot = new BotRoll();
 	BotRoll rollSecretBot = new BotRoll();
-	protected Integer[] secretBot = new Integer[Board.optM];
-	protected Integer[] combiBot = new Integer[Board.optM];
-	protected Integer[] secretPlayer = new Integer[Board.optM];
-	protected Integer[] combiPlayer = new Integer[Board.optM];
+	protected Integer[] secretBot = new Integer[Board.pawns];
+	protected Integer[] combiBot = new Integer[Board.pawns];
+	protected Integer[] secretPlayer = new Integer[Board.pawns];
+	protected Integer[] combiPlayer = new Integer[Board.pawns];
 	protected boolean isloose = false;
 
 	public Duel () {
@@ -39,7 +39,7 @@ public class Duel extends Game{
 		do {
 
 			System.out.println("---- Tour Joueur ----");
-			System.out.println("Faites une proposition de "+Board.optM + " chiffres !" );
+			System.out.println("Faites une proposition de "+Board.pawns + " chiffres !" );
 
 			Input combiplayer = new Input();
 			combiPlayer = combiplayer.getInput();
@@ -88,42 +88,7 @@ public class Duel extends Game{
 
 		System.out.println(secretplayer);
 		System.out.println(Arrays.toString(secretBot));
-		
 		do {
-
-			System.out.println("---- Tour Joueur ----");
-			System.out.println("Faites une proposition de "+Board.optM + " chiffres !" );
-
-			Input combiplayer = new Input();
-			combiPlayer = combiplayer.getInput();
-			
-			compareChallengerMasterMind(secretBot,combiPlayer);
-
-			System.out.println(resultat(combiPlayer,present,position));
-			
-			iswin(secretBot,combiPlayer);
-
-			System.out.println("---- Tour Ordinateur ----");
-			
-			compareDefenseurMastermind(secretPlayer,combiBot);
-			
-			System.out.println(resultat(combiBot,present,position));
-			
-			isloose(secretPlayer,combiBot);
-			
-			if (isloose == true) {
-			System.out.println("Perdu ! L'ordinateur a trouvé votre combinaison  en "+Board.tried + " tentative(s) !  Retour au menu principal");
-			} 
-			
-			else if (iswin == true) {
-				System.out.println("Bravo, vous avez trouvé la combinaison de l'ordinateur en "+Board.tried +" tentative(s) !  Retour au menu principal ");
-			}
-			else {
-				System.out.println("Tour suivant !");
-			}
-			
-			Board.tried++;
-			
 		} while (Board.tried <= Board.life && iswin == false && isloose == false);
 		this.notifyObserver();
 		
@@ -137,7 +102,7 @@ public class Duel extends Game{
 		str1 +=("\r\n------------------------------");
 		str1 +=("\r\nDans ce mode jeu, vous jouez contre l'ordinateur.");
 		str1 +=("\r\nChacun votre tour, vous allez tenter de découvrir la combinaison secrète de l'autre.");
-		str1 +=("\r\nElle est composée de "+Board.optM + " chiffres compris entre 0 et 9.");
+		str1 +=("\r\nElle est composée de "+Board.pawns + " chiffres compris entre 0 et 9.");
 		str1 +=("\r\nVous avez le droit a "+Board.life + " tentatives !");
 		str1 +=("\r\nA vous de jouer ! Veuillez choisir votre combinaison secrète :");
 		return str1;

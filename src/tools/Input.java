@@ -7,7 +7,7 @@ import start.Board;
 
 public class Input {
 	Scanner sc = new Scanner(System.in);
-	private Integer[] Input = new Integer[Board.optM];
+	private Integer[] Input = new Integer[Board.pawns];
 
 	public Input() {
 
@@ -18,10 +18,10 @@ public class Input {
 	public Integer[] generateInput() {
 		String userc = "";
 		do {
-			System.out.println("\r\nVeuillez entrer " + +Board.optM + " chiffres");
+			System.out.println("\r\nVeuillez entrer " + +Board.pawns + " chiffres");
 			userc = sc.nextLine();
 
-			if (userc.length() != Board.optM) 
+			if (userc.length() != Board.pawns) 
 			{
 				System.out.println("Attention, vous n'avez pas sélectionné le bon nombre de chiffre !");
 			}  
@@ -33,7 +33,7 @@ public class Input {
 					Input[i]=Integer.parseInt(""+userc.charAt(i));
 				}
 			}
-		} while (userc.length() != Board.optM);
+		} while (userc.length() != Board.pawns);
 		return Input;
 	}
 
