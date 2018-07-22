@@ -1,5 +1,6 @@
 package typegame;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import start.Board;
@@ -12,7 +13,7 @@ public class Defenseur extends Game {
 
 
 	BotRoll PC = new BotRoll();
-	
+
 
 	public Defenseur () {
 
@@ -46,28 +47,31 @@ public class Defenseur extends Game {
 		this.notifyObserver();
 	}
 
+	@SuppressWarnings("unchecked")
 	public void playDefenseurMastermind() {
 
 		System.out.println(rulesDefenseur());
 		Input player = new Input();
 		this.secret = player.getInput();
-		
-		System.out.println(" Votre nombre secret est :"+Arrays.toString(secret));
-		
-			for(int y = 0; y < Board.pawns; y++) {
-				testcolor[y]=color;
-				combinaisonIA.add(0);
-			}
-			
-			Board.tried++;
-			
-			do { 
 
+		System.out.println(" Votre nombre secret est :"+Arrays.toString(secret));
+
+		for(int y = 0; y < Board.pawns; y++) {
+			testcolor[y]=color;
+			combinaisonIA.add(color);
+		}
+
+		do { 
+			do {
 				for(int i = 0; i < Board.pawns; i++) {
 					testcolor[i]=color;
-					if(check == true) {
-					combinaisonIA.set(i, color);
-					}	
+
+					if(check == false) {
+						combinaisonIA.set(i, color);
+					}
+					if( pos <= i ) {
+						combinaisonIA.set(i, color);
+					}
 				}
 
 				int inposition = compareinposition(secret, testcolor);
@@ -76,25 +80,31 @@ public class Defenseur extends Game {
 				if(ballcolor > 0) {
 					addToCombinaison(combinaisonIA,color,ballcolor);
 				}
-				if(pos == Board.pawns) {
-					moveBallCombinaison(combinaisonIA,secret);
-				}
-				
-				compareinpositionIA(secret, combinaisonIA);
-				comparepresentIA(secret, combinaisonIA);
-				
+
+				System.out.println(Board.tried);
 				System.out.println(resultat(combinaisonIA));
-				
+				listcombinaison.add((ArrayList<Integer>)combinaisonIA.clone());
 				Board.tried++;
 				color++;
-
-			} while (compareinpositionIA(secret, combinaisonIA) < Board.pawns && Board.tried < 15);
-			
-			this.notifyObserver();
-			
-		}
+				
+			} while (ballFound != Board.pawns);
 		
-	
+			moveBallCombinaison(combinaisonIA,secret);
+			
+			if (compareinpositionIA(secret, combinaisonIA) == Board.pawns) {
+				Board.tried--;
+				System.out.println("Perdu ! L'ordinateur a trouvé votre combinaison  en "+Board.tried + " tentative(s) !  Retour au menu principal");
+			}else if (Board.tried < Board.life) {
+				System.out.println("Mauvaise combinaison ! Essaye encore !");
+			}else {
+				System.out.println("Vous avez gagné ! L'ordinateur n'a pas trouvé votre combinaison ! Retour au menu principal");
+			}		
+		} while (compareinpositionIA(secret, combinaisonIA) < Board.pawns && Board.tried <= Board.life);
+
+		this.notifyObserver();
+	}
+
+
 	private static  String rulesDefenseur() {
 		String str1 = "";
 
@@ -111,7 +121,7 @@ public class Defenseur extends Game {
 	@Override
 	public void addObserver(IObserver obs) {
 		listObserver.add(obs);
-		
+
 	}
 
 	@Override
@@ -119,7 +129,7 @@ public class Defenseur extends Game {
 		for(IObserver obs : listObserver) {
 			obs.update();
 		}
-		
+
 	}
 }
 

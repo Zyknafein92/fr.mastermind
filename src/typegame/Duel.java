@@ -84,14 +84,12 @@ public class Duel extends Game{
 		Input secretplayer = new Input();
 		secretPlayer = secretplayer.getInput();
 
+	
 		System.out.println("A présent, tentez de découvrir la combinaison de l'ordinateur !");
 
 		System.out.println(secretplayer);
 		System.out.println(Arrays.toString(secretBot));
-		do {
-		} while (Board.tried <= Board.life && iswin == false && isloose == false);
-		this.notifyObserver();
-		
+			
 	}
 
 	public static  String rulesDuelPlusMoins() {

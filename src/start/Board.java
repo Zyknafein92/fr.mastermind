@@ -15,7 +15,7 @@ public class Board implements IObserver {
 	public static int type; // sert à définir le type de jeu
 	public static int pawns = 4; // sert à définir le nombre de chiffres/couleurss a découvrir
 	public static int tried = 1; // sert à définir le nombre de tentative
-	public static int life = 5; // // sert à définir le nombre de vie du joueur
+	public static int life = 15; // // sert à définir le nombre de vie du joueur
 
 
 
