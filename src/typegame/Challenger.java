@@ -12,6 +12,12 @@ import tools.IObserver;
 import tools.Input;
 
 
+/**
+ * Challenger est la classe qui représente le mod Challenger.
+ * 
+ * @author Zyk
+ *
+ */
 public class Challenger extends Game  {
 
 	private ArrayList<IObserver> listObserver = new ArrayList <IObserver>();
@@ -60,8 +66,8 @@ public class Challenger extends Game  {
 
 			Input player = new Input();
 			this.combinaison = player.getInput();	
-			compareinposition(secret,combinaison);
-            comparepresent(secret,combinaison);
+			compareInposition(secret,combinaison);
+            comparePresent(secret,combinaison);
 
 			System.out.println(resultat(combinaison));
 

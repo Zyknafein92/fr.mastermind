@@ -8,59 +8,113 @@ import java.util.Scanner;
 import tools.IObservable;
 import tools.IObserver;
 
-public abstract class Game implements IObservable{
+/**
+ * 
+ * Game est la classe qui regroupe les méthodes communes, et les attributs
+ * communs de tous les jeux. Ceci inclut : les méthodes de comparaisons, ajouts
+ * et déplacements des pions, l'affichage de résultat
+ * 
+ * @author Zyk
+ *
+ */
 
-	protected String[] Soluc = new String [Board.pawns];
+public abstract class Game implements IObservable {
+	
+	protected String[] Soluc = new String[Board.pawns];
 	protected Integer[] combinaison = new Integer[Board.pawns];
-	protected ArrayList <Integer> combinaisonIA = new ArrayList<Integer>();
-	protected ArrayList <ArrayList<Integer>> listcombinaison = new ArrayList<ArrayList<Integer>>();
+	protected ArrayList<Integer> combinaisonIA = new ArrayList<Integer>();
+	protected ArrayList<ArrayList<Integer>> listCombinaison = new ArrayList<ArrayList<Integer>>();
 	protected Integer[] secret = new Integer[Board.pawns];
-	protected Integer[] testcolor = new Integer[Board.pawns];
+	protected Integer[] testColor = new Integer[Board.pawns];
 	protected boolean iswin = false;
-	protected int ispresent = 0;
-	protected int inposition = 0;
-	protected ArrayList<IObserver> listObserver = new ArrayList <IObserver>();
+	protected int isPresent = 0;
+	protected int inPosition = 0;
+	protected ArrayList<IObserver> listObserver = new ArrayList<IObserver>();
 	Scanner sc = new Scanner(System.in);
 	protected int pos = 0;
 	protected int color = 1;
 	protected boolean check = false;
 	protected int ballFound = 0;
 
-	/* Méthode Challenger */
+	// Méthode des jeux PlusMoins
 
-	public void compareChallenger (Integer[]secret, Integer[]combinaison) {
+	/**
+	 * 
+	 * compareChallenger compare les tableaux d'integers secret et combinaison pour 
+	 * mettre à jour un string qui affichera le résultat de la proposition dans le mode ChallengerPlusMoins
+	 * 
+	 * @param secret 
+	 *  Tableau d'Integer qui contient le secret.
+	 * 
+	 * @param combinaison
+	 * Tableau d'Integer qui contient la combinaison.
+	 *         
+	 */
 
-		for (int i = 0; i <Board.pawns; i++) {
-			if(secret[i]< combinaison[i] ) {
-				Soluc[i] = ""+ "-";
-			}else if (secret[i] > combinaison[i]) {
-				Soluc[i] = ""+ "+";
-			}else {
-				Soluc[i] = ""+ "=";
+	public void compareChallenger(Integer[] secret, Integer[] combinaison) {
+
+		for (int i = 0; i < Board.pawns; i++) {
+			if (secret[i] < combinaison[i]) {
+				Soluc[i] = "" + "-";
+			} else if (secret[i] > combinaison[i]) {
+				Soluc[i] = "" + "+";
+			} else {
+				Soluc[i] = "" + "=";
 			}
 		}
 	}
 
-	public void compareDefenseur (Integer[]secret, Integer[]combinaison) {
+	/**
+	 * 
+	 * compareDefenseur est la méthode de l'IA qui compare secret et combinaison pour mettre à jour la combinaison de l'ordinateur
+	 *  et affiche le résultat de la tentative dans le String Soluc
+	 *  
+	 * @param secret
+	 * Tableau d'Integer qui représente le secret.
+	 * @param combinaison
+	 * Tableau d'Integer qui représente la combinaison.
+	 * 
+	 */
 
-		for(int i = 0; i < combinaison.length; i++ ) {
+	public void compareDefenseur(Integer[] secret, Integer[] combinaison) {
+
+		for (int i = 0; i < combinaison.length; i++) {
 			if (secret[i] > combinaison[i]) {
-				combinaison[i]++; }
+				combinaison[i]++;
+			}
 			if (secret[i] < combinaison[i]) {
-				combinaison[i]--;}
-			if(secret[i]< combinaison[i] ) {
-				Soluc[i] = ""+ "-";
-			}else if (secret[i] > combinaison[i]) {
-				Soluc[i] = ""+ "+";
-			}else {
-				Soluc[i] = ""+ "=";
-			}	
+				combinaison[i]--;
+			}
+			if (secret[i] < combinaison[i]) {
+				Soluc[i] = "" + "-";
+			} else if (secret[i] > combinaison[i]) {
+				Soluc[i] = "" + "+";
+			} else {
+				Soluc[i] = "" + "=";
+			}
 		}
 	}
 
-	/* Méthode MasterMind */
+	// Méthode des jeux MasterMind
 
-	protected int compareinposition(Integer[] secret, Integer[] combinaison) {
+
+	/**
+	 * 
+	 * compareInposition compare les pions a l'indice i de secret et combinaison. 
+	 * Si un pion est bien placé, la valeur de inposition est incrémenté.
+	 * 
+	 * @param secret
+	 * Tableau d'Integer qui représente le secret.
+	 * 
+	 * @param combinaison
+	 * Tableau d'Integer qui représente la combinaison.
+	 * 
+	 * @return
+	 * Retourne le nombre de pion en position
+	 * 
+	 */
+
+	protected int compareInposition(Integer[] secret, Integer[] combinaison) {
 
 		int inposition = 0;
 		for (int i = 0; i < Board.pawns; i++) {
@@ -70,7 +124,25 @@ public abstract class Game implements IObservable{
 		}
 		return inposition;
 	}
-	protected int comparepresent(Integer[] secret, Integer[] combinaison) {
+
+
+	/**
+	 * 
+	 * comparePresent est la méthode qui compare le secret et la combinaison a l'indice i. 
+	 * Si le pion de la combinaison est présent dans le secret, il incrémente la valeur ispresent.
+	 * 
+	 * @param secret
+	 * Tableau d'Integer qui représente le secret.
+	 * 
+	 * @param combinaison
+	 * Tableau d'Integer qui représente la combinaison.
+	 * 
+	 * @return
+	 * Retourne le nombre de pion présent après savoir soustrait les pions qui sont à la bonne position.
+	 * 
+	 */
+	
+	protected int comparePresent(Integer[] secret, Integer[] combinaison) {
 		int ispresent = 0;
 		boolean found = false;
 
@@ -82,24 +154,52 @@ public abstract class Game implements IObservable{
 					ispresent++;
 					found = true;
 				}
-				j++;	
-			} while (j < Board.pawns &&!found);
+				j++;
+			} while (j < Board.pawns && !found);
 		}
-		return ispresent - compareinposition(secret,combinaison);
+		return ispresent - compareInposition(secret, combinaison);
 	}
 
-	protected int compareinpositionIA(Integer[] secret,ArrayList<Integer> combinaison) {
+	/**
+	 * 
+	 * compareInpositionIA est la méthode qui compare le secret du joueur et la combinaison de l'ordinateur a l'indice i. 
+	 * Si le pion de la combinaison est à la bonne position par rapport au secret, il incrémente la valeur inposition.
+	 * 
+	 * @param secret
+	 * Tableau d'Integer qui représente le secret.
+	 * @param combinaison
+	 * ArrayList qui contient la combinaison.
+	 * @return
+	 * Retourne le nombre de pion à la bonne position.
+	 * 
+	 */
+	
+	protected int compareInpositionIA(Integer[] secret, ArrayList<Integer> combinaisonIA) {
 
 		int inposition = 0;
 		for (int i = 0; i < Board.pawns; i++) {
-			if (combinaison.get(i).equals(secret[i])) {
+			if (combinaisonIA.get(i).equals(secret[i])) {
 				inposition++;
 			}
 		}
 		return inposition;
 	}
 
-	protected int comparepresentIA(Integer[] secret, ArrayList<Integer>combinaison) {
+	/**
+	 * 
+	 * comparePresentIA est la méthode qui compare le secret du joueur et la combinaison de l'ordinateur a l'indice i. 
+	 * Si le pion de la combinaison est présent dans le secret, il incrémente la valeur ispresent et passe au pion suivant.
+	 * 
+	 * @param secret
+	 * Tableau d'Integer qui représente le secret.
+	 * @param combinaisonIA
+	 * ArrayList qui contient la combinaison de l'ordinateur.
+	 * @return
+	 * Retourne le nombre de pion présent après soustraction avec le nombre de pion à la bonne position.
+	 * 
+	 */
+	
+	protected int comparePresentIA(Integer[] secret, ArrayList<Integer> combinaisonIA) {
 		int ispresent = 0;
 		boolean found = false;
 
@@ -107,17 +207,32 @@ public abstract class Game implements IObservable{
 			int j = 0;
 			found = false;
 			do {
-				if (secret[i] == combinaison.get(j)) {
+				if (secret[i] == combinaisonIA.get(j)) {
 					ispresent++;
 					found = true;
 				}
-				j++;	
-			} while (j < Board.pawns &&!found);
+				j++;
+			} while (j < Board.pawns && !found);
 		}
-		return ispresent - compareinpositionIA(secret, combinaison);
+		return ispresent - compareInpositionIA(secret, combinaisonIA);
 	}
 
-	protected void addToCombinaison (ArrayList<Integer> combinaison, int color, int ballcolor) {
+	/**
+	 * 
+	 * addToCombinaison remplace à chaque fois qu'un pion est présent ou à la bonne position représenté par int ballcolor. 
+	 * Le pion est ajouté à l'indice de "pos" à la couleur actuelle. 
+	 * A chaque ajout, la valeur de pos est incrémenté ainsi que le nombre de pion trouvé.
+	 * 
+	 * @param combinaisonIA
+	 *  ArrayList qui contient la combinaison de l'ordinateur.
+	 * @param color
+	 * Int qui représente la valeur de la couleur actuelle.
+	 * @param ballcolor
+	 * Nombre de pion étant présent ou à la bonne position à ajouter.
+	 * 
+	 */
+	
+	protected void addToCombinaison (ArrayList<Integer> combinaisonIA, int color, int ballcolor) {
 
 		int x = 0;
 		while(ballcolor > x) {
@@ -126,21 +241,41 @@ public abstract class Game implements IObservable{
 			x++;
 			ballFound++;
 			pos++;
-		}		
+		}
 	}
 
+	/**
+	 * moveBallCombinaison compare les valeurs entre la combinaisonIA, 
+	 * et le secret puis déplace les pions en fonction des résultats entre l'indice i et j.
+	 * 
+	 * A chaque tour, la combinaison est ajoutée à une liste de combinaison afin d'éviter qu'elle soit tirée à nouveau.
+	 * Si elle est déjà présente dans la liste des combinaisons, la JVM refait un swap.
+	 * 
+	 * La valeur de tried est incrémenté a chaque tentative et le résultat est affiché dans la console.
+	 * 
+	 * @param combinaisonIA
+	 *  ArrayList qui contient la combinaison de l'ordinateur.
+	 *  
+	 * @param secret
+	 * Tableau d'Integer qui contient le secret.
+	 * 
+	 * @param listCombinaison
+	 * ArrayList des différentes combinaisons proposées par l'ordinateur
+	 * 
+	 */
+	
 	@SuppressWarnings("unchecked")
-	protected void moveBallCombinaison (ArrayList<Integer> combinaison, Integer[]secret) {
+	protected void moveBallCombinaison(ArrayList<Integer> combinaisonIA, Integer[] secret, ArrayList<ArrayList<Integer>>listCombinaison) {
 
-		for(int i=0; i < Board.pawns; i++) {
-			boolean found = false;
-			for(int j = 0; j < Board.pawns;j++) {
-				if(combinaison.get(i)==secret[i]) {
-					found = true;
+		for (int i = 0; i < Board.pawns; i++) {
+		//	boolean found = false; (test voir si ca marche sans)
+			for (int j = 0; j < Board.pawns; j++) {
+				if (combinaisonIA.get(i) == secret[i]) {
+			//		found = true;
 				} else {
-					listcombinaison.add((ArrayList<Integer>)combinaisonIA.clone());
+					listCombinaison.add((ArrayList<Integer>) combinaisonIA.clone());
 					Collections.swap(combinaisonIA, i, j);
-					if(!listcombinaison.contains(combinaisonIA)) { 
+					if (!listCombinaison.contains(combinaisonIA)) {
 						System.out.println(Board.tried);
 						System.out.println(resultat(combinaisonIA));
 						Board.tried++;
@@ -153,230 +288,394 @@ public abstract class Game implements IObservable{
 		}
 	}
 
-
-
-	protected boolean iswin (Integer[] secret, Integer[] combinaison) {
-		if (Arrays.equals(secret,combinaison))
+	/**
+	 * 
+	 * Boolean qui compare le secret et la combinaison.
+	 * Si il est retourne la valeur True, la partie est gagnée
+	 * 
+	 * @param secret
+	 * Tableau d'Integer qui contient le secret.
+	 * @param combinaison
+	 * Tableau d'Integer qui contient la combinaison.
+	 * @return
+	 * Retourne la valeur du boolean
+	 * 
+	 */
+	
+	protected boolean iswin(Integer[] secret, Integer[] combinaison) {
+		if (Arrays.equals(secret, combinaison))
 			iswin = true;
 		else
 			iswin = false;
-		return iswin;		
+		return iswin;
 	}
 
-	protected boolean iswin (Integer[] secret, ArrayList<Integer> combinaisonIA) {
-		if (compareinpositionIA(secret, combinaisonIA) == Board.pawns)
+	/**
+	 * 
+	 * Boolean qui compare le secret et la combinaison.
+	 * Si il est retourne la valeur True, la partie est gagnée
+	 * 
+	 * @param secret
+	 * Tableau d'Integer qui contient le secret.
+	 * 
+	 * @param combinaisonIA
+	 * Arraylist qui contient la combinaison.
+	 * 
+	 * @return
+	 * Retourne la valeur du boolean
+	 * 
+	 */
+	
+	protected boolean iswin(Integer[] secret, ArrayList<Integer> combinaisonIA) {
+		if (compareInpositionIA(secret, combinaisonIA) == Board.pawns)
 			iswin = true;
 		else
 			iswin = false;
-		return iswin;		
+		return iswin;
 	}
 
-	protected String resultat (Integer[]combinaison, String[] Soluc) {
+	/**
+	 * resultat affiche un String contenant la combinaison et soluc.
+	 * 
+	 * @param combinaison
+	 *  Tableau d'Integer qui contient la combinaison.
+	 *  
+	 * @param Soluc
+	 * Tableau String qui contient le résultat de la comparaison de la combinaison et du secret affiché sous la forme de + - ou =.
+	 * 
+	 * @return
+	 * Retourne le String resultat.
+	 * 
+	 */
+	
+	protected String resultat(Integer[] combinaison, String[] Soluc) {
 		String resultat = "";
 
-		resultat +="Proposition ->" +Arrays.toString(combinaison)  + "Résultat : " +Arrays.toString(Soluc);
+		resultat += "Proposition ->" + Arrays.toString(combinaison) + "Résultat : " + Arrays.toString(Soluc);
 
-		return resultat;
-	}
-
-	protected String resultat(Integer[]combinaison) {
-		String resultat = "";
-
-		if (comparepresent(secret,combinaison) != 0)	
-			resultat +="Tour :" + Board.tried + " | Proposition ->" +Arrays.toString(combinaison) + " || Résultat : " +comparepresent(secret,combinaison) + " présent(s), "  + compareinposition(secret,combinaison) + " bonne(s) position(s) ";
-		else
-			resultat +="Boucle " + Board.tried + " | Proposition ->" +Arrays.toString(combinaison) + " || Résultat : " +compareinposition(secret,combinaison) + " bonne(s) position(s) ";
-		return resultat;
-	}
-
-	protected String resultat(ArrayList<Integer>combinaisonIA) {
-		String resultat = "";
-
-		if (comparepresentIA(secret,combinaisonIA) != 0)	
-			resultat +="Boucle " + Board.tried + " | Proposition ->" +combinaisonIA + " || Résultat : " +comparepresentIA(secret,combinaisonIA) + " présent(s), "  + compareinpositionIA(secret,combinaisonIA) + " bonne(s) position(s) ";
-		else
-			resultat +="Boucle " + Board.tried + " | Proposition ->" +combinaisonIA + " || Résultat : " +compareinpositionIA(secret,combinaisonIA) + " bonne(s) position(s) ";
 		return resultat;
 	}
 
 	/**
-	 * @return the soluc
+	 * 
+	 * resultat affiche un String contenant le nombre de tour, la proposition du joueur (combinaison), 
+	 * le nombre de pion présent, à la bonne position.
+	 * 
+	 * @param combinaison
+	 * Tableau d'Integer qui contient la combinaison.
+	 * 
+	 * @return
+	 * Retourne le String resultat.
+	 * 
 	 */
+	
+	protected String resultat(Integer[] combinaison) {
+		String resultat = "";
+
+		if (comparePresent(secret, combinaison) != 0)
+			resultat += "Tour :" + Board.tried + " | Proposition ->" + Arrays.toString(combinaison) + " || Résultat : "
+					+ comparePresent(secret, combinaison) + " présent(s), " + compareInposition(secret, combinaison)
+					+ " bonne(s) position(s) ";
+		else
+			resultat += "Boucle " + Board.tried + " | Proposition ->" + Arrays.toString(combinaison) + " || Résultat : "
+					+ compareInposition(secret, combinaison) + " bonne(s) position(s) ";
+		return resultat;
+	}
+
+	
+	/**
+	 * resultat affiche un String contenant le nombre de tour, la proposition de l'ordinateur(combinaisonIA), 
+	 * le nombre de pion présent, à la bonne position.
+	 * 
+	 * @param combinaisonIA
+	 * Arraylist qui contient la combinaison.
+	 * 
+	 * @return
+	 * Retourne le String resultat.
+	 * 
+	 */
+	
+	protected String resultat(ArrayList<Integer> combinaisonIA) {
+		String resultat = "";
+
+		if (comparePresentIA(secret, combinaisonIA) != 0)
+			resultat += "Boucle " + Board.tried + " | Proposition ->" + combinaisonIA + " || Résultat : "
+					+ comparePresentIA(secret, combinaisonIA) + " présent(s), "
+					+ compareInpositionIA(secret, combinaisonIA) + " bonne(s) position(s) ";
+		else
+			resultat += "Boucle " + Board.tried + " | Proposition ->" + combinaisonIA + " || Résultat : "
+					+ compareInpositionIA(secret, combinaisonIA) + " bonne(s) position(s) ";
+		return resultat;
+	}
+
+	/**
+	 * 
+	 * @return le tableau String Soluc
+	 * 
+	 */
+	
 	protected String[] getSoluc() {
 		return Soluc;
 	}
 
 	/**
-	 * @return the combinaison
+	 * 
+	 * @return le tableau Integer combinaison
+	 * 
 	 */
+	
 	protected Integer[] getCombinaison() {
 		return combinaison;
 	}
 
 	/**
-	 * @return the combinaisonIA
+	 * 
+	 * @return l'ArrayList Integer de combinaisonIA
+	 * 
 	 */
+	
 	protected ArrayList<Integer> getCombinaisonIA() {
 		return combinaisonIA;
 	}
 
 	/**
-	 * @return the secret
+	 * 
+	 * @return le tableau Integer secret
+	 * 
 	 */
+	
 	protected Integer[] getSecret() {
 		return secret;
 	}
 
 	/**
-	 * @return the testcolor
+	 * 
+	 * @return le tableau Integer testcolor
+	 * 
 	 */
+	
 	protected Integer[] getTestcolor() {
-		return testcolor;
+		return testColor;
 	}
 
 	/**
-	 * @return the iswin
+	 * 
+	 * @return le booleen iswin
+	 * 
 	 */
+	
 	protected boolean isIswin() {
 		return iswin;
 	}
 
 	/**
-	 * @return the ispresent
+	 * 
+	 * @return int ispresent
+	 * 
 	 */
+	
 	protected int getIspresent() {
-		return ispresent;
+		return isPresent;
 	}
 
 	/**
-	 * @return the inposition
+	 * 
+	 * @return int inposition
+	 * 
 	 */
+	
 	protected int getInposition() {
-		return inposition;
+		return inPosition;
 	}
 
 	/**
-	 * @return the listObserver
+	 * 
+	 * @return  listObserver
+	 * 
 	 */
+	
 	protected ArrayList<IObserver> getListObserver() {
 		return listObserver;
 	}
 
 	/**
-	 * @return the pos
+	 * 
+	 * @return int pos
+	 * 
 	 */
+	
 	protected int getPos() {
 		return pos;
 	}
 
 	/**
-	 * @return the color
+	 * 
+	 * @return int color
+	 * 
 	 */
+	
 	protected int getColor() {
 		return color;
 	}
 
 	/**
-	 * @return the check
+	 * 
+	 * @return booleen check
+	 * 
 	 */
+	
 	protected boolean isCheck() {
 		return check;
 	}
 
 	/**
-	 * @return the ballFound
+	 * 
+	 * @return int ballFound
+	 * 
 	 */
+	
 	protected int getBallFound() {
 		return ballFound;
 	}
 
 	/**
-	 * @param soluc the soluc to set
+	 * 
+	 * @param soluc
+	 * Le String soluc mis à jour.
+	 * 
 	 */
 	protected void setSoluc(String[] soluc) {
 		Soluc = soluc;
 	}
 
 	/**
-	 * @param combinaison the combinaison to set
+	 * 
+	 * @param combinaison
+	 * Tableau Integer combinaison mis à jour
+	 * 
 	 */
+	
 	protected void setCombinaison(Integer[] combinaison) {
 		this.combinaison = combinaison;
 	}
 
 	/**
-	 * @param combinaisonIA the combinaisonIA to set
+	 * 
+	 * @param combinaisonIA
+	 * Arraylist Integer combinaisonIA mise à jour.
+	 *            
 	 */
+	
 	protected void setCombinaisonIA(ArrayList<Integer> combinaisonIA) {
 		this.combinaisonIA = combinaisonIA;
 	}
 
 	/**
-	 * @param secret the secret to set
+	 * 
+	 * @param secret
+	 * Tableau Integer secret mis à jour.
+	 *            
 	 */
+	
 	protected void setSecret(Integer[] secret) {
 		this.secret = secret;
 	}
 
 	/**
-	 * @param testcolor the testcolor to set
+	 * 
+	 * @param testcolor
+	 * Tableau Integer test color mis à jour
+	 * 
 	 */
+	
 	protected void setTestcolor(Integer[] testcolor) {
-		this.testcolor = testcolor;
+		this.testColor = testcolor;
 	}
 
 	/**
-	 * @param iswin the iswin to set
+	 * 
+	 * @param iswin
+	 *  booleen iswin mis à jour.
+	 *            
 	 */
-	protected void setIswin(boolean iswin) {
+	
+	protected void setisWin(boolean iswin) {
 		this.iswin = iswin;
 	}
 
 	/**
-	 * @param ispresent the ispresent to set
+	 * 
+	 * @param ispresent
+	 * int isPresent mis à jour.
+	 *            
 	 */
-	protected void setIspresent(int ispresent) {
-		this.ispresent = ispresent;
+	
+	protected void setisPresent(int isPresent) {
+		this.isPresent = isPresent;
 	}
 
 	/**
-	 * @param inposition the inposition to set
+	 * 
+	 * @param inposition
+	 * int inPosition mis à jour.
+	 * 
 	 */
-	protected void setInposition(int inposition) {
-		this.inposition = inposition;
+	
+	protected void setInposition(int inPosition) {
+		this.inPosition = inPosition;
 	}
 
 	/**
-	 * @param listObserver the listObserver to set
+	 * 
+	 * @param listObserver
+	 * listObserver mise à jour.
+	 * 
 	 */
+	
 	protected void setListObserver(ArrayList<IObserver> listObserver) {
 		this.listObserver = listObserver;
 	}
 
 	/**
-	 * @param pos the pos to set
+	 * 
+	 * @param pos
+	 * int pos mis à jour.
+	 *            
 	 */
+	
 	protected void setPos(int pos) {
 		this.pos = pos;
 	}
 
 	/**
-	 * @param color the color to set
+	 * 
+	 * @param color
+	 * int color mis à jour.      
+	 *            
 	 */
+	
 	protected void setColor(int color) {
 		this.color = color;
 	}
 
 	/**
-	 * @param check the check to set
+	 * 
+	 * @param check
+	 * booleen check mis à jour.
+	 * 
 	 */
+	
 	protected void setCheck(boolean check) {
 		this.check = check;
 	}
 
 	/**
-	 * @param ballFound the ballFound to set
+	 * 
+	 * @param ballFound
+	 *  int ballFound mis à jour.
+	 *  
 	 */
+	
 	protected void setBallFound(int ballFound) {
 		this.ballFound = ballFound;
 	}
@@ -389,12 +688,10 @@ public abstract class Game implements IObservable{
 
 	@Override
 	public void notifyObserver() {
-		for(IObserver obs : listObserver) {
+		for (IObserver obs : listObserver) {
 			obs.update();
 		}
 
 	}
 
 }
-
-

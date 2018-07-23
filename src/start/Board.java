@@ -2,12 +2,18 @@ package start;
 
 
 import java.util.Scanner;
-
 import tools.IObserver;
 import typegame.Challenger;
 import typegame.Defenseur;
 import typegame.Duel;
 
+
+/**
+ * Board représente le menu du jeu, l'utilisateur choisi le mode de jeu, son type içi.
+ * 
+ * @author Zyk
+ *
+ */
 
 public class Board implements IObserver {
 
@@ -18,7 +24,13 @@ public class Board implements IObserver {
 	public static int life = 15; // // sert à définir le nombre de vie du joueur
 
 
-
+/**
+ * 
+ *  Menu est la méthode qui affiche les choix utilisateurs, et permet de lancer grâce au pattern observeur les différents jeux proposés.
+ *  A chaque fin de jeu, l'utilisateur est renvoyé içi.
+ *  
+ */
+	
 	public void Menu() {
 
 		Scanner sc = new Scanner(System.in);
@@ -29,7 +41,7 @@ public class Board implements IObserver {
 		System.out.println("------------------------------");
 		System.out.println("Quel jeu voulez-vous choisir ?");
 
-		// choix du mode de jeu.
+		// présentation choix du mode de jeu.
 		System.out.println("1.Mode +/-");
 		System.out.println("2.Mode Mastermind");
 		System.out.println("3.Quitter");
@@ -138,53 +150,69 @@ public class Board implements IObserver {
 		} while (type == 0 || type > 3); // fin de la boucle du type de jeu
 
 	}
-
+	
+	/**
+	 * @return retourne le type de jeu
+	 */
+	
 	public int getMod() {
 		return type;
 	}
-
+	
+	/**
+	 * @return le type de jeu
+	 */
+	
 	public void setMod(int mod) {
 		Board.type = mod;
 	}
 
 	/**
-	 * @return return try var
+	 * @return le nombre d'essai réalisé par le joueur.
 	 */
 	public static int getTried() {
 		return tried;
 	}
 
 	/**
-	 * @param tried the tried to set
+	 * @param mise à jour d'essai réalisé par le joueur.
 	 */
+	
 	public static void setTried(int tried) {
 		Board.tried = tried;
 	}
 
 	/**
-	 * @return the life
+	 * @return le nombre de vie.
 	 */
+	
 	public static int getLife() {
 		return life;
 	}
 
 	/**
-	 * @param life the life to set
+	 * @param mise à jour du nombre d'essai (vie du joueur) autorisés par les joueurs
 	 */
+	
 	public static void setLife(int life) {
 		Board.life = life;
 	}
 
+	/**
+	 * @return Retourne le nombre de pion effectif pendant le jeu.
+	 */
+	
+	protected static int getNumberOfPawns() {
+		return pawns;
+	}
+	
+	/**
+	 * @param Crée une nouvelle partie
+	 */
+	
 	public void update() {
 		Board newGame = new Board();
 		newGame.Menu();
-	}
-
-	/**
-	 * @return the numberOfPawns
-	 */
-	protected static int getNumberOfPawns() {
-		return pawns;
 	}
 
 }

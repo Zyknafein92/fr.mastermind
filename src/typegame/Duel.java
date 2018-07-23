@@ -1,5 +1,6 @@
 package typegame;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import start.Board;
@@ -23,11 +24,10 @@ public class Duel extends Game{
 		secretBot = rollSecretBot.getBotRoll();
 	}
 
-
 	public void playDuelPlusMoins () {
 
 		System.out.println(rulesDuelPlusMoins());
-		System.out.println("Entrez votre combinaison secrète :");
+
 		Input secretplayer = new Input();
 		secretPlayer = secretplayer.getInput();
 
@@ -58,7 +58,7 @@ public class Duel extends Game{
 			System.out.println(resultat(combiBot,Soluc));
 
 			isloose(secretPlayer,combiBot);
-			
+
 			if (isloose == true) {
 				System.out.println("Perdu ! L'ordinateur a trouvé votre combinaison  en "+Board.tried + " tentative(s) !  Retour au menu principal");
 			} 
@@ -68,28 +68,81 @@ public class Duel extends Game{
 			else {
 				System.out.println("Tour suivant !");
 			}
-			
+
 			Board.tried++;
-			
+
 		} while (Board.tried <= Board.life && iswin == false && isloose == false);
-		
+
 		System.out.println("Fin de partie, retour au menu principal !");
 		this.notifyObserver();
 	}
 
+	@SuppressWarnings("unchecked")
 	public void playDuelMastermind () {
-		
+
 		System.out.println(rulesDuelPlusMoins());
-		System.out.println("Entrez votre combinaison secrète :");
+
 		Input secretplayer = new Input();
 		secretPlayer = secretplayer.getInput();
+		
+		do {
+			System.out.println("---- Tour Joueur ----");
+			System.out.println("Faites une proposition de "+Board.pawns + " chiffres !" );
+			System.out.println(Arrays.toString(secretBot));
+			Input player = new Input();
+			combiPlayer = player.getInput();
 
-	
-		System.out.println("A présent, tentez de découvrir la combinaison de l'ordinateur !");
-
-		System.out.println(secretplayer);
-		System.out.println(Arrays.toString(secretBot));
+			compareInposition(secretBot,combiPlayer);
+			comparePresent(secretBot,combiPlayer);
 			
+			System.out.println(resultat(combiPlayer));
+			
+			iswin(secretBot,combiPlayer);
+
+			System.out.println("---- Tour Ordinateur ----");
+			
+			for(int y = 0; y < Board.pawns; y++) {
+				testColor[y]=color;
+				combinaisonIA.add(color);
+			}
+					for(int i = 0; i < Board.pawns; i++) {
+						testColor[i]=color;
+
+						if(check == false) {
+							combinaisonIA.set(i, color);
+						}
+						if( pos <= i ) {
+							combinaisonIA.set(i, color);
+						}
+					}
+
+					int inposition = compareInposition(secretPlayer, testColor);
+					isPresent = comparePresent(secretPlayer, testColor);
+					int ballcolor = inposition + isPresent;
+					if(ballcolor > 0) {
+						addToCombinaison(combinaisonIA,color,ballcolor);
+					}
+
+					System.out.println(Board.tried);
+					System.out.println(resultat(combinaisonIA));
+					listCombinaison.add((ArrayList<Integer>)combinaisonIA.clone());
+					Board.tried++;
+					color++;
+					
+				moveBallCombinaison(combinaisonIA,secretPlayer, listCombinaison);
+          
+			
+			if(compareInpositionIA(secretPlayer, combinaisonIA) == Board.pawns) {
+				Board.tried--;
+				System.out.println("Perdu ! L'ordinateur a trouvé votre combinaison  en "+Board.tried + " tentative(s) !  Retour au menu principal");
+			}else if(iswin(secretBot,combinaison) == true){
+				System.out.println("Bravo ! Vous avez trouvé la combinaison de l'ordinateur en "+Board.tried +" tentative(s) !  Retour au menu principal");
+			}else if (Board.tried < Board.life) {
+				System.out.println("Mauvaise combinaison ! Essaye encore !");
+			}else {
+				System.out.println("Egalité, aucun joueur n'a trouvé la combinaison de l'autre | Retour au menu principal");
+			}
+		} while (compareInpositionIA(secretPlayer, combinaisonIA) < Board.pawns && iswin == false && Board.tried <= Board.life);
 	}
 
 	public static  String rulesDuelPlusMoins() {
@@ -181,7 +234,7 @@ public class Duel extends Game{
 	@Override
 	public void addObserver(IObserver obs) {
 		listObserver.add(obs);
-		
+
 	}
 
 	@Override
@@ -189,6 +242,6 @@ public class Duel extends Game{
 		for(IObserver obs : listObserver) {
 			obs.update();
 		}
-		
+
 	}
 }
