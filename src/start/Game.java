@@ -268,16 +268,14 @@ public abstract class Game implements IObservable {
 	protected void moveBallCombinaison(ArrayList<Integer> combinaisonIA, Integer[] secret, ArrayList<ArrayList<Integer>>listCombinaison) {
 
 		for (int i = 0; i < Board.pawns; i++) {
-		//	boolean found = false; (test voir si ca marche sans)
 			for (int j = 0; j < Board.pawns; j++) {
 				if (combinaisonIA.get(i) == secret[i]) {
-			//		found = true;
 				} else {
 					listCombinaison.add((ArrayList<Integer>) combinaisonIA.clone());
 					Collections.swap(combinaisonIA, i, j);
 					if (!listCombinaison.contains(combinaisonIA)) {
 						System.out.println(Board.tried);
-						System.out.println(resultat(combinaisonIA));
+						System.out.println(resultat(combinaisonIA, secret));
 						Board.tried++;
 
 					} else {
@@ -364,12 +362,15 @@ public abstract class Game implements IObservable {
 	 * @param combinaison
 	 * Tableau d'Integer qui contient la combinaison.
 	 * 
+	 * @param secret
+	 * Tableau d'Integer qui contient le secret.
+	 * 
 	 * @return
 	 * Retourne le String resultat.
 	 * 
 	 */
 	
-	protected String resultat(Integer[] combinaison) {
+	protected String resultat(Integer[] combinaison, Integer[] secret) {
 		String resultat = "";
 
 		if (comparePresent(secret, combinaison) != 0)
@@ -390,12 +391,16 @@ public abstract class Game implements IObservable {
 	 * @param combinaisonIA
 	 * Arraylist qui contient la combinaison.
 	 * 
+	 * @param secret
+	 * 
+	 * Tableau d'Integer qui contient le secret.
+	 * 
 	 * @return
 	 * Retourne le String resultat.
 	 * 
 	 */
 	
-	protected String resultat(ArrayList<Integer> combinaisonIA) {
+	protected String resultat(ArrayList<Integer> combinaisonIA, Integer[] secret) {
 		String resultat = "";
 
 		if (comparePresentIA(secret, combinaisonIA) != 0)

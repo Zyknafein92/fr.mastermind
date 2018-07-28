@@ -2,6 +2,8 @@ package typegame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 import start.Board;
 import start.Game;
@@ -84,7 +86,7 @@ public class Duel extends Game{
 
 		Input secretplayer = new Input();
 		secretPlayer = secretplayer.getInput();
-		
+
 		do {
 			System.out.println("---- Tour Joueur ----");
 			System.out.println("Faites une proposition de "+Board.pawns + " chiffres !" );
@@ -94,44 +96,49 @@ public class Duel extends Game{
 
 			compareInposition(secretBot,combiPlayer);
 			comparePresent(secretBot,combiPlayer);
-			
-			System.out.println(resultat(combiPlayer));
-			
+
+			System.out.println(resultat(combiPlayer,secretBot));
+
 			iswin(secretBot,combiPlayer);
 
 			System.out.println("---- Tour Ordinateur ----");
-			
-			for(int y = 0; y < Board.pawns; y++) {
-				testColor[y]=color;
-				combinaisonIA.add(color);
+
+			if(Board.tried <= 1) {
+				for(int y = 0; y < Board.pawns; y++) {
+					testColor[y]=color;
+					combinaisonIA.add(color);
+				}
 			}
-					for(int i = 0; i < Board.pawns; i++) {
-						testColor[i]=color;
 
-						if(check == false) {
-							combinaisonIA.set(i, color);
-						}
-						if( pos <= i ) {
-							combinaisonIA.set(i, color);
-						}
-					}
+			for(int i = 0; i < Board.pawns; i++) {
+				testColor[i]=color;
 
-					int inposition = compareInposition(secretPlayer, testColor);
-					isPresent = comparePresent(secretPlayer, testColor);
-					int ballcolor = inposition + isPresent;
-					if(ballcolor > 0) {
-						addToCombinaison(combinaisonIA,color,ballcolor);
-					}
+				if(check == false) {
+					combinaisonIA.set(i, color);
+				}
+				if( pos <= i ) {
+					combinaisonIA.set(i, color);
+				}
+			}
 
-					System.out.println(Board.tried);
-					System.out.println(resultat(combinaisonIA));
-					listCombinaison.add((ArrayList<Integer>)combinaisonIA.clone());
-					Board.tried++;
-					color++;
-					
-				moveBallCombinaison(combinaisonIA,secretPlayer, listCombinaison);
-          
-			
+			int inposition = compareInposition(secretPlayer, testColor);
+			isPresent = comparePresent(secretPlayer, testColor);
+			int ballcolor = inposition + isPresent;
+			if(ballcolor > 0) {
+				addToCombinaison(combinaisonIA,color,ballcolor);
+			}
+			if(ballFound == Board.pawns) {
+				moveBallCombinaison(combinaisonIA, secretBot, listCombinaison);
+			}
+
+
+			System.out.println(Board.tried);
+			System.out.println(resultat(combinaisonIA,secretPlayer));
+			listCombinaison.add((ArrayList<Integer>)combinaisonIA.clone());
+			Board.tried++;
+			color++;
+
+
 			if(compareInpositionIA(secretPlayer, combinaisonIA) == Board.pawns) {
 				Board.tried--;
 				System.out.println("Perdu ! L'ordinateur a trouvé votre combinaison  en "+Board.tried + " tentative(s) !  Retour au menu principal");

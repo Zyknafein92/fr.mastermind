@@ -69,7 +69,7 @@ public class Challenger extends Game  {
 			compareInposition(secret,combinaison);
             comparePresent(secret,combinaison);
 
-			System.out.println(resultat(combinaison));
+			System.out.println(resultat(combinaison,secret));
 
 			iswin(this.secret,this.combinaison);
 

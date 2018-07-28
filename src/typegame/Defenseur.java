@@ -57,14 +57,14 @@ public class Defenseur extends Game {
 		System.out.println(" Votre nombre secret est :"+Arrays.toString(secret));
 
 		for(int y = 0; y < Board.pawns; y++) {
-			testcolor[y]=color;
+			testColor[y]=color;
 			combinaisonIA.add(color);
 		}
 
 		do { 
 			do {
 				for(int i = 0; i < Board.pawns; i++) {
-					testcolor[i]=color;
+					testColor[i]=color;
 
 					if(check == false) {
 						combinaisonIA.set(i, color);
@@ -74,24 +74,24 @@ public class Defenseur extends Game {
 					}
 				}
 
-				int inposition = compareinposition(secret, testcolor);
-				ispresent = comparepresent(secret, testcolor);
-				int ballcolor = inposition + ispresent;
+				int inposition = compareInposition(secret, testColor);
+				isPresent = comparePresent(secret, testColor);
+				int ballcolor = inposition + isPresent;
 				if(ballcolor > 0) {
 					addToCombinaison(combinaisonIA,color,ballcolor);
 				}
 
 				System.out.println(Board.tried);
-				System.out.println(resultat(combinaisonIA));
-				listcombinaison.add((ArrayList<Integer>)combinaisonIA.clone());
+				System.out.println(resultat(combinaisonIA,secret));
+				listCombinaison.add((ArrayList<Integer>)combinaisonIA.clone());
 				Board.tried++;
 				color++;
 				
 			} while (ballFound != Board.pawns);
 		
-			moveBallCombinaison(combinaisonIA,secret);
+			moveBallCombinaison(combinaisonIA, secret, listCombinaison);
 			
-			if (compareinpositionIA(secret, combinaisonIA) == Board.pawns) {
+			if (compareInpositionIA(secret, combinaisonIA) == Board.pawns) {
 				Board.tried--;
 				System.out.println("Perdu ! L'ordinateur a trouvé votre combinaison  en "+Board.tried + " tentative(s) !  Retour au menu principal");
 			}else if (Board.tried < Board.life) {
@@ -99,7 +99,7 @@ public class Defenseur extends Game {
 			}else {
 				System.out.println("Vous avez gagné ! L'ordinateur n'a pas trouvé votre combinaison ! Retour au menu principal");
 			}		
-		} while (compareinpositionIA(secret, combinaisonIA) < Board.pawns && Board.tried <= Board.life);
+		} while (compareInpositionIA(secret, combinaisonIA) < Board.pawns && Board.tried <= Board.life);
 
 		this.notifyObserver();
 	}
