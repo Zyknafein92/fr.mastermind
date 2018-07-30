@@ -9,6 +9,13 @@ import tools.BotRoll;
 import tools.IObserver;
 import tools.Input;
 
+/**
+ * 
+ * Cette classe représente le mode de jeu Defenseur
+ * @author Zyk
+ *
+ */
+
 public class Defenseur extends Game {
 
 
@@ -20,6 +27,12 @@ public class Defenseur extends Game {
 		this.combinaison = PC.getBotRoll();
 	}
 
+	/**
+	 * 
+	 * Méthode de jeu Defenseur pour le mod +/-.
+	 * 
+	 */
+	
 	public void playDefenseurPlusMoins() {
 
 		System.out.println(rulesDefenseur());
@@ -47,6 +60,12 @@ public class Defenseur extends Game {
 		this.notifyObserver();
 	}
 
+	/**
+	 * 
+	 * Méthode de jeu Defenseur pour le mode MasterMind.
+	 * 
+	 */
+	
 	@SuppressWarnings("unchecked")
 	public void playDefenseurMastermind() {
 
@@ -94,17 +113,24 @@ public class Defenseur extends Game {
 			if (compareInpositionIA(secret, combinaisonIA) == Board.pawns) {
 				Board.tried--;
 				System.out.println("Perdu ! L'ordinateur a trouvé votre combinaison  en "+Board.tried + " tentative(s) !  Retour au menu principal");
-			}else if (Board.tried < Board.life) {
-				System.out.println("Mauvaise combinaison ! Essaye encore !");
-			}else {
-				System.out.println("Vous avez gagné ! L'ordinateur n'a pas trouvé votre combinaison ! Retour au menu principal");
-			}		
+			}	
 		} while (compareInpositionIA(secret, combinaisonIA) < Board.pawns && Board.tried <= Board.life);
-
+		
+		  if (Board.tried >= Board.life) {
+				System.out.println("Vous avez gagné ! L'ordinateur n'a pas trouvé votre combinaison ! Retour au menu principal");
+			}	
+		  
 		this.notifyObserver();
 	}
 
 
+	/**
+	 * Méthode qui retourne un string contenant les règles du jeu Defenseur.
+	 * 
+	 * @return String avec les règles.
+	 * 
+	 */
+	
 	private static  String rulesDefenseur() {
 		String str1 = "";
 

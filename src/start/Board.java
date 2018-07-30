@@ -2,6 +2,7 @@ package start;
 
 
 import java.util.Scanner;
+
 import tools.IObserver;
 import typegame.Challenger;
 import typegame.Defenseur;
@@ -41,12 +42,12 @@ public class Board implements IObserver {
 		System.out.println("------------------------------");
 		System.out.println("Quel jeu voulez-vous choisir ?");
 
-		// présentation choix du mode de jeu.
+		
 		System.out.println("1.Mode +/-");
 		System.out.println("2.Mode Mastermind");
 		System.out.println("3.Quitter");
 
-		do { // boucle choix du mode de jeu.
+		do { 
 			System.out.println("Choisissez votre mode de jeu :");
 			mod = sc.nextInt();
 
@@ -75,10 +76,10 @@ public class Board implements IObserver {
 				break;
 
 			}
-		} while (mod != 1 && mod != 2 && mod != 3); //fin de la boucle du type de jeu
+		} while (mod != 1 && mod != 2 && mod != 3); 
 
 
-		//choix du type de jeu
+
 		System.out.println("Veuillez choisir un type de jeu !");
 		System.out.println("1.Mode Challenger");
 		System.out.println("2.Mode Défenseur");
@@ -86,7 +87,7 @@ public class Board implements IObserver {
 
 		type = sc.nextInt();
 
-		do { // boucle du type de jeu
+		do { 
 			switch (type) {
 
 			case 1:
@@ -147,7 +148,7 @@ public class Board implements IObserver {
 				break;
 			}
 
-		} while (type == 0 || type > 3); // fin de la boucle du type de jeu
+		} while (type == 0 || type > 3); 
 
 	}
 	

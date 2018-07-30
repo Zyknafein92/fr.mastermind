@@ -4,9 +4,17 @@ import java.util.Random;
 
 import start.Board;
 
+/**
+ * Cette classe permet la génération d'un jet de dés aléatoire pour l'ordinateur
+ * 
+ * @author Zyk
+ *
+ */
+
 public class BotRoll {
 
 	private Integer[] BotRoll = new Integer [Board.pawns];
+	
 	
 	public BotRoll () {
 	
@@ -14,6 +22,10 @@ public class BotRoll {
 
 	}
 
+	/**
+	 * @return Génère un tableau d'Integer aléatoire.
+	 */
+	
 	public Integer[] generateBotRoll() {
 		Random random = new Random();
 		for(int i= 0;i< Board.pawns;i++) 
@@ -21,22 +33,25 @@ public class BotRoll {
 			BotRoll[i] = (random.nextInt(9)) ;
 		}
 		return BotRoll;
-	
 	}
 
 	/**
-	 * @return the botRoll
+	 * @return le tableau Integer BotRoll
 	 */
+	
 	public Integer[] getBotRoll() {
 		return BotRoll;
 	}
 
 	/**
-	 * @param botRoll the botRoll to set
+	 * @param Génère un tableau selon la méthode generateBotRoll
 	 */
+	
 	public void setBotRoll(int[] botRoll) {
 		BotRoll = generateBotRoll();
 	}
+	
+
 	public String toString() {
 		return Arrays.toString(BotRoll);
 	}

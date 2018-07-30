@@ -28,6 +28,10 @@ public class Challenger extends Game  {
 		this.secret = PC.getBotRoll();
 	}
 
+	/**
+	 * Méthode de jeu pour le mode challenger +/-.
+	 */
+	
 	public void playChallengerPlusMoins() {
 
 		System.out.println(rulesChallengerPlusMoins());
@@ -57,6 +61,10 @@ public class Challenger extends Game  {
 	}
 
 
+	/**
+	 * Méthode de jeu pour le mode challenger Mastermind
+	 */
+
 	public void playChallengerMastermind() {
 
 		System.out.println(rulesChallengerMastermind());
@@ -85,6 +93,10 @@ public class Challenger extends Game  {
 		this.notifyObserver();
 	}
 
+	/**
+	 * Méthode qui affiche les règles du jeu challenger en mode +/-.
+	 * @return String 
+	 */
 	public static  String rulesChallengerPlusMoins() {
 		String str1 = "";
 
@@ -98,6 +110,10 @@ public class Challenger extends Game  {
 		return str1;
 	}
 
+	/**
+	 * Méthode qui affiche les règles du jeu challenger en mode Mastermind.
+	 * @return String
+	 */
 	public static  String rulesChallengerMastermind() {
 		String str1 = "";
 

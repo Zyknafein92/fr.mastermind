@@ -11,6 +11,13 @@ import tools.BotRoll;
 import tools.IObserver;
 import tools.Input;
 
+/**
+ * 
+ * Duel est la classe qui représente le jeu Duel.
+ * @author Zyk
+ *
+ */
+
 public class Duel extends Game{
 
 	BotRoll rollCombiBot = new BotRoll();
@@ -25,6 +32,12 @@ public class Duel extends Game{
 		combiBot = rollCombiBot.getBotRoll();
 		secretBot = rollSecretBot.getBotRoll();
 	}
+
+	/**
+	 * 
+	 * Méthode de jeu Duel pour le mod +/-.
+	 * 
+	 */
 
 	public void playDuelPlusMoins () {
 
@@ -79,6 +92,12 @@ public class Duel extends Game{
 		this.notifyObserver();
 	}
 
+	/**
+	 * 
+	 * Méthode de jeu Duel pour le mod Mastermind.
+	 * 
+	 */
+
 	@SuppressWarnings("unchecked")
 	public void playDuelMastermind () {
 
@@ -124,17 +143,25 @@ public class Duel extends Game{
 			int inposition = compareInposition(secretPlayer, testColor);
 			isPresent = comparePresent(secretPlayer, testColor);
 			int ballcolor = inposition + isPresent;
+			
 			if(ballcolor > 0) {
 				addToCombinaison(combinaisonIA,color,ballcolor);
+				System.out.println(Board.tried);
+				System.out.println(resultat(combinaisonIA,secretPlayer));
 			}
+			
 			if(ballFound == Board.pawns) {
-				moveBallCombinaison(combinaisonIA, secretBot, listCombinaison);
-			}
-
-
-			System.out.println(Board.tried);
-			System.out.println(resultat(combinaisonIA,secretPlayer));
-			listCombinaison.add((ArrayList<Integer>)combinaisonIA.clone());
+				moveBallCombinaisonDuelMastermind(combinaisonIA, secretBot, listCombinaison);
+				
+				for(int i = 0; i < tryCombinaisonBot.size(); i++){
+				combinaisonIA.set(i, tryCombinaisonBot.get(i));	
+				}
+				
+				System.out.println(Board.tried);
+				System.out.println(resultat(combinaisonIA,secretPlayer));
+				listCombinaison.add((ArrayList<Integer>)combinaisonIA.clone());
+			}	
+			
 			Board.tried++;
 			color++;
 
@@ -150,7 +177,16 @@ public class Duel extends Game{
 				System.out.println("Egalité, aucun joueur n'a trouvé la combinaison de l'autre | Retour au menu principal");
 			}
 		} while (compareInpositionIA(secretPlayer, combinaisonIA) < Board.pawns && iswin == false && Board.tried <= Board.life);
+		this.notifyObserver();
 	}
+
+	/**
+	 * 
+	 * Méthode qui génère un string contenant les règles du jeu Duel pour le mod +/-.
+	 * 
+	 * @return String contenant les règles.
+	 * 
+	 */
 
 	public static  String rulesDuelPlusMoins() {
 		String str1 = "";
@@ -166,6 +202,17 @@ public class Duel extends Game{
 		return str1;
 	}
 
+	/**
+	 * Boolean qui permet de tester si l'ordinateur trouve ou non la combinaison du joueur.
+	 * 
+	 * @param Tableau d'Integer contenant le secret du joueur.
+	 * 
+	 * @param Tableau d'Integer contenant la combinaison de l'ordinateur.
+	 * 
+	 * @return la valeur du boolean isloose.
+	 * 
+	 */
+
 	public boolean isloose (Integer[] secretPlayer, Integer[] combiBot) {
 		if (Arrays.equals(secretPlayer,combiBot))
 			isloose = true;
@@ -175,31 +222,33 @@ public class Duel extends Game{
 	}
 
 	/**
-	 * @param isloose the isloose to set
+	 * @param Met à jour le booleen isloose.
 	 */
-	public void setIsloose(boolean isloose) {
+	public void setisLoose(boolean isloose) {
 		this.isloose = isloose;
 	}
 
 
 	/**
-	 * @return the secretBot
+	 * @return Tableau Integer contenant le secret de l'ordinateur mis à jour.
 	 */
+
 	public Integer[] getSecretBot() {
 		return secretBot;
 	}
 
 
 	/**
-	 * @return the combiBot
+	 * @return Tableau d'Integer contenant le secret de l'ordinateur mis à jour.
 	 */
+
 	public Integer[] getCombiBot() {
 		return combiBot;
 	}
 
 
 	/**
-	 * @return the secretPlayer
+	 * @return Tableau d'Integer contenant le secret du joueur mis à jour.
 	 */
 	public Integer[] getSecretPlayer() {
 		return secretPlayer;
@@ -207,23 +256,24 @@ public class Duel extends Game{
 
 
 	/**
-	 * @return the isloose
+	 * @return boolean isloose mis à jour.
 	 */
-	public boolean isIsloose() {
+	public boolean isLoose() {
 		return isloose;
 	}
 
 
 	/**
-	 * @param secretBot the secretBot to set
+	 * @param Met à jour le tableau d'Integer contenant le secret de l'ordinateur.
 	 */
+
 	public void setSecretBot(Integer[] secretBot) {
 		this.secretBot = secretBot;
 	}
 
 
 	/**
-	 * @param combiBot the combiBot to set
+	 * @param Met à jour le tableau d'Integer contenant la combinaison de l'ordinateur.
 	 */
 	public void setCombiBot(Integer[] combiBot) {
 		this.combiBot = combiBot;
@@ -231,7 +281,7 @@ public class Duel extends Game{
 
 
 	/**
-	 * @param secretPlayer the secretPlayer to set
+	 * @param Met à jour le tableau d'Integer contenant le secret du joueur.
 	 */
 	public void setSecretPlayer(Integer[] secretPlayer) {
 		this.secretPlayer = secretPlayer;

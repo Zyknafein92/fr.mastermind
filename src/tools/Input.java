@@ -5,6 +5,12 @@ import java.util.Scanner;
 
 import start.Board;
 
+/**
+ * Cette classe sert à saisir et contrôler les saisis claviers de l'utilisateur grâce à la méthode Scanner.
+ * @author Zyk
+ *
+ */
+
 public class Input {
 	Scanner sc = new Scanner(System.in);
 	private Integer[] Input = new Integer[Board.pawns];
@@ -15,6 +21,13 @@ public class Input {
 
 	}
 
+	/**
+	 * Méthode qui permet de contrôler la saisie de l'utilisateur et de la mémoriser pour une utilisation ultérieure.
+	 * 
+	 * @return
+	 * Tableau d'Integer
+	 */
+	
 	public Integer[] generateInput() {
 		String userc = "";
 		do {
@@ -37,10 +50,18 @@ public class Input {
 		return Input;
 	}
 
+	/**
+	 * @return la saisie clavier de l'utilisateur.
+	 */
+	
 	public Integer[] getInput() {
 		return Input;
 	}
 
+	/**
+	 * @param Saisie clavier de l'utilisateur.
+	 */
+	
 	public void setInput(Integer[] playerInput) {
 		this.Input = generateInput();
 	}

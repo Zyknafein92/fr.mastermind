@@ -24,6 +24,7 @@ public abstract class Game implements IObservable {
 	protected Integer[] combinaison = new Integer[Board.pawns];
 	protected ArrayList<Integer> combinaisonIA = new ArrayList<Integer>();
 	protected ArrayList<ArrayList<Integer>> listCombinaison = new ArrayList<ArrayList<Integer>>();
+	protected ArrayList<ArrayList<Integer>> tryCombinaisonBot = new ArrayList<ArrayList<Integer>>();
 	protected Integer[] secret = new Integer[Board.pawns];
 	protected Integer[] testColor = new Integer[Board.pawns];
 	protected boolean iswin = false;
@@ -277,7 +278,6 @@ public abstract class Game implements IObservable {
 						System.out.println(Board.tried);
 						System.out.println(resultat(combinaisonIA, secret));
 						Board.tried++;
-
 					} else {
 						Collections.swap(combinaisonIA, i, j);
 					}
@@ -285,6 +285,26 @@ public abstract class Game implements IObservable {
 			}
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	protected void moveBallCombinaisonDuelMastermind(ArrayList<Integer> combinaisonIA, Integer[] secret, ArrayList<ArrayList<Integer>>listCombinaison) {
+		
+		for (int i = 0; i < Board.pawns; i++) {
+			for (int j = 0; j < Board.pawns; j++) {
+				if (combinaisonIA.get(i) == secret[i]) {
+				} else {
+					listCombinaison.add((ArrayList<Integer>)combinaisonIA.clone());
+					Collections.swap(combinaisonIA, i, j);
+					if (!listCombinaison.contains(combinaisonIA)) {
+						tryCombinaisonBot.add((ArrayList<Integer>)combinaisonIA.clone());
+					} else {
+						Collections.swap(combinaisonIA, i, j);
+					}
+				}
+			}
+		}
+	}
+	
 
 	/**
 	 * 
