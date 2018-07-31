@@ -18,12 +18,9 @@ import typegame.Duel;
 
 public class Board implements IObserver {
 
-	public static int mod; // sert à définir le mod de jeu
-	public static int type; // sert à définir le type de jeu
-	public static int pawns = 4; // sert à définir le nombre de chiffres/couleurss a découvrir
-	public static int tried = 1; // sert à définir le nombre de tentative
-	public static int life = 15; // // sert à définir le nombre de vie du joueur
-
+	private static int mod; // sert à définir le mod de jeu
+	private static int type; // sert à définir le type de jeu
+	
 
 /**
  * 
@@ -74,20 +71,23 @@ public class Board implements IObserver {
 
 				System.out.println("Veuillez choisir un mode valide !");
 				break;
-
 			}
+			
 		} while (mod != 1 && mod != 2 && mod != 3); 
 
 
-
 		System.out.println("Veuillez choisir un type de jeu !");
+		
+		do {
+			
 		System.out.println("1.Mode Challenger");
 		System.out.println("2.Mode Défenseur");
 		System.out.println("3.Mode Duel");
 
 		type = sc.nextInt();
 
-		do { 
+	
+			
 			switch (type) {
 
 			case 1:
@@ -143,17 +143,18 @@ public class Board implements IObserver {
 				break;
 
 			default:
-
-				System.out.println("Veuillez choisir un mode valide !");
+				System.out.println("Veuillez choisir un type de jeu valide !");
 				break;
 			}
-
-		} while (type == 0 || type > 3); 
+			
+		} while (type != 1 && type != 2 && type != 3); 
 
 	}
 	
 	/**
+	 * 
 	 * @return retourne le type de jeu
+	 * 
 	 */
 	
 	public int getMod() {
@@ -161,54 +162,20 @@ public class Board implements IObserver {
 	}
 	
 	/**
+	 * 
 	 * @return le type de jeu
+	 * 
 	 */
 	
 	public void setMod(int mod) {
 		Board.type = mod;
 	}
 
-	/**
-	 * @return le nombre d'essai réalisé par le joueur.
-	 */
-	public static int getTried() {
-		return tried;
-	}
-
-	/**
-	 * @param mise à jour d'essai réalisé par le joueur.
-	 */
-	
-	public static void setTried(int tried) {
-		Board.tried = tried;
-	}
-
-	/**
-	 * @return le nombre de vie.
-	 */
-	
-	public static int getLife() {
-		return life;
-	}
-
-	/**
-	 * @param mise à jour du nombre d'essai (vie du joueur) autorisés par les joueurs
-	 */
-	
-	public static void setLife(int life) {
-		Board.life = life;
-	}
-
-	/**
-	 * @return Retourne le nombre de pion effectif pendant le jeu.
-	 */
-	
-	protected static int getNumberOfPawns() {
-		return pawns;
-	}
 	
 	/**
+	 * 
 	 * @param Crée une nouvelle partie
+	 * 
 	 */
 	
 	public void update() {

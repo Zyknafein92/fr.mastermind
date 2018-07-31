@@ -3,17 +3,21 @@ package tools;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import option.GameOptions;
 import start.Board;
 
 /**
+ * 
  * Cette classe sert à saisir et contrôler les saisis claviers de l'utilisateur grâce à la méthode Scanner.
  * @author Zyk
  *
  */
 
 public class Input {
+	
 	Scanner sc = new Scanner(System.in);
-	private Integer[] Input = new Integer[Board.pawns];
+	private int pawns = GameOptions.getPanws();
+	private Integer[] Input = new Integer[pawns];
 
 	public Input() {
 
@@ -31,10 +35,10 @@ public class Input {
 	public Integer[] generateInput() {
 		String userc = "";
 		do {
-			System.out.println("\r\nVeuillez entrer " + +Board.pawns + " chiffres");
+			System.out.println("\r\nVeuillez entrer " + +pawns + " chiffres");
 			userc = sc.nextLine();
 
-			if (userc.length() != Board.pawns) 
+			if (userc.length() != pawns) 
 			{
 				System.out.println("Attention, vous n'avez pas sélectionné le bon nombre de chiffre !");
 			}  
@@ -46,7 +50,7 @@ public class Input {
 					Input[i]=Integer.parseInt(""+userc.charAt(i));
 				}
 			}
-		} while (userc.length() != Board.pawns);
+		} while (userc.length() != pawns);
 		return Input;
 	}
 

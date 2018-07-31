@@ -2,6 +2,7 @@ package tools;
 import java.util.Arrays;
 import java.util.Random;
 
+import option.GameOptions;
 import start.Board;
 
 /**
@@ -12,14 +13,15 @@ import start.Board;
  */
 
 public class BotRoll {
-
-	private Integer[] BotRoll = new Integer [Board.pawns];
+	
+	private int pawns = GameOptions.getPanws();
+	private Integer[] BotRoll = new Integer [pawns];
 	
 	
 	public BotRoll () {
 	
 		BotRoll = generateBotRoll();
-
+        
 	}
 
 	/**
@@ -28,7 +30,7 @@ public class BotRoll {
 	
 	public Integer[] generateBotRoll() {
 		Random random = new Random();
-		for(int i= 0;i< Board.pawns;i++) 
+		for(int i= 0; i < pawns; i++) 
 		{
 			BotRoll[i] = (random.nextInt(9)) ;
 		}

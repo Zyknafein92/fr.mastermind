@@ -5,7 +5,6 @@ package typegame;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import start.Board;
 import start.Game;
 import tools.BotRoll;
 import tools.IObserver;
@@ -13,11 +12,13 @@ import tools.Input;
 
 
 /**
+ * 
  * Challenger est la classe qui représente le mod Challenger.
  * 
  * @author Zyk
  *
  */
+
 public class Challenger extends Game  {
 
 	private ArrayList<IObserver> listObserver = new ArrayList <IObserver>();
@@ -25,7 +26,10 @@ public class Challenger extends Game  {
 
 
 	public Challenger () {
+		
+		super();
 		this.secret = PC.getBotRoll();
+		
 	}
 
 	/**
@@ -41,21 +45,20 @@ public class Challenger extends Game  {
 			Input player = new Input();
 			this.combinaison = player.getInput();
 
-			compareChallenger(this.secret,this.combinaison);
+			compareChallenger(secret,combinaison);
 
-			iswin(this.secret,this.combinaison);
+			System.out.println(resultat(combinaison,Soluc));
 
-			System.out.print(resultat(combinaison,Soluc));
-
-			if (iswin == true) {
-				System.out.println("Bravo, vous avez gagné en "+Board.tried + " tentative(s) !");
-			}else if (Board.tried < Board.life) {
-				System.out.println("Mauvaise combinaison !");
+			if (isWin(secret,combinaison) == true) {
+				System.out.println("Bravo, vous avez gagné en "+gameCounter + " tentative(s) ! Retour au menu principal\n");
+			}else if (gameCounter < maxTry) {
+				System.out.println("Mauvaise combinaison !\n");
 			}else {
-				System.out.println("Vous avez perdu, retour au menu principal");
+				System.out.println("Vous avez perdu ! Retour au menu principal\n");
 			}
-			Board.tried++;
-		} while (Board.tried <= Board.life && iswin == false);
+			gameCounter++;
+			
+		} while (gameCounter <= maxTry && isWin(secret,combinaison) == false);
 		
 		this.notifyObserver();
 	}
@@ -68,28 +71,24 @@ public class Challenger extends Game  {
 	public void playChallengerMastermind() {
 
 		System.out.println(rulesChallengerMastermind());
-		System.out.println(Arrays.toString(this.secret));
+		System.out.println(Arrays.toString(secret));
 
 		do {
 
 			Input player = new Input();
 			this.combinaison = player.getInput();	
-			compareInposition(secret,combinaison);
-            comparePresent(secret,combinaison);
-
+		
 			System.out.println(resultat(combinaison,secret));
 
-			iswin(this.secret,this.combinaison);
-
-			if (iswin == true) {
-				System.out.println("Bravo, vous avez gagné en "+Board.tried + " tentative(s) !");
-			}else if (Board.tried < Board.life) {
-				System.out.println("Mauvaise combinaison !");
+			if (isWin(secret,combinaison) == true) {
+				System.out.println("Bravo, vous avez gagné en "+gameCounter + " tentative(s) ! Retour au menu principal\n");
+			}else if (gameCounter < maxTry) {
+				System.out.println("Mauvaise combinaison !\n");
 			}else {
-				System.out.println("Vous avez perdu, retour au menu principal");
+				System.out.println("Vous avez perdu ! Retour au menu principal\n");
 			}
-			Board.tried++;
-		} while (Board.tried <= Board.life && iswin == false);
+			gameCounter++;
+		} while (gameCounter <= maxTry && isWin(secret,combinaison) == false);
 		this.notifyObserver();
 	}
 
@@ -104,9 +103,9 @@ public class Challenger extends Game  {
 		str1 +=("\r\n--------- Challenger ---------");
 		str1 +=("\r\n------------------------------");
 		str1 +=("\r\nVous devez trouver la combinaison mystère de votre adversaire !");
-		str1 +=("\r\nElle est composée de "+Board.pawns + " chiffres compris entre 0 et 9.");
-		str1 +=("\r\nVous avez le droit a "+Board.life + " tentatives !");
-		str1 +=("\r\nA vous de jouer !");
+		str1 +=("\r\nElle est composée de "+pawns + " chiffres compris entre 0 et 9.");
+		str1 +=("\r\nVous avez le droit a "+maxTry + " tentatives !");
+		str1 +=("\r\nA vous de jouer !\\n");
 		return str1;
 	}
 
@@ -121,9 +120,9 @@ public class Challenger extends Game  {
 		str1 +=("\r\n--------- Challenger ---------");
 		str1 +=("\r\n------------------------------");
 		str1 +=("\r\nVous devez trouver la combinaison mystère de votre adversaire !");
-		str1 +=("\r\nElle est composée de "+Board.pawns + " chiffres compris entre 0 et 9.");
-		str1 +=("\r\nVous avez le droit a "+Board.life + " tentatives !");
-		str1 +=("\r\nA vous de jouer !");
+		str1 +=("\r\nElle est composée de "+pawns + " chiffres compris entre 0 et 9.");
+		str1 +=("\r\nVous avez le droit a "+maxTry + " tentatives !");
+		str1 +=("\r\nA vous de jouer !\n");
 		return str1;
 	}
 	
