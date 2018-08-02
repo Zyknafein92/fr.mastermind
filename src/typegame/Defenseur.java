@@ -18,11 +18,10 @@ public class Defenseur extends Game {
 
 
 	BotRoll PC = new BotRoll();
-
-
+	
 	public Defenseur () {
 		super();
-		this.combinaison = PC.getBotRoll();
+		combinaison = PC.generateBotRoll();
 		moveI = moveJ = 0;
 	}
 
@@ -35,8 +34,10 @@ public class Defenseur extends Game {
 	public void playDefenseurPlusMoins() {
 
 		System.out.println(rulesDefenseur());
+		
 		Input player = new Input();
-		this.secret = player.getInput();
+		this.secret = player.generateInput();
+		
 		System.out.println(" Votre nombre secret est :"+Arrays.toString(secret));
 
 		do {
@@ -51,9 +52,9 @@ public class Defenseur extends Game {
 				System.out.println("Vous avez gagné ! L'ordinateur n'a pas trouvé votre combinaison ! Retour au menu principal\n");
 			}
 			gameCounter++;
-			
+
 		} while (gameCounter <= maxTry && isWin(secret,combinaison) == false);
-		
+
 		this.notifyObserver();
 	}
 
@@ -66,8 +67,9 @@ public class Defenseur extends Game {
 	public void playDefenseurMastermind() {
 
 		System.out.println(rulesDefenseur());
+		
 		Input player = new Input();
-		this.secret = player.getInput();
+		this.secret = player.generateInput();
 
 		System.out.println(" Votre nombre secret est :"+Arrays.toString(secret));
 
@@ -77,48 +79,52 @@ public class Defenseur extends Game {
 		}
 
 		do { 
-		
-				for(int i = 0; i < pawns; i++) {
-					testColor[i]=color;
 
-					if(check == false) {
-						combinaisonIA.set(i, color);
-					}
-					if( pos <= i ) {
-						combinaisonIA.set(i, color);
-					}
+			for(int i = 0; i < pawns; i++) {
+				testColor[i]=color;
+
+				if(check == false) {
+					combinaisonIA.set(i, color);
 				}
-
-				int inposition = compareInposition(secret, testColor);
-				isPresent = comparePresent(secret, testColor);
-				int ballcolor = inposition + isPresent;
-
-				if(ballcolor > 0) {
-					addToCombinaison(combinaisonIA,color,ballcolor);
+				if( pos <= i ) {
+					combinaisonIA.set(i, color);
 				}
+			}
 
-				if(ballFound != pawns) {
-			    System.out.println(resultat(combinaisonIA, secret));
-				}
-				
-				if(ballFound == pawns) {
-                movePawns(combinaisonIA, secret, listCombinaison);
-				}	
-				
-				color++;
-		
+			inPosition = compareInposition(secret, testColor);
+			isPresent = comparePresent(secret, testColor);
 			
-		
+			int ballcolor = inPosition + isPresent;
+
+			if(ballcolor > 0) {
+				addToCombinaison(combinaisonIA,color,ballcolor);
+			}
+
+			if(ballFound != pawns) {
+				System.out.println(resultat(combinaisonIA, secret));
+			}
+
+			if(ballFound == pawns) {
+				movePawns(combinaisonIA, secret, listCombinaison);
+			}
+
+			if (color <= maxNumbers) {
+				color++;
+			}
+
 			if (compareInpositionIA(secret, combinaisonIA) == pawns) {
 				System.out.println("Perdu ! L'ordinateur a trouvé votre combinaison  en "+gameCounter + " tentative(s) !  Retour au menu principal\n");
 			}else if (gameCounter >= maxTry) {
 				System.out.println("Vous avez gagné ! L'ordinateur n'a pas trouvé votre combinaison ! Retour au menu principal\n");
 			}
-			gameCounter++;
 			
+			gameCounter++;
+
 		} while (compareInpositionIA(secret, combinaisonIA) < pawns && gameCounter <= maxTry);
 
 		this.notifyObserver();
+		combinaisonIA.clear();
+		listCombinaison.clear();
 	}
 
 

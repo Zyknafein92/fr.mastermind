@@ -1,6 +1,7 @@
 package start;
 
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import tools.IObserver;
@@ -18,17 +19,17 @@ import typegame.Duel;
 
 public class Board implements IObserver {
 
-	private static int mod; // sert à définir le mod de jeu
-	private static int type; // sert à définir le type de jeu
-	
+	private int mod; // sert à définir le mod de jeu
+	private int type; // sert à définir le type de jeu
 
-/**
- * 
- *  Menu est la méthode qui affiche les choix utilisateurs, et permet de lancer grâce au pattern observeur les différents jeux proposés.
- *  A chaque fin de jeu, l'utilisateur est renvoyé içi.
- *  
- */
-	
+
+	/**
+	 * 
+	 *  Menu est la méthode qui affiche les choix utilisateurs, et permet de lancer grâce au pattern observeur les différents jeux proposés.
+	 *  A chaque fin de jeu, l'utilisateur est renvoyé içi.
+	 *  
+	 */
+
 	public void Menu() {
 
 		Scanner sc = new Scanner(System.in);
@@ -39,14 +40,24 @@ public class Board implements IObserver {
 		System.out.println("------------------------------");
 		System.out.println("Quel jeu voulez-vous choisir ?");
 
-		
+
 		System.out.println("1.Mode +/-");
 		System.out.println("2.Mode Mastermind");
 		System.out.println("3.Quitter");
 
 		do { 
+
 			System.out.println("Choisissez votre mode de jeu :");
-			mod = sc.nextInt();
+
+			try {
+				
+				mod = sc.nextInt();
+				
+			}catch(InputMismatchException e) {
+				
+				System.out.println(" Veuillez entrer un chiffre  !");
+				sc.next();
+			}
 
 			switch (mod) {
 			case 1:
@@ -72,22 +83,31 @@ public class Board implements IObserver {
 				System.out.println("Veuillez choisir un mode valide !");
 				break;
 			}
-			
+
 		} while (mod != 1 && mod != 2 && mod != 3); 
 
 
 		System.out.println("Veuillez choisir un type de jeu !");
-		
+
 		do {
-			
-		System.out.println("1.Mode Challenger");
-		System.out.println("2.Mode Défenseur");
-		System.out.println("3.Mode Duel");
 
-		type = sc.nextInt();
+			System.out.println("1.Mode Challenger");
+			System.out.println("2.Mode Défenseur");
+			System.out.println("3.Mode Duel");
 
-	
-			
+
+			try {
+				
+				type = sc.nextInt();
+				
+			}catch(InputMismatchException e) {
+				
+				System.out.println(" Veuillez entrer un chiffre  !");
+				sc.next();
+			}
+
+
+
 			switch (type) {
 
 			case 1:
@@ -146,38 +166,11 @@ public class Board implements IObserver {
 				System.out.println("Veuillez choisir un type de jeu valide !");
 				break;
 			}
-			
+
 		} while (type != 1 && type != 2 && type != 3); 
 
 	}
-	
-	/**
-	 * 
-	 * @return retourne le type de jeu
-	 * 
-	 */
-	
-	public int getMod() {
-		return type;
-	}
-	
-	/**
-	 * 
-	 * @return le type de jeu
-	 * 
-	 */
-	
-	public void setMod(int mod) {
-		Board.type = mod;
-	}
 
-	
-	/**
-	 * 
-	 * @param Crée une nouvelle partie
-	 * 
-	 */
-	
 	public void update() {
 		Board newGame = new Board();
 		newGame.Menu();

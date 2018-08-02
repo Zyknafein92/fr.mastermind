@@ -1,10 +1,10 @@
 package tools;
 
-import java.util.Arrays;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import option.GameOptions;
-import start.Board;
 
 /**
  * 
@@ -14,16 +14,15 @@ import start.Board;
  */
 
 public class Input {
+
+	InputStreamReader isr = new InputStreamReader(System.in);
+	BufferedReader br = new BufferedReader(isr);
 	
-	Scanner sc = new Scanner(System.in);
-	private int pawns = GameOptions.getPanws();
-	private Integer[] Input = new Integer[pawns];
+	private int PANWS = GameOptions.getPanws();
+	private int MAXNUMBERS = GameOptions.getMaxnumbers();
+	private Integer[] Input = new Integer[PANWS];
 
-	public Input() {
 
-		generateInput();
-
-	}
 
 	/**
 	 * Méthode qui permet de contrôler la saisie de l'utilisateur et de la mémoriser pour une utilisation ultérieure.
@@ -31,10 +30,12 @@ public class Input {
 	 * @return
 	 * Tableau d'Integer
 	 */
-	
-	public Integer[] generateInput() {
+	/*	public Integer[] generateInput() {
+
 		String userc = "";
+
 		do {
+
 			System.out.println("\r\nVeuillez entrer " + +pawns + " chiffres");
 			userc = sc.nextLine();
 
@@ -46,32 +47,59 @@ public class Input {
 			{	
 				for ( int i=0; i<userc.length(); i++)
 				{
-
 					Input[i]=Integer.parseInt(""+userc.charAt(i));
 				}
 			}
 		} while (userc.length() != pawns);
+
 		return Input;
 	}
-
-	/**
-	 * @return la saisie clavier de l'utilisateur.
 	 */
-	
-	public Integer[] getInput() {
+
+	public Integer[] generateInput() {
+
+		String userc = null;
+		boolean badnumbers = false;
+		
+		do {
+			while (true) {	
+				System.out.println("\r\nVeuillez entrer " + +PANWS + " chiffres");
+				try {
+
+					userc = br.readLine();
+
+					for(int i = 0; i < PANWS; i++) {
+
+						Input[i] = Integer.parseInt(""+userc.charAt(i));
+                     
+					if (Input[i] > MAXNUMBERS) {
+						badnumbers = true;
+					}else {
+						badnumbers = false;
+					}
+					
+					}
+					
+					break;
+					
+				} catch (IOException e) {
+					e.printStackTrace();	
+				} catch (NumberFormatException e) { 
+					System.out.println("La valeur est incorrecte");
+				}
+			}
+
+			if(userc.length() != PANWS) {
+				System.out.println("Attention ! Merci de saisir " + +PANWS + " chiffres" );
+			}
+			
+			if(badnumbers == true) {
+				System.out.println("Une des valeurs choisies est supérieur à " +MAXNUMBERS);
+				
+			}
+			  
+		} while (userc.length() != PANWS || badnumbers == true);
+
 		return Input;
 	}
-
-	/**
-	 * @param Saisie clavier de l'utilisateur.
-	 */
-	
-	public void setInput(Integer[] playerInput) {
-		this.Input = generateInput();
-	}
-	
-	public String toString() {
-		return Arrays.toString(Input);
-	}
-
 }

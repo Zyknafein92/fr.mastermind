@@ -1,6 +1,5 @@
 package typegame;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import start.Game;
@@ -19,6 +18,7 @@ public class Duel extends Game{
 
 	BotRoll rollCombiBot = new BotRoll();
 	BotRoll rollSecretBot = new BotRoll();
+
 	protected Integer[] secretBot = new Integer[pawns];
 	protected Integer[] combiBot = new Integer[pawns];
 	protected Integer[] secretPlayer = new Integer[pawns];
@@ -28,7 +28,7 @@ public class Duel extends Game{
 
 	public Duel () {
 		super();
-		secretBot = rollSecretBot.getBotRoll();
+		secretBot = rollSecretBot.generateBotRoll();
 		moveI = moveJ = 0;
 	}
 
@@ -43,9 +43,9 @@ public class Duel extends Game{
 		System.out.println(rulesDuelPlusMoins());
 
 		Input secretplayer = new Input();
-		secretPlayer = secretplayer.getInput();
+		secretPlayer = secretplayer.generateInput();
 
-		combiBot = rollCombiBot.getBotRoll();
+		combiBot = rollCombiBot.generateBotRoll();
 
 		System.out.println("A présent, tentez de découvrir la combinaison de l'ordinateur !");
 
@@ -59,7 +59,7 @@ public class Duel extends Game{
 
 
 			Input combiplayer = new Input();
-			combiPlayer = combiplayer.getInput();
+			combiPlayer = combiplayer.generateInput();
 
 			compareChallenger(secretBot,combiPlayer);
 
@@ -103,7 +103,7 @@ public class Duel extends Game{
 
 		/* Secret's player */
 		Input secretplayer = new Input();
-		secretPlayer = secretplayer.getInput();
+		secretPlayer = secretplayer.generateInput();
 		System.out.println(Arrays.toString(secretBot));
 		do {
 
@@ -112,7 +112,7 @@ public class Duel extends Game{
 			System.out.println("-------------------------");
 
 			Input player = new Input();
-			combiPlayer = player.getInput();	
+			combiPlayer = player.generateInput();	
 
 			System.out.println(resultat(combiPlayer,secretBot));
 
@@ -155,7 +155,10 @@ public class Duel extends Game{
 			}	
 			
 			
-			color++;
+			if (color <= maxNumbers) {
+				color++;
+			}
+			
 			if (compareInpositionIA(secretPlayer, combinaisonIA) == pawns) {
 				System.out.println("\nPerdu ! L'ordinateur a trouvé votre combinaison  en "+gameCounter + " tentative(s) !  Retour au menu principal\n");
 			} 
@@ -168,6 +171,8 @@ public class Duel extends Game{
 		} while (gameCounter <= maxTry && isWin(secretBot,combiPlayer) == false && compareInpositionIA(secretPlayer, combinaisonIA) != pawns);
 
 		this.notifyObserver();
+		combinaisonIA.clear();
+		listCombinaison.clear();
 	}
 
 	/**

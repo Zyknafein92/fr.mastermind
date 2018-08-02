@@ -28,7 +28,7 @@ public class Challenger extends Game  {
 	public Challenger () {
 		
 		super();
-		this.secret = PC.getBotRoll();
+		this.secret = PC.generateBotRoll();
 		
 	}
 
@@ -42,8 +42,9 @@ public class Challenger extends Game  {
 		System.out.println(Arrays.toString(this.secret));
 
 		do {
+			
 			Input player = new Input();
-			this.combinaison = player.getInput();
+			this.combinaison = player.generateInput();
 
 			compareChallenger(secret,combinaison);
 
@@ -76,7 +77,7 @@ public class Challenger extends Game  {
 		do {
 
 			Input player = new Input();
-			this.combinaison = player.getInput();	
+			this.combinaison = player.generateInput();	
 		
 			System.out.println(resultat(combinaison,secret));
 
@@ -87,9 +88,13 @@ public class Challenger extends Game  {
 			}else {
 				System.out.println("Vous avez perdu ! Retour au menu principal\n");
 			}
+			
 			gameCounter++;
+			
 		} while (gameCounter <= maxTry && isWin(secret,combinaison) == false);
+		
 		this.notifyObserver();
+		
 	}
 
 	/**
