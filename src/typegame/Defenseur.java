@@ -61,6 +61,7 @@ public class Defenseur extends Game {
 	 */
 
 	public void playDefenseurMastermind() {
+		
 		int pos = 0;
 		int pawnsFound = 0;
 		System.out.println(rulesDefenseur());
@@ -71,27 +72,23 @@ public class Defenseur extends Game {
 
 		// Initialisation de l'ArrayList à la couleur 0.
 		for(int i = 0; i < GameOptions.PAWNS; i++) {
-			combinaisonIA.add(color);
-			testColor[i]=color;
+			combinaisonIA.add(pawnsvalue);
 		}
 
 		do {
-
-			int pawnsToAdd = countPresentIA(secret, testColor);
-           
-			if(pawnsToAdd > 0 && pos < GameOptions.PAWNS - 1) {
-				int x = 0;
-				while(pawnsToAdd > x) {
-					combinaisonIA.set(pos, color);
-					pos++;
-					pawnsFound++;
-					x++;
-				}
-			}
 			
-			for(int i = 0; i < GameOptions.PAWNS ; i++) {		
-				if( pos <= i) {
-					combinaisonIA.set(i, color);
+			boolean found = false;
+			
+			if(countPresentIA(secret, pawnsvalue) && pos < GameOptions.PAWNS) {
+				combinaisonIA.set(pos, this.pawnsvalue);
+				pos++;
+				pawnsFound++;
+				found = true;
+			} else {
+				for(int i = 0; i < GameOptions.PAWNS;i++) {
+					if(pos <= i && !found) {
+						combinaisonIA.set(i, pawnsvalue);
+					}
 				}
 			}
 
@@ -102,8 +99,8 @@ public class Defenseur extends Game {
 
 			System.out.println(resultat(combinaisonIA, secret));
 
-			if (color < GameOptions.MAX_NUMBERS) {
-				color++;
+			if (pawnsvalue < GameOptions.MAX_NUMBERS) {
+				pawnsvalue++;
 			}
 
 			if (compareInpositionIA(combinaisonIA,secret) == GameOptions.PAWNS) {
