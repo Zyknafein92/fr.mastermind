@@ -5,10 +5,9 @@ package typegame;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import option.GameOptions;
 import start.Game;
-import tools.BotRoll;
 import tools.IObserver;
-import tools.Input;
 
 
 /**
@@ -22,13 +21,11 @@ import tools.Input;
 public class Challenger extends Game  {
 
 	private ArrayList<IObserver> listObserver = new ArrayList <IObserver>();
-	BotRoll PC = new BotRoll();
-
 
 	public Challenger () {
 		
 		super();
-		this.secret = PC.generateBotRoll();
+		this.secret = Game.generateBotRoll();
 		
 	}
 
@@ -43,23 +40,22 @@ public class Challenger extends Game  {
 
 		do {
 			
-			Input player = new Input();
-			this.combinaison = player.generateInput();
+			this.combinaison = this.generateInput();
 
 			compareChallenger(secret,combinaison);
 
-			System.out.println(resultat(combinaison,Soluc));
+			System.out.println(resultat(combinaison,soluc));
 
 			if (isWin(secret,combinaison) == true) {
 				System.out.println("Bravo, vous avez gagné en "+gameCounter + " tentative(s) ! Retour au menu principal\n");
-			}else if (gameCounter < maxTry) {
+			}else if (gameCounter < GameOptions.MAX_TRY) {
 				System.out.println("Mauvaise combinaison !\n");
 			}else {
 				System.out.println("Vous avez perdu ! Retour au menu principal\n");
 			}
 			gameCounter++;
 			
-		} while (gameCounter <= maxTry && isWin(secret,combinaison) == false);
+		} while (gameCounter <= GameOptions.MAX_TRY && isWin(secret,combinaison) == false);
 		
 		this.notifyObserver();
 	}
@@ -76,14 +72,13 @@ public class Challenger extends Game  {
 
 		do {
 
-			Input player = new Input();
-			this.combinaison = player.generateInput();	
+			this.combinaison = this.generateInput();	
 		
-			System.out.println(resultat(combinaison,secret));
+			System.out.println(resultat(secret,combinaison));
 
 			if (isWin(secret,combinaison) == true) {
 				System.out.println("Bravo, vous avez gagné en "+gameCounter + " tentative(s) ! Retour au menu principal\n");
-			}else if (gameCounter < maxTry) {
+			}else if (gameCounter < GameOptions.MAX_TRY) {
 				System.out.println("Mauvaise combinaison !\n");
 			}else {
 				System.out.println("Vous avez perdu ! Retour au menu principal\n");
@@ -91,7 +86,7 @@ public class Challenger extends Game  {
 			
 			gameCounter++;
 			
-		} while (gameCounter <= maxTry && isWin(secret,combinaison) == false);
+		} while (gameCounter <= GameOptions.MAX_TRY && isWin(secret,combinaison) == false);
 		
 		this.notifyObserver();
 		
@@ -108,8 +103,8 @@ public class Challenger extends Game  {
 		str1 +=("\r\n--------- Challenger ---------");
 		str1 +=("\r\n------------------------------");
 		str1 +=("\r\nVous devez trouver la combinaison mystère de votre adversaire !");
-		str1 +=("\r\nElle est composée de "+pawns + " chiffres compris entre 0 et 9.");
-		str1 +=("\r\nVous avez le droit a "+maxTry + " tentatives !");
+		str1 +=("\r\nElle est composée de " + GameOptions.PAWNS + " chiffres compris entre 0 et 9.");
+		str1 +=("\r\nVous avez le droit a " + GameOptions.MAX_TRY + " tentatives !");
 		str1 +=("\r\nA vous de jouer !\\n");
 		return str1;
 	}
@@ -125,8 +120,8 @@ public class Challenger extends Game  {
 		str1 +=("\r\n--------- Challenger ---------");
 		str1 +=("\r\n------------------------------");
 		str1 +=("\r\nVous devez trouver la combinaison mystère de votre adversaire !");
-		str1 +=("\r\nElle est composée de "+pawns + " chiffres compris entre 0 et 9.");
-		str1 +=("\r\nVous avez le droit a "+maxTry + " tentatives !");
+		str1 +=("\r\nElle est composée de " + GameOptions.PAWNS + " chiffres compris entre 0 et 9.");
+		str1 +=("\r\nVous avez le droit a " + GameOptions.MAX_TRY + " tentatives !");
 		str1 +=("\r\nA vous de jouer !\n");
 		return str1;
 	}

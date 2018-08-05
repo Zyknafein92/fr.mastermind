@@ -2,10 +2,9 @@ package typegame;
 
 import java.util.Arrays;
 
+import option.GameOptions;
 import start.Game;
-import tools.BotRoll;
 import tools.IObserver;
-import tools.Input;
 
 /**
  * 
@@ -16,12 +15,9 @@ import tools.Input;
 
 public class Defenseur extends Game {
 
-
-	BotRoll PC = new BotRoll();
-	
 	public Defenseur () {
 		super();
-		combinaison = PC.generateBotRoll();
+		combinaison = Game.generateBotRoll();
 		moveI = moveJ = 0;
 	}
 
@@ -34,26 +30,25 @@ public class Defenseur extends Game {
 	public void playDefenseurPlusMoins() {
 
 		System.out.println(rulesDefenseur());
-		
-		Input player = new Input();
-		this.secret = player.generateInput();
-		
+
+		this.secret = this.generateInput();
+
 		System.out.println(" Votre nombre secret est :"+Arrays.toString(secret));
 
 		do {
 
 			compareDefenseur(this.secret,this.combinaison);
 
-			System.out.println(resultat(combinaison,Soluc));
+			System.out.println(resultat(combinaison,soluc));
 
 			if (isWin(secret,combinaison) == true) {
 				System.out.println("Perdu ! L'ordinateur a trouvé votre combinaison  en "+gameCounter + " tentative(s) !  Retour au menu principal\n");
-			} else if (gameCounter >= maxTry) {
+			} else if (gameCounter >= GameOptions.MAX_TRY) {
 				System.out.println("Vous avez gagné ! L'ordinateur n'a pas trouvé votre combinaison ! Retour au menu principal\n");
 			}
 			gameCounter++;
 
-		} while (gameCounter <= maxTry && isWin(secret,combinaison) == false);
+		} while (gameCounter <= GameOptions.MAX_TRY && isWin(secret,combinaison) == false);
 
 		this.notifyObserver();
 	}
@@ -61,66 +56,65 @@ public class Defenseur extends Game {
 	/**
 	 * 
 	 * Méthode de jeu Defenseur pour le mode MasterMind.
+	 * @param panwsToAdd 
 	 * 
 	 */
 
 	public void playDefenseurMastermind() {
-
+		int pos = 0;
+		int pawnsFound = 0;
 		System.out.println(rulesDefenseur());
-		
-		Input player = new Input();
-		this.secret = player.generateInput();
+
+		this.secret = generateInput();
 
 		System.out.println(" Votre nombre secret est :"+Arrays.toString(secret));
 
-		for(int y = 0; y < pawns; y++) {
-			testColor[y]=color;
+		// Initialisation de l'ArrayList à la couleur 0.
+		for(int i = 0; i < GameOptions.PAWNS; i++) {
 			combinaisonIA.add(color);
+			testColor[i]=color;
 		}
 
-		do { 
+		do {
 
-			for(int i = 0; i < pawns; i++) {
-				testColor[i]=color;
-
-				if(check == false) {
-					combinaisonIA.set(i, color);
-				}
-				if( pos <= i ) {
-					combinaisonIA.set(i, color);
+			int pawnsToAdd = countPresentIA(secret, testColor);
+           
+			if(pawnsToAdd > 0 && pos < GameOptions.PAWNS - 1) {
+				int x = 0;
+				while(pawnsToAdd > x) {
+					combinaisonIA.set(pos, color);
+					pos++;
+					pawnsFound++;
+					x++;
 				}
 			}
-
-			inPosition = compareInposition(secret, testColor);
-			isPresent = comparePresent(secret, testColor);
 			
-			int ballcolor = inPosition + isPresent;
-
-			if(ballcolor > 0) {
-				addToCombinaison(combinaisonIA,color,ballcolor);
+			for(int i = 0; i < GameOptions.PAWNS ; i++) {		
+				if( pos <= i) {
+					combinaisonIA.set(i, color);
+				}
 			}
 
-			if(ballFound != pawns) {
-				System.out.println(resultat(combinaisonIA, secret));
+			if(pawnsFound == GameOptions.PAWNS) {
+				movePawns(combinaisonIA, listCombinaison);
 			}
 
-			if(ballFound == pawns) {
-				movePawns(combinaisonIA, secret, listCombinaison);
-			}
 
-			if (color <= maxNumbers) {
+			System.out.println(resultat(combinaisonIA, secret));
+
+			if (color < GameOptions.MAX_NUMBERS) {
 				color++;
 			}
 
-			if (compareInpositionIA(secret, combinaisonIA) == pawns) {
+			if (compareInpositionIA(combinaisonIA,secret) == GameOptions.PAWNS) {
 				System.out.println("Perdu ! L'ordinateur a trouvé votre combinaison  en "+gameCounter + " tentative(s) !  Retour au menu principal\n");
-			}else if (gameCounter >= maxTry) {
+			}else if (gameCounter >= GameOptions.MAX_TRY) {
 				System.out.println("Vous avez gagné ! L'ordinateur n'a pas trouvé votre combinaison ! Retour au menu principal\n");
 			}
-			
+
 			gameCounter++;
 
-		} while (compareInpositionIA(secret, combinaisonIA) < pawns && gameCounter <= maxTry);
+		} while (compareInpositionIA(combinaisonIA,secret) < GameOptions.PAWNS && gameCounter <= GameOptions.MAX_TRY);
 
 		this.notifyObserver();
 		combinaisonIA.clear();
@@ -142,8 +136,8 @@ public class Defenseur extends Game {
 		str1 +=("\r\n--------- Defenseur ----------");
 		str1 +=("\r\n------------------------------");
 		str1 +=("\r\nVous devez entrer un nombre mystère que l'ordinateur va devoir trouver.");
-		str1 +=("\r\nIl est composé de "+pawns + " chiffres compris entre 0 et 9.");
-		str1 +=("\r\nL'ordinateur à le droit à "+maxTry + " tentative(s) !");
+		str1 +=("\r\nIl est composé de "+GameOptions.PAWNS + " chiffres compris entre 0 et 9.");
+		str1 +=("\r\nL'ordinateur à le droit à "+GameOptions.MAX_TRY + " tentative(s) !");
 		str1 +=("\r\nA vous de jouer !\n");
 		return str1;
 	}

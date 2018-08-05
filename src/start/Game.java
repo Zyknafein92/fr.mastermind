@@ -3,6 +3,9 @@ package start;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import option.GameOptions;
@@ -23,39 +26,88 @@ public abstract class Game implements IObservable {
 
 	Scanner sc = new Scanner(System.in);
 
-	protected static int pawns = GameOptions.getPanws();
-	protected static int maxTry = GameOptions.getMaxtry();
-	protected static int maxNumbers = GameOptions.getMaxnumbers();
-
-	protected int gameCounter = 0;
-	protected int isPresent = 0;
-	protected int inPosition = 0;
-	protected int pos = 0;
-	protected int color = 1;
-	protected int ballFound = 0;
-	protected int moveI, moveJ = 0;
-
-	protected String[] Soluc = new String[pawns];
-
-	protected Integer[] combinaison = new Integer[pawns];
-	protected Integer[] secret = new Integer[pawns];
-	protected Integer[] testColor = new Integer[pawns];
-
-	protected ArrayList<Integer> combinaisonIA = new ArrayList<Integer>();
-	protected ArrayList<ArrayList<Integer>> listCombinaison = new ArrayList<ArrayList<Integer>>();
-
-	protected ArrayList<IObserver> listObserver = new ArrayList<IObserver>();
-
-	protected boolean iswin = false;
-	protected boolean check = false;
+	protected int gameCounter;
+	protected int isPresent;
+	protected int inPosition;
+	protected int color;
+	protected int ballFound;
+	protected int moveI; 
+	protected int moveJ;
+	protected String[] soluc;
+	protected Integer[] combinaison;
+	protected Integer[] secret;
+	protected Integer[] testColor;
+	protected ArrayList<Integer> combinaisonIA;
+	protected ArrayList<ArrayList<Integer>> listCombinaison;
+	protected ArrayList<IObserver> listObserver;
+	protected boolean iswin;
+	protected boolean check;
 
 	public Game () {
+		this.gameCounter = 1;
+		this.isPresent = 0;
+		this.color = 0;
+		this.ballFound = 0;
+		this.moveI = 0;
+		this.moveJ = 0;
+		this.soluc = new String[GameOptions.PAWNS];
+		this.combinaison = new Integer[GameOptions.PAWNS];
+		this.secret = new Integer[GameOptions.PAWNS];
+		this.testColor = new Integer[GameOptions.PAWNS];
+		this.combinaisonIA = new ArrayList<Integer>();
+		this.listCombinaison = new ArrayList<ArrayList<Integer>>();
+		this.listObserver = new ArrayList<IObserver>();
+		this.iswin = false;
+		this.check = false;
+	}
 
-		pawns = GameOptions.getPanws();
-		maxNumbers = GameOptions.getMaxnumbers();
-		maxTry = GameOptions.getMaxtry();
-		gameCounter = 1;
+	/**
+	 * @return Génère un tableau d'Integer aléatoire.
+	 */
 
+	public static Integer[] generateBotRoll() {
+		Integer[] botRoll = new Integer[GameOptions.PAWNS];
+		Random random = new Random();
+		for(int i = 0; i < GameOptions.PAWNS; i++) 
+		{
+			botRoll[i] = random.nextInt(GameOptions.MAX_NUMBERS);
+		}
+		return botRoll;
+	}
+
+	/**
+	 * TODO
+	 * @return
+	 */
+	
+	public Integer[] generateInput() {
+		Scanner scan = new Scanner(System.in);
+		Integer[] input = new Integer[GameOptions.PAWNS];
+		Boolean badnumbers;
+
+		do {
+			badnumbers = false;
+			Integer value;
+			String userc = scan.nextLine();
+			System.out.println("\r\nVeuillez entrer " + GameOptions.PAWNS + " chiffres");
+			if (userc.length() != GameOptions.PAWNS) {
+				System.out.println("Attention ! Merci de saisir " + GameOptions.PAWNS + " chiffres" );
+				badnumbers = true;
+			} else {
+				for(int i = 0; i < input.length; i++) {
+					value = Character.getNumericValue(userc.charAt(i));
+					if (Character.isDigit(userc.charAt(i)) && value <= GameOptions.MAX_NUMBERS) {
+						input[i] = value;
+					} else {
+						System.out.println("La valeur : '" + userc.charAt(i) + "' est supérieur à " + GameOptions.MAX_NUMBERS + " ou ce ne sont pas des chiffres...");
+						badnumbers = true;
+					}
+				}
+			}
+
+		} while (badnumbers);
+
+		return input;
 	}
 
 	// Méthode des jeux PlusMoins
@@ -75,13 +127,13 @@ public abstract class Game implements IObservable {
 
 	public void compareChallenger(Integer[] secret, Integer[] combinaison) {
 
-		for (int i = 0; i < pawns; i++) {
+		for (int i = 0; i < GameOptions.PAWNS; i++) {
 			if (secret[i] < combinaison[i]) {
-				Soluc[i] = "" + "-";
+				soluc[i] = "" + "-";
 			} else if (secret[i] > combinaison[i]) {
-				Soluc[i] = "" + "+";
+				soluc[i] = "" + "+";
 			} else {
-				Soluc[i] = "" + "=";
+				soluc[i] = "" + "=";
 			}
 		}
 	}
@@ -100,18 +152,18 @@ public abstract class Game implements IObservable {
 	public void compareDefenseur(Integer[] secret, Integer[] combinaison) {
 
 		for (int i = 0; i < combinaison.length; i++) {
-			if (secret[i] > combinaison[i] && combinaison[i] < maxNumbers) {
+			if (secret[i] > combinaison[i] && combinaison[i] < GameOptions.MAX_NUMBERS) {
 				combinaison[i]++;
 			}
-			if (secret[i] < combinaison[i] && combinaison[i] < maxNumbers) {
+			if (secret[i] < combinaison[i] && combinaison[i] <  GameOptions.MAX_NUMBERS) {
 				combinaison[i]--;
 			}
 			if (secret[i] < combinaison[i]) {
-				Soluc[i] = "" + "-";
+				soluc[i] = "" + "-";
 			} else if (secret[i] > combinaison[i]) {
-				Soluc[i] = "" + "+";
+				soluc[i] = "" + "+";
 			} else {
-				Soluc[i] = "" + "=";
+				soluc[i] = "" + "=";
 			}
 		}
 	}
@@ -138,7 +190,7 @@ public abstract class Game implements IObservable {
 	protected int compareInposition(Integer[] secret, Integer[] combinaison) {
 
 		int inposition = 0;
-		for (int i = 0; i < pawns; i++) {
+		for (int i = 0; i < GameOptions.PAWNS; i++) {
 			if (combinaison[i].equals(secret[i])) {
 				inposition++;
 			}
@@ -164,45 +216,32 @@ public abstract class Game implements IObservable {
 	 */
 
 	protected int comparePresent(Integer[] secret, Integer[] combinaison) {
-		
+
 		int ispresent = 0;
 		boolean found = false;
 		int j = 0;
 
-		for (int i = 0; i < pawns; i++) {
+		for (int i = 0; i < GameOptions.PAWNS; i++) {
 			j = 0;
 			found = false;
 			do {
-				
-				if (secret[j] == combinaison[i]) {
+
+				if (combinaison[i] == secret [j]) {
 					ispresent++;
 					found = true;
 				}
-				
+
 				j++;
-			} while (j < pawns && !found);
+			} while (j < GameOptions.PAWNS && !found);
 		}
-		return ispresent - compareInposition(secret, combinaison);
+		return ispresent;//- compareInposition(secret, combinaison);
+		
 	}
 
-	/**
-	 * 
-	 * compareInpositionIA est la méthode qui compare le secret du joueur et la combinaison de l'ordinateur a l'indice i. 
-	 * Si le pion de la combinaison est à la bonne position par rapport au secret, il incrémente la valeur inposition.
-	 * 
-	 * @param secret
-	 * Tableau d'Integer qui représente le secret.
-	 * @param combinaison
-	 * ArrayList qui contient la combinaison.
-	 * @return
-	 * Retourne le nombre de pion à la bonne position.
-	 * 
-	 */
-
-	protected int compareInpositionIA(Integer[] secret, ArrayList<Integer> combinaisonIA) {
+	protected int compareInpositionIA(ArrayList<Integer> combinaisonIA, Integer[] secret) {
 
 		int inposition = 0;
-		for (int i = 0; i < pawns; i++) {
+		for (int i = 0; i < GameOptions.PAWNS; i++) {
 			if (combinaisonIA.get(i).equals(secret[i])) {
 				inposition++;
 			}
@@ -217,31 +256,51 @@ public abstract class Game implements IObservable {
 	 * 
 	 * @param secret
 	 * Tableau d'Integer qui représente le secret.
-	 * @param combinaisonIA
+	 * @param combinaison
 	 * ArrayList qui contient la combinaison de l'ordinateur.
 	 * @return
 	 * Retourne le nombre de pion présent après soustraction avec le nombre de pion à la bonne position.
 	 * 
 	 */
 
-	protected int comparePresentIA(Integer[] secret, ArrayList<Integer> combinaisonIA) {
+	protected int comparePresentIA(ArrayList<Integer> combinaisonIA, Integer[] secret) {
 		int ispresent = 0;
 		boolean found = false;
 
-		for (int i = 0; i < pawns; i++) {
+		for (int i = 0; i < GameOptions.PAWNS; i++) {
 			int j = 0;
 			found = false;
 			do {
-				if (secret[i] == combinaisonIA.get(j)) {
+				if (combinaisonIA.get(j).equals(secret[i])) {
 					ispresent++;
 					found = true;
 				}
 				j++;
-			} while (j < pawns && !found);
+			} while (j < GameOptions.PAWNS && !found);
 		}
-		return ispresent - compareInpositionIA(secret, combinaisonIA);
+		return ispresent - compareInpositionIA(combinaisonIA, secret);
 	}
+	protected int countPresentIA(Integer[] secret, Integer[] testColor) {
+		int ispresent = 0;
+		boolean found = false;
 
+		for (int i = 0; i < GameOptions.PAWNS; i++) {
+			int j = 0;
+			found = false;
+			do {
+				if (combinaisonIA.get(j).equals(secret[i])) {
+					ispresent++;
+					found = true;
+				}
+				j++;
+			} while (j < GameOptions.PAWNS && !found);
+		}
+		return ispresent;
+	}
+	
+
+
+	 
 	/**
 	 * 
 	 * addToCombinaison remplace à chaque fois qu'un pion est présent ou à la bonne position représenté par int ballcolor. 
@@ -258,16 +317,9 @@ public abstract class Game implements IObservable {
 	 */
 
 	protected void addToCombinaison (ArrayList<Integer> combinaisonIA, int color, int ballcolor) {
-
-		int x = 0;
-		while(ballcolor > x) {
-			combinaisonIA.set(pos,color);
-			check = true;
-			x++;
-			ballFound++;
-			pos++;
+     
 		}
-	}
+	
 
 
 	/**
@@ -278,38 +330,34 @@ public abstract class Game implements IObservable {
 	 * @param combinaisonIA
 	 * ArrayList qui contient la combinaison de l'ordinateur.
 	 * 
-	 * @param secret
-	 * 
-	 * Tableau d'Integer contenant le secret.
-	 * 
 	 * @param listCombinaison
 	 * ArrayList contenant les combinaisons déjà tenté par l'ordinateur.
 	 * 
 	 */
 
 	@SuppressWarnings("unchecked")
-	protected void movePawns (ArrayList<Integer> combinaisonIA, Integer[] secret, ArrayList<ArrayList<Integer>>listCombinaison) {
+	protected void movePawns (ArrayList<Integer> combinaisonIA, ArrayList<ArrayList<Integer>> listCombinaison) {
+
 
 		do {
 
-			if (moveI > pawns - 1) {
-				moveI = 0;
-			}
-
-			if (moveJ > pawns - 1) {
+			if (moveJ > GameOptions.PAWNS - 1) {
 				moveJ = 0;
 				moveI++;
 			}
 
+			if (moveI > GameOptions.PAWNS - 1) {
+				moveI = 0;
+			}
+
 			Collections.swap(combinaisonIA, moveI, moveJ);
+			//int temp = combinaisonIA[moveI];
+			//combinaison[moveJ] = combinaisonIA[moveI];
+			//combinaisonIA[moveI] = temp;
 			moveJ++;
-
 		} while(listCombinaison.contains(combinaisonIA));
-
 		listCombinaison.add((ArrayList<Integer>) combinaisonIA.clone());
-
-		System.out.println(resultat(combinaisonIA, secret));
-
+		
 	}	
 
 	/**
@@ -329,26 +377,6 @@ public abstract class Game implements IObservable {
 	protected boolean isWin(Integer[] secret, Integer[] combinaison) {
 		return Arrays.equals(secret, combinaison);
 	}
-
-	/**
-	 * 
-	 * Boolean qui compare le secret et la combinaison.
-	 * Si il est retourne la valeur True, la partie est gagnée
-	 * 
-	 * @param secret
-	 * Tableau d'Integer qui contient le secret.
-	 * 
-	 * @param combinaisonIA
-	 * Arraylist qui contient la combinaison.
-	 * 
-	 * @return
-	 * Retourne la valeur du boolean
-	 * 
-	 */
-
-	//protected boolean isWin(Integer[] secret, ArrayList<Integer> combinaisonIA) {
-	//	return 
-	//}
 
 	/**
 	 * resultat affiche un String contenant la combinaison et soluc.
@@ -388,7 +416,7 @@ public abstract class Game implements IObservable {
 	 * 
 	 */
 
-	protected String resultat(Integer[] combinaison, Integer[] secret) {
+	protected String resultat(Integer[] secret, Integer[] combinaison) {
 		String resultat = "";
 
 		if (comparePresent(secret, combinaison) != 0)
@@ -401,35 +429,19 @@ public abstract class Game implements IObservable {
 		return resultat;
 	}
 
-
-	/**
-	 * resultat affiche un String contenant le nombre de tour, la proposition de l'ordinateur(combinaisonIA), 
-	 * le nombre de pion présent, à la bonne position.
-	 * 
-	 * @param combinaisonIA
-	 * Arraylist qui contient la combinaison.
-	 * 
-	 * @param secret
-	 * 
-	 * Tableau d'Integer qui contient le secret.
-	 * 
-	 * @return
-	 * Retourne le String resultat.
-	 * 
-	 */
-
-	protected String resultat(ArrayList<Integer> combinaisonIA, Integer[] secret) {
+	protected String resultat(ArrayList<Integer> combinaison, Integer[] secret) {
 		String resultat = "";
 
-		if (comparePresentIA(secret, combinaisonIA) != 0)
+		if (comparePresentIA(combinaisonIA,secret) != 0)
 			resultat += "Tentative(s) : " + gameCounter + "  | Proposition -> " + combinaisonIA + " || Résultat : "
-					+ comparePresentIA(secret, combinaisonIA) + " présent(s), "
-					+ compareInpositionIA(secret, combinaisonIA) + " bonne(s) position(s) ";
+					+ comparePresentIA(combinaisonIA,secret) + " présent(s), " + compareInpositionIA(combinaisonIA,secret)
+					+ " bonne(s) position(s) ";
 		else
 			resultat += "Tentative(s) : " + gameCounter + "  | Proposition -> " + combinaisonIA + " || Résultat : "
-					+ compareInpositionIA(secret, combinaisonIA) + " bonne(s) position(s) ";
+					+ compareInpositionIA(combinaisonIA,secret) + " bonne(s) position(s) ";
 		return resultat;
 	}
+	 
 
 	/**
 	 * 
@@ -438,7 +450,7 @@ public abstract class Game implements IObservable {
 	 */
 
 	protected String[] getSoluc() {
-		return Soluc;
+		return soluc;
 	}
 
 	/**
@@ -513,16 +525,6 @@ public abstract class Game implements IObservable {
 
 	/**
 	 * 
-	 * @return int pos
-	 * 
-	 */
-
-	protected int getPos() {
-		return pos;
-	}
-
-	/**
-	 * 
 	 * @return int color
 	 * 
 	 */
@@ -558,7 +560,7 @@ public abstract class Game implements IObservable {
 	 * 
 	 */
 	protected void setSoluc(String[] soluc) {
-		Soluc = soluc;
+		this.soluc = soluc;
 	}
 
 	/**
@@ -636,17 +638,6 @@ public abstract class Game implements IObservable {
 
 	protected void setListObserver(ArrayList<IObserver> listObserver) {
 		this.listObserver = listObserver;
-	}
-
-	/**
-	 * 
-	 * @param pos
-	 * int pos mis à jour.
-	 *            
-	 */
-
-	protected void setPos(int pos) {
-		this.pos = pos;
 	}
 
 	/**
