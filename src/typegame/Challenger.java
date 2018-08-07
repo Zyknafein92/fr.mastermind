@@ -23,23 +23,25 @@ public class Challenger extends Game  {
 	private ArrayList<IObserver> listObserver = new ArrayList <IObserver>();
 
 	public Challenger () {
-		
+
 		super();
 		this.secret = Game.generateBotRoll();
-		
+
 	}
 
 	/**
 	 * Méthode de jeu pour le mode challenger +/-.
 	 */
-	
+
 	public void playChallengerPlusMoins() {
 
 		System.out.println(rulesChallengerPlusMoins());
-		System.out.println(Arrays.toString(this.secret));
-
+		
 		do {
-			
+			/*	if (dev = 1) {
+			System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secret));
+			}
+		*/
 			this.combinaison = this.generateInput();
 
 			compareChallenger(secret,combinaison);
@@ -51,12 +53,12 @@ public class Challenger extends Game  {
 			}else if (gameCounter < GameOptions.MAX_TRY) {
 				System.out.println("Mauvaise combinaison !\n");
 			}else {
-				System.out.println("Vous avez perdu ! Retour au menu principal\n");
+				System.out.println("Vous avez perdu ! Le secret a découvrir était: "+Arrays.toString(secret)+ " Retour au menu principal\n");
 			}
 			gameCounter++;
-			
+
 		} while (gameCounter <= GameOptions.MAX_TRY && isWin(secret,combinaison) == false);
-		
+
 		this.notifyObserver();
 	}
 
@@ -68,28 +70,33 @@ public class Challenger extends Game  {
 	public void playChallengerMastermind() {
 
 		System.out.println(rulesChallengerMastermind());
-		System.out.println(Arrays.toString(secret));
-
+	
 		do {
-
-			this.combinaison = this.generateInput();	
+			
+		//	if (dev = 1) {
+			System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secret));
+		//	}
 		
-			System.out.println(resultat(secret,combinaison));
+			this.combinaison = this.generateInput();
+			
+			countPosition(secret, combinaison);
+			
+			System.out.println(resultat(combinaison, isPresent, inPosition));
 
 			if (isWin(secret,combinaison) == true) {
 				System.out.println("Bravo, vous avez gagné en "+gameCounter + " tentative(s) ! Retour au menu principal\n");
 			}else if (gameCounter < GameOptions.MAX_TRY) {
 				System.out.println("Mauvaise combinaison !\n");
 			}else {
-				System.out.println("Vous avez perdu ! Retour au menu principal\n");
+				System.out.println("Vous avez perdu ! Le secret a découvrir était: "+Arrays.toString(secret)+ " Retour au menu principal\n");
 			}
-			
+
 			gameCounter++;
-			
+
 		} while (gameCounter <= GameOptions.MAX_TRY && isWin(secret,combinaison) == false);
-		
+
 		this.notifyObserver();
-		
+
 	}
 
 	/**
@@ -105,7 +112,7 @@ public class Challenger extends Game  {
 		str1 +=("\r\nVous devez trouver la combinaison mystère de votre adversaire !");
 		str1 +=("\r\nElle est composée de " + GameOptions.PAWNS + " chiffres compris entre 0 et 9.");
 		str1 +=("\r\nVous avez le droit a " + GameOptions.MAX_TRY + " tentatives !");
-		str1 +=("\r\nA vous de jouer !\\n");
+		str1 +=("\r\nA vous de jouer !\n");
 		return str1;
 	}
 
@@ -113,6 +120,7 @@ public class Challenger extends Game  {
 	 * Méthode qui affiche les règles du jeu challenger en mode Mastermind.
 	 * @return String
 	 */
+	
 	public static  String rulesChallengerMastermind() {
 		String str1 = "";
 
@@ -125,11 +133,11 @@ public class Challenger extends Game  {
 		str1 +=("\r\nA vous de jouer !\n");
 		return str1;
 	}
-	
+
 	@Override
 	public void addObserver(IObserver obs) {
 		listObserver.add(obs);
-		
+
 	}
 
 	@Override
@@ -137,6 +145,6 @@ public class Challenger extends Game  {
 		for(IObserver obs : listObserver) {
 			obs.update();
 		}
-		
+
 	}
 }

@@ -13,6 +13,7 @@ import tools.IObserver;
  *
  */
 
+
 public class Defenseur extends Game {
 
 	public Defenseur () {
@@ -61,9 +62,7 @@ public class Defenseur extends Game {
 	 */
 
 	public void playDefenseurMastermind() {
-		
-		int pos = 0;
-		int pawnsFound = 0;
+
 		System.out.println(rulesDefenseur());
 
 		this.secret = generateInput();
@@ -72,23 +71,21 @@ public class Defenseur extends Game {
 
 		// Initialisation de l'ArrayList à la couleur 0.
 		for(int i = 0; i < GameOptions.PAWNS; i++) {
-			combinaisonIA.add(pawnsvalue);
+			combinaisonIA.add(pawnsValue);
+			testColor[i]= pawnsValue;
 		}
 
 		do {
-			
-			boolean found = false;
-			
-			if(countPresentIA(secret, pawnsvalue) && pos < GameOptions.PAWNS) {
-				combinaisonIA.set(pos, this.pawnsvalue);
-				pos++;
-				pawnsFound++;
-				found = true;
-			} else {
-				for(int i = 0; i < GameOptions.PAWNS;i++) {
-					if(pos <= i && !found) {
-						combinaisonIA.set(i, pawnsvalue);
-					}
+			for(int i = 0; i < GameOptions.PAWNS; i++) {
+				testColor[i]=pawnsValue;
+			}
+			int pawnsToAdd = countPresent(secret, testColor); 
+
+			addToCombinaison(combinaisonIA, testColor, pawnsToAdd);
+
+			for(int i = 0; i < GameOptions.PAWNS ; i++) {		
+				if( pos <= i) {
+					combinaisonIA.set(i, pawnsValue);
 				}
 			}
 
@@ -96,14 +93,15 @@ public class Defenseur extends Game {
 				movePawns(combinaisonIA, listCombinaison);
 			}
 
+		    countPosition(secret, combinaisonIA);
+			//System.out.println(+isPresent +"a"+ +inPosition);
+			System.out.println(resultat(combinaisonIA,isPresent,inPosition));
 
-			System.out.println(resultat(combinaisonIA, secret));
-
-			if (pawnsvalue < GameOptions.MAX_NUMBERS) {
-				pawnsvalue++;
+			if (pawnsValue < GameOptions.MAX_NUMBERS) {
+				pawnsValue++;
 			}
 
-			if (compareInpositionIA(combinaisonIA,secret) == GameOptions.PAWNS) {
+			if (inPosition == GameOptions.PAWNS) {
 				System.out.println("Perdu ! L'ordinateur a trouvé votre combinaison  en "+gameCounter + " tentative(s) !  Retour au menu principal\n");
 			}else if (gameCounter >= GameOptions.MAX_TRY) {
 				System.out.println("Vous avez gagné ! L'ordinateur n'a pas trouvé votre combinaison ! Retour au menu principal\n");
@@ -117,7 +115,6 @@ public class Defenseur extends Game {
 		combinaisonIA.clear();
 		listCombinaison.clear();
 	}
-
 
 	/**
 	 * Méthode qui retourne un string contenant les règles du jeu Defenseur.

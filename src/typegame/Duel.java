@@ -43,9 +43,14 @@ public class Duel extends Game{
 
 		System.out.println("A présent, tentez de découvrir la combinaison de l'ordinateur !");
 
-		System.out.println(secretPlayer);
-		System.out.println(Arrays.toString(secretBot));
+		System.out.println(Arrays.toString(secretPlayer));
+
 		do {
+
+			/*	if (dev = 1) {
+			System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secretBot));
+			}
+		*/
 
 			System.out.println("\n-------------------------");
 			System.out.println("------ Tour Joueur ------");
@@ -69,7 +74,7 @@ public class Duel extends Game{
 
 
 			if (isLoose(secretPlayer,combiBot) == true) {
-				System.out.println("\nPerdu ! L'ordinateur a trouvé votre combinaison  en "+gameCounter + " tentative(s) !  Retour au menu principal\n");
+				System.out.println("\nPerdu ! L'ordinateur a trouvé votre combinaison  en "+gameCounter + " tentative(s) ! Son secret était : "+Arrays.toString(secretBot) +"  Retour au menu principal\n");
 			} 
 			else if (isWin(secretBot,combiPlayer) == true) {
 				System.out.println("\nBravo, vous avez trouvé la combinaison de l'ordinateur en "+gameCounter +" tentative(s) !  Retour au menu principal\n");
@@ -96,70 +101,71 @@ public class Duel extends Game{
 
 		/* Secret's player */
 		secretPlayer = this.generateInput();
-		System.out.println(Arrays.toString(secretBot));
-		do {
 
+		do {
+			
+		/*	if (dev = 1) {
+				System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secretBot));
+				}
+			*/
 			System.out.println("\n-------------------------");
 			System.out.println("------ Tour Joueur ------");
 			System.out.println("-------------------------");
 
 			combiPlayer = this.generateInput();	
-
-			System.out.println(resultat(combiPlayer,secretBot));
+			
+			countPosition(secretBot, combiPlayer);
+			System.out.println(resultat(combiPlayer,isPresent,inPosition));
 
 			System.out.println("\n-------------------------");
 			System.out.println("---- Tour Ordinateur ----");
 			System.out.println("-------------------------\n");
 
 			if(gameCounter < 2) {
-				for(int y = 0; y < GameOptions.PAWNS; y++) {
-					testColor[y]=color;
-					combinaisonIA.add(color);
+
+				for(int i = 0; i < GameOptions.PAWNS; i++) {
+					combinaisonIA.add(pawnsValue);
+					testColor[i]= pawnsValue;
 				}
-			}	
+			}
 
 			for(int i = 0; i < GameOptions.PAWNS; i++) {
-				testColor[i]=color;
+				testColor[i]=pawnsValue;
+			}
 
-				if(check == false) {
-					combinaisonIA.set(i, color);
+			int pawnsToAdd = countPresent(secretPlayer, testColor); 
+
+			addToCombinaison(combinaisonIA, testColor, pawnsToAdd);
+
+			for(int i = 0; i < GameOptions.PAWNS ; i++) {		
+				if( pos <= i) {
+					combinaisonIA.set(i, pawnsValue);
 				}
-				if( pos <= i ) {
-					combinaisonIA.set(i, color);
-				}
 			}
 
-			int inposition = compareInposition(secretPlayer, testColor);
-			isPresent = comparePresent(secretPlayer, testColor);
-			int ballcolor = inposition + isPresent;
-
-			if(ballcolor > 0) {
-				addToCombinaison(combinaisonIA,color,ballcolor);
-			}
-
-			if(ballFound != GameOptions.PAWNS) {
-				System.out.println(resultat(combinaisonIA, secretPlayer));
-			}
-
-			if(ballFound == GameOptions.PAWNS) {
-				movePawns(combinaisonIA, secretPlayer, listCombinaison);
-			}	
-			
-			
-			if (color <= GameOptions.MAX_NUMBERS) {
-				color++;
+			if(pawnsFound == GameOptions.PAWNS) {
+				movePawns(combinaisonIA, listCombinaison);
 			}
 			
-		//	if (compareInpositionIA(secretPlayer, combinaisonIA) == GameOptions.PAWNS) {
-		//		System.out.println("\nPerdu ! L'ordinateur a trouvé votre combinaison  en "+gameCounter + " tentative(s) !  Retour au menu principal\n");
-		//	} 
-			else if (isWin(secretBot,combiPlayer) == true) {
+            countPosition(secretPlayer, combinaisonIA);
+			System.out.println(resultat(combinaisonIA,isPresent,inPosition));
+
+			if (pawnsValue < GameOptions.MAX_NUMBERS) {
+				pawnsValue++;
+			}
+
+			if (compareInpositionIA(combinaisonIA, secretPlayer) == GameOptions.PAWNS) {
+
+				System.out.println("\nPerdu ! L'ordinateur a trouvé votre combinaison  en "+gameCounter + " tentative(s) ! Son secret était : "+Arrays.toString(secretBot) +"  Retour au menu principal\n");
+
+			} else if (isWin(secretBot,combiPlayer) == true) {
+
 				System.out.println("\nBravo, vous avez trouvé la combinaison de l'ordinateur en "+gameCounter +" tentative(s) !  Retour au menu principal\n");
 			}
-			
+
 			gameCounter++;
-			
-		} while (gameCounter <= GameOptions.MAX_TRY && isWin(secretBot,combiPlayer) == false && compareInposition(secretPlayer, combinaisonIA) != GameOptions.PAWNS);
+
+		} while (gameCounter <= GameOptions.MAX_TRY && isWin(secretBot,combiPlayer) == false && compareInpositionIA(combinaisonIA, secretPlayer) != GameOptions.PAWNS);
 
 		this.notifyObserver();
 		listCombinaison.clear();
@@ -285,5 +291,19 @@ public class Duel extends Game{
 			obs.update();
 		}
 
+	}
+
+	/**
+	 * @return the combiPlayer
+	 */
+	public Integer[] getCombiPlayer() {
+		return combiPlayer;
+	}
+
+	/**
+	 * @param combiPlayer the combiPlayer to set
+	 */
+	public void setCombiPlayer(Integer[] combiPlayer) {
+		this.combiPlayer = combiPlayer;
 	}
 }
