@@ -5,6 +5,8 @@ package typegame;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.sun.tracing.dtrace.ArgsAttributes;
+
 import option.GameOptions;
 import start.Game;
 import start.Main;
@@ -40,10 +42,10 @@ public class Challenger extends Game  {
 		System.out.println(rulesChallenger());
 		
 		do {
-			/*	if (dev = 1) {
-			System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secret));
-			}
-		*/
+			//if () {
+			//System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secret));
+		//	}
+		
 			this.combinaison = this.generateInput();
 
 			compareChallenger(secret,combinaison);
