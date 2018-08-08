@@ -13,7 +13,7 @@ public class GameOptions extends Game {
 
 	public static int MAX_NUMBERS = setMAX_NUMBERS();
 	public static int MAX_TRY = setMAX_TRY();
-	public static int PAWNS = setPAWNS();;
+	public static int PAWNS = setPAWNS();
 /*
 	public GameOptions() {
 		
