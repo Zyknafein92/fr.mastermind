@@ -13,8 +13,16 @@
 	</Appenders>
 	<Loggers>
 		<Root level="trace">
-<AppenderRef ref="Console" />
+			<AppenderRef ref="Console" />
 			<AppenderRef ref="MyFile" />
 		</Root>
-	</Loggers>	
+		<logger name="GameController" level="trace" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="MyFile" />
+		</logger>
+		<logger name="User" level="trace" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="MyFile" />
+		</logger>
+	</Loggers>
 </Configuration>

@@ -5,25 +5,25 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class GameOptions   {
-	
-	
-	public static int MAX_NUMBERS;
-	public static int MAX_TRY;
-	public static int PAWNS;
-	
-	
+import start.Game;
+
+public class GameOptions extends Game {
+
 	static Properties p = new Properties();
-	
+
+	public static int MAX_NUMBERS = setMAX_NUMBERS();
+	public static int MAX_TRY = setMAX_TRY();
+	public static int PAWNS = setPAWNS();;
+/*
 	public GameOptions() {
 		
-		MAX_NUMBERS = getMAX_NUMBERS();
-		MAX_TRY = getMAX_TRY();
-		PAWNS = getPAWNS();
-		
+	MAX_NUMBERS = setMAX_NUMBERS();
+	MAX_TRY = setMAX_TRY();
+	PAWNS = setPAWNS();	
+	
 	}
-
-	public static int getMAX_TRY() {
+*/	
+	public static int setMAX_TRY() {
 
 		try {
 			InputStream is = new FileInputStream("conf/config.properties");
@@ -36,7 +36,7 @@ public class GameOptions   {
 		return Integer.parseInt(p.getProperty("MAX_TRY"));
 	}
 
-	public static int getPAWNS() {
+	public static int setPAWNS() {
 
 		try {
 			InputStream is = new FileInputStream("conf/config.properties");
@@ -49,7 +49,7 @@ public class GameOptions   {
 		return Integer.parseInt(p.getProperty("PAWNS"));
 	}
 
-	public static int getMAX_NUMBERS() {
+	public static int setMAX_NUMBERS() {
 
 		try {
 			InputStream is = new FileInputStream("conf/config.properties");
@@ -63,6 +63,8 @@ public class GameOptions   {
 	}
 
 }
+
+
 
 
 

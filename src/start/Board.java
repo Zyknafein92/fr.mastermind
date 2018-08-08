@@ -1,9 +1,13 @@
 package start;
 
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.InputMismatchException;
+import java.util.Properties;
 import java.util.Scanner;
 
+import option.GameOptions;
 import tools.IObserver;
 import typegame.Challenger;
 import typegame.Defenseur;
@@ -23,17 +27,18 @@ public class Board implements IObserver {
 	private int type; // sert à définir le type de jeu
 	private int again; // sert à savoir si l'utilisateur souhaite rejouer au jeu.
 	Scanner sc = new Scanner(System.in);
-
-
+	
+	
 	/**
 	 * 
 	 *  Menu est la méthode qui affiche les choix utilisateurs, et permet de lancer grâce au pattern observeur les différents jeux proposés.
 	 *  A chaque fin de jeu, l'utilisateur est renvoyé içi.
 	 *  
+	 *  
 	 */
 
-	public void Menu() {
-
+	public void Menu(){
+	 
 		System.out.println("------------------------------");
 		System.out.println("- Bienvenue sur MasterNumber -");
 		System.out.println("------------------------------");

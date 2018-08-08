@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Properties;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
@@ -31,7 +29,7 @@ public abstract class Game  implements IObservable {
 
 	static final Logger LOGGER = LogManager.getRootLogger();
 	Scanner sc = new Scanner(System.in);
-	
+
 	protected int gameCounter; // variable qui represente le nombre de tour jouer.
 	protected int isPresent;   // variable qui represente le nombre de pion présent.
 	protected int inPosition;  // variable qui represente les pions à la bonne position.
@@ -56,7 +54,7 @@ public abstract class Game  implements IObservable {
 	 */
 
 	public Game () {
-       
+
 		this.gameCounter = 1;
 		this.isPresent = 0;
 		this.inPosition = 0;
@@ -116,10 +114,10 @@ public abstract class Game  implements IObservable {
 			} else {
 				for(int i = 0; i < input.length; i++) {
 					value = Character.getNumericValue(userc.charAt(i));
-					if (Character.isDigit(userc.charAt(i)) && value <= GameOptions.MAX_NUMBERS) {
+					if (Character.isDigit(userc.charAt(i)) && value <= GameOptions.PAWNS) {
 						input[i] = value;
 					} else {
-						System.out.println("La valeur : '" + userc.charAt(i) + "' est supérieur à " + GameOptions.MAX_NUMBERS + " ou ce ne sont pas des chiffres...");
+						System.out.println("La valeur : '" + userc.charAt(i) + "' est supérieur à " + GameOptions.PAWNS + " ou ce ne sont pas des chiffres...");
 						badnumbers = true;
 					}
 				}
@@ -493,3 +491,5 @@ public abstract class Game  implements IObservable {
 	}
 
 }
+
+
