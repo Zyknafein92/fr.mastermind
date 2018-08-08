@@ -4,6 +4,7 @@ package start;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import option.GameOptions;
 import tools.IObserver;
 import typegame.Challenger;
 import typegame.Defenseur;
@@ -24,10 +25,10 @@ public class Board implements IObserver {
 	private int again; // sert à savoir si l'utilisateur souhaite rejouer au jeu.
 	Scanner sc = new Scanner(System.in);
 
-	public Board() {
-		this.mod = mod;
-		this.type = type;
-	}
+//	public Board() {
+//		this.mod = mod;
+//		this.type = type;
+//	}
 
 
 
@@ -40,12 +41,14 @@ public class Board implements IObserver {
 
 	public void Menu() {
 
+		
+		
 		System.out.println("------------------------------");
 		System.out.println("- Bienvenue sur MasterNumber -");
 		System.out.println("------------------------------");
 		System.out.println("Quel jeu voulez-vous choisir ?");
 
-
+	
 		System.out.println("1.Mode +/-");
 		System.out.println("2.Mode Mastermind");
 		System.out.println("3.Quitter");

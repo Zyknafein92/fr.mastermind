@@ -1,5 +1,6 @@
 package typegame;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import option.GameOptions;
@@ -55,10 +56,7 @@ public class Defenseur extends Game {
 	}
 
 	/**
-	 * 
-	 * Méthode de jeu Defenseur pour le mode MasterMind.
-	 * @param panwsToAdd 
-	 * 
+	 * Méthode de jeu Defenseur pour le mode MasterMind. 
 	 */
 
 	public void playDefenseurMastermind() {
@@ -70,15 +68,16 @@ public class Defenseur extends Game {
 		System.out.println(" Votre nombre secret est :"+Arrays.toString(secret));
 
 		// Initialisation de l'ArrayList à la couleur 0.
+
 		for(int i = 0; i < GameOptions.PAWNS; i++) {
 			combinaisonIA.add(pawnsValue);
-			testColor[i]= pawnsValue;
 		}
 
 		do {
 			for(int i = 0; i < GameOptions.PAWNS; i++) {
 				testColor[i]=pawnsValue;
 			}
+
 			int pawnsToAdd = countPresent(secret, testColor); 
 
 			addToCombinaison(combinaisonIA, testColor, pawnsToAdd);
@@ -93,8 +92,9 @@ public class Defenseur extends Game {
 				movePawns(combinaisonIA, listCombinaison);
 			}
 
-		    countPosition(secret, combinaisonIA);
-			//System.out.println(+isPresent +"a"+ +inPosition);
+			
+			comparePositionB(secret, combinaisonIA);
+			
 			System.out.println(resultat(combinaisonIA,isPresent,inPosition));
 
 			if (pawnsValue < GameOptions.MAX_NUMBERS) {
@@ -109,45 +109,45 @@ public class Defenseur extends Game {
 
 			gameCounter++;
 
-		} while (compareInpositionIA(combinaisonIA,secret) < GameOptions.PAWNS && gameCounter <= GameOptions.MAX_TRY);
+		} while (inPosition < GameOptions.PAWNS && gameCounter <= GameOptions.MAX_TRY);
 
 		this.notifyObserver();
 		combinaisonIA.clear();
 		listCombinaison.clear();
 	}
 
-	/**
-	 * Méthode qui retourne un string contenant les règles du jeu Defenseur.
-	 * 
-	 * @return String avec les règles.
-	 * 
-	 */
+/**
+ * Méthode qui retourne un string contenant les règles du jeu Defenseur.
+ * 
+ * @return String avec les règles.
+ * 
+ */
 
-	private static  String rulesDefenseur() {
-		String str1 = "";
+private static  String rulesDefenseur() {
+	String str1 = "";
 
-		str1 = ("\r\n------------------------------");
-		str1 +=("\r\n--------- Defenseur ----------");
-		str1 +=("\r\n------------------------------");
-		str1 +=("\r\nVous devez entrer un nombre mystère que l'ordinateur va devoir trouver.");
-		str1 +=("\r\nIl est composé de "+GameOptions.PAWNS + " chiffres compris entre 0 et 9.");
-		str1 +=("\r\nL'ordinateur à le droit à "+GameOptions.MAX_TRY + " tentative(s) !");
-		str1 +=("\r\nA vous de jouer !\n");
-		return str1;
+	str1 = ("\r\n------------------------------");
+	str1 +=("\r\n--------- Defenseur ----------");
+	str1 +=("\r\n------------------------------");
+	str1 +=("\r\nVous devez entrer un nombre mystère que l'ordinateur va devoir trouver.");
+	str1 +=("\r\nIl est composé de "+GameOptions.PAWNS + " chiffres compris entre 0 et 9.");
+	str1 +=("\r\nL'ordinateur à le droit à "+GameOptions.MAX_TRY + " tentative(s) !");
+	str1 +=("\r\nA vous de jouer !\n");
+	return str1;
+}
+
+@Override
+public void addObserver(IObserver obs) {
+	listObserver.add(obs);
+
+}
+
+@Override
+public void notifyObserver() {
+	for(IObserver obs : listObserver) {
+		obs.update();
 	}
 
-	@Override
-	public void addObserver(IObserver obs) {
-		listObserver.add(obs);
-
-	}
-
-	@Override
-	public void notifyObserver() {
-		for(IObserver obs : listObserver) {
-			obs.update();
-		}
-
-	}
+}
 }
 

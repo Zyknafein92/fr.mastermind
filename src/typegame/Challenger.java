@@ -79,8 +79,9 @@ public class Challenger extends Game  {
 		
 			this.combinaison = this.generateInput();
 			
-			countPosition(secret, combinaison);
 			
+			comparePositionA(secret, combinaison);
+			System.out.println(Arrays.toString(resultat));
 			System.out.println(resultat(combinaison, isPresent, inPosition));
 
 			if (isWin(secret,combinaison) == true) {
@@ -101,7 +102,7 @@ public class Challenger extends Game  {
 
 	/**
 	 * Méthode qui affiche les règles du jeu challenger en mode +/-.
-	 * @return String 
+	 * @return String contenant les règles.
 	 */
 	public static  String rulesChallengerPlusMoins() {
 		String str1 = "";
@@ -118,7 +119,7 @@ public class Challenger extends Game  {
 
 	/**
 	 * Méthode qui affiche les règles du jeu challenger en mode Mastermind.
-	 * @return String
+	 * @return String contenant les règles.
 	 */
 	
 	public static  String rulesChallengerMastermind() {

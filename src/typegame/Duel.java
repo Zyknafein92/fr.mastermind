@@ -104,17 +104,16 @@ public class Duel extends Game{
 
 		do {
 			
-		/*	if (dev = 1) {
-				System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secretBot));
-				}
-			*/
+		
+			System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secretBot));
+			
 			System.out.println("\n-------------------------");
 			System.out.println("------ Tour Joueur ------");
 			System.out.println("-------------------------");
 
 			combiPlayer = this.generateInput();	
 			
-			countPosition(secretBot, combiPlayer);
+		    comparePositionA(secretBot, combiPlayer);
 			System.out.println(resultat(combiPlayer,isPresent,inPosition));
 
 			System.out.println("\n-------------------------");
@@ -147,14 +146,15 @@ public class Duel extends Game{
 				movePawns(combinaisonIA, listCombinaison);
 			}
 			
-            countPosition(secretPlayer, combinaisonIA);
+			comparePositionB(secretPlayer, combinaisonIA);
 			System.out.println(resultat(combinaisonIA,isPresent,inPosition));
 
 			if (pawnsValue < GameOptions.MAX_NUMBERS) {
 				pawnsValue++;
 			}
 
-			if (compareInpositionIA(combinaisonIA, secretPlayer) == GameOptions.PAWNS) {
+			//TODO : A revoir
+			if (inPosition == GameOptions.PAWNS) {
 
 				System.out.println("\nPerdu ! L'ordinateur a trouvé votre combinaison  en "+gameCounter + " tentative(s) ! Son secret était : "+Arrays.toString(secretBot) +"  Retour au menu principal\n");
 
@@ -165,7 +165,7 @@ public class Duel extends Game{
 
 			gameCounter++;
 
-		} while (gameCounter <= GameOptions.MAX_TRY && isWin(secretBot,combiPlayer) == false && compareInpositionIA(combinaisonIA, secretPlayer) != GameOptions.PAWNS);
+		} while (gameCounter <= GameOptions.MAX_TRY && isWin(secretBot,combiPlayer) == false && inPosition != GameOptions.PAWNS);
 
 		this.notifyObserver();
 		listCombinaison.clear();
