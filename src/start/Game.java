@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
@@ -26,11 +27,11 @@ import tools.IObserver;
  *
  */
 
-public abstract class Game implements IObservable {
+public abstract class Game  implements IObservable {
 
 	static final Logger LOGGER = LogManager.getRootLogger();
 	Scanner sc = new Scanner(System.in);
-
+	
 	protected int gameCounter; // variable qui represente le nombre de tour jouer.
 	protected int isPresent;   // variable qui represente le nombre de pion présent.
 	protected int inPosition;  // variable qui represente les pions à la bonne position.
@@ -55,7 +56,7 @@ public abstract class Game implements IObservable {
 	 */
 
 	public Game () {
-
+       
 		this.gameCounter = 1;
 		this.isPresent = 0;
 		this.inPosition = 0;

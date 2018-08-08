@@ -6,16 +6,27 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class GameOptions   {
-		
-	public static final int MAX_TRY = 15;   //getMAX_TRY();
-	public static final int PAWNS =4; //getPAWNS();
-	public static final int MAX_NUMBERS = 6; //getMAX_NUMBERS();
+	
+	
+	public static int MAX_NUMBERS;
+	public static int MAX_TRY;
+	public static int PAWNS;
+	
+	
 	static Properties p = new Properties();
 	
-	public static final int getMAX_TRY() {
+	public GameOptions() {
+		
+		MAX_NUMBERS = getMAX_NUMBERS();
+		MAX_TRY = getMAX_TRY();
+		PAWNS = getPAWNS();
+		
+	}
+
+	public static int getMAX_TRY() {
 
 		try {
-			InputStream is = new FileInputStream("config.properties");
+			InputStream is = new FileInputStream("conf/config.properties");
 			p.load(is);
 			is.close();
 		}
@@ -24,11 +35,11 @@ public class GameOptions   {
 		}
 		return Integer.parseInt(p.getProperty("MAX_TRY"));
 	}
-	
-	public static final int getPAWNS() {
+
+	public static int getPAWNS() {
 
 		try {
-			InputStream is = new FileInputStream("config.properties");
+			InputStream is = new FileInputStream("conf/config.properties");
 			p.load(is);
 			is.close();
 		}
@@ -37,11 +48,11 @@ public class GameOptions   {
 		}
 		return Integer.parseInt(p.getProperty("PAWNS"));
 	}
-	
-	public static final int getMAX_NUMBERS() {
+
+	public static int getMAX_NUMBERS() {
 
 		try {
-			InputStream is = new FileInputStream("config.properties");
+			InputStream is = new FileInputStream("conf/config.properties");
 			p.load(is);
 			is.close();
 		}
@@ -51,7 +62,6 @@ public class GameOptions   {
 		return Integer.parseInt(p.getProperty("MAX_NUMBERS"));
 	}
 
-	
 }
 
 

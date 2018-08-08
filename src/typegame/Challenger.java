@@ -7,6 +7,8 @@ import java.util.Arrays;
 
 import option.GameOptions;
 import start.Game;
+import start.Main;
+import sun.security.util.Length;
 import tools.IObserver;
 
 
@@ -73,10 +75,8 @@ public class Challenger extends Game  {
 	
 		do {
 			
-		//	if (dev = 1) {
 			System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secret));
-		//	}
-		
+			
 			this.combinaison = this.generateInput();
 			
 			

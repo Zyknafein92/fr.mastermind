@@ -4,7 +4,6 @@ package start;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import option.GameOptions;
 import tools.IObserver;
 import typegame.Challenger;
 import typegame.Defenseur;
@@ -25,12 +24,6 @@ public class Board implements IObserver {
 	private int again; // sert à savoir si l'utilisateur souhaite rejouer au jeu.
 	Scanner sc = new Scanner(System.in);
 
-//	public Board() {
-//		this.mod = mod;
-//		this.type = type;
-//	}
-
-
 
 	/**
 	 * 
@@ -41,14 +34,12 @@ public class Board implements IObserver {
 
 	public void Menu() {
 
-		
-		
 		System.out.println("------------------------------");
 		System.out.println("- Bienvenue sur MasterNumber -");
 		System.out.println("------------------------------");
 		System.out.println("Quel jeu voulez-vous choisir ?");
 
-	
+
 		System.out.println("1.Mode +/-");
 		System.out.println("2.Mode Mastermind");
 		System.out.println("3.Quitter");
@@ -182,26 +173,30 @@ public class Board implements IObserver {
 	public void update() {
 
 		do {
+
 			System.out.println("Souhaitez-vous rejouer ?");
 			System.out.println("1. Oui || 2.Non");
+
 			try {
 				again = sc.nextInt();
 			}catch(InputMismatchException e) {
 				System.out.println("Choix incorrect, veuillez saisir une valeur correcte");
 				sc.next();
 			}
-		}while(again != 1 && again != 2);
+
+		} while(again != 1 && again != 2);
 
 		if(again == 1) {
 			System.out.println(mod);
 			System.out.println(type);
+
 			if(mod == 1) { 		
 				if(type == 1) {
 					Challenger jeu = new Challenger();
 					jeu.addObserver(this);
 					jeu.playChallengerPlusMoins();
 				}
-				
+
 				if(type == 2) {
 					Defenseur jeu = new Defenseur();
 					jeu.addObserver(this);
@@ -213,25 +208,25 @@ public class Board implements IObserver {
 					jeu.playDuelPlusMoins();
 				}
 			}
-				if (mod == 2) {
-					if(type == 1) {
-						Challenger jeu = new Challenger();
-						jeu.addObserver(this);
-						jeu.playChallengerMastermind();
-					}
-					
-					if(type == 2) {
-						Defenseur jeu = new Defenseur();
-						jeu.addObserver(this);
-						jeu.playDefenseurMastermind();
-					}
-					if(type == 3) {
-						Duel jeu = new Duel();
-						jeu.addObserver(this);
-						jeu.playDuelMastermind();
-					}
+			if (mod == 2) {
+				if(type == 1) {
+					Challenger jeu = new Challenger();
+					jeu.addObserver(this);
+					jeu.playChallengerMastermind();
 				}
-			
+
+				if(type == 2) {
+					Defenseur jeu = new Defenseur();
+					jeu.addObserver(this);
+					jeu.playDefenseurMastermind();
+				}
+				if(type == 3) {
+					Duel jeu = new Duel();
+					jeu.addObserver(this);
+					jeu.playDuelMastermind();
+				}
+			}
+
 		} else {	
 			Menu();
 		}
