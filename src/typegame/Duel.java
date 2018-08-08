@@ -19,7 +19,7 @@ public class Duel extends Game{
 	protected Integer[] combiBot = new Integer[GameOptions.PAWNS];
 	protected Integer[] secretPlayer = new Integer[GameOptions.PAWNS];
 	protected Integer[] combiPlayer = new Integer[GameOptions.PAWNS];
-	protected boolean isloose = false;
+	private boolean isloose = false;
 
 
 	public Duel () {
@@ -187,7 +187,7 @@ public class Duel extends Game{
 		str1 +=("\r\n------------------------------");
 		str1 +=("\r\nDans ce mode jeu, vous jouez contre l'ordinateur.");
 		str1 +=("\r\nChacun votre tour, vous allez tenter de découvrir la combinaison secrète de l'autre.");
-		str1 +=("\r\nElle est composée de " + GameOptions.PAWNS + " chiffres compris entre 0 et 9.");
+		str1 +=("\r\nElle est composée de " + GameOptions.PAWNS + " chiffres compris entre 0 et "+GameOptions.MAX_NUMBERS);
 		str1 +=("\r\nVous avez le droit a " + GameOptions.MAX_TRY + " tentatives !");
 		str1 +=("\r\nA vous de jouer ! Veuillez choisir votre combinaison secrète :");
 		return str1;

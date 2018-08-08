@@ -130,7 +130,7 @@ private static  String rulesDefenseur() {
 	str1 +=("\r\n--------- Defenseur ----------");
 	str1 +=("\r\n------------------------------");
 	str1 +=("\r\nVous devez entrer un nombre mystère que l'ordinateur va devoir trouver.");
-	str1 +=("\r\nIl est composé de "+GameOptions.PAWNS + " chiffres compris entre 0 et 9.");
+	str1 +=("\r\nIl est composé de "+GameOptions.PAWNS + " chiffres compris entre 0 et "+GameOptions.MAX_NUMBERS);
 	str1 +=("\r\nL'ordinateur à le droit à "+GameOptions.MAX_TRY + " tentative(s) !");
 	str1 +=("\r\nA vous de jouer !\n");
 	return str1;

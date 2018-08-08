@@ -37,7 +37,7 @@ public class Challenger extends Game  {
 
 	public void playChallengerPlusMoins() {
 
-		System.out.println(rulesChallengerPlusMoins());
+		System.out.println(rulesChallenger());
 		
 		do {
 			/*	if (dev = 1) {
@@ -71,7 +71,7 @@ public class Challenger extends Game  {
 
 	public void playChallengerMastermind() {
 
-		System.out.println(rulesChallengerMastermind());
+		System.out.println(rulesChallenger());
 	
 		do {
 			
@@ -104,32 +104,14 @@ public class Challenger extends Game  {
 	 * Méthode qui affiche les règles du jeu challenger en mode +/-.
 	 * @return String contenant les règles.
 	 */
-	public static  String rulesChallengerPlusMoins() {
+	public static  String rulesChallenger() {
 		String str1 = "";
 
 		str1 = ("\r\n------------------------------");
 		str1 +=("\r\n--------- Challenger ---------");
 		str1 +=("\r\n------------------------------");
 		str1 +=("\r\nVous devez trouver la combinaison mystère de votre adversaire !");
-		str1 +=("\r\nElle est composée de " + GameOptions.PAWNS + " chiffres compris entre 0 et 9.");
-		str1 +=("\r\nVous avez le droit a " + GameOptions.MAX_TRY + " tentatives !");
-		str1 +=("\r\nA vous de jouer !\n");
-		return str1;
-	}
-
-	/**
-	 * Méthode qui affiche les règles du jeu challenger en mode Mastermind.
-	 * @return String contenant les règles.
-	 */
-	
-	public static  String rulesChallengerMastermind() {
-		String str1 = "";
-
-		str1 = ("\r\n------------------------------");
-		str1 +=("\r\n--------- Challenger ---------");
-		str1 +=("\r\n------------------------------");
-		str1 +=("\r\nVous devez trouver la combinaison mystère de votre adversaire !");
-		str1 +=("\r\nElle est composée de " + GameOptions.PAWNS + " chiffres compris entre 0 et 9.");
+		str1 +=("\r\nElle est composée de " + GameOptions.PAWNS + " chiffres compris entre 0 et "+GameOptions.MAX_NUMBERS);
 		str1 +=("\r\nVous avez le droit a " + GameOptions.MAX_TRY + " tentatives !");
 		str1 +=("\r\nA vous de jouer !\n");
 		return str1;

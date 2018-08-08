@@ -5,24 +5,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import start.Game;
-
-public class GameOptions extends Game {
+public class GameOptions {
 
 	static Properties p = new Properties();
 
-	public static int MAX_NUMBERS = setMAX_NUMBERS();
-	public static int MAX_TRY = setMAX_TRY();
-	public static int PAWNS = setPAWNS();
-/*
-	public GameOptions() {
-		
-	MAX_NUMBERS = setMAX_NUMBERS();
-	MAX_TRY = setMAX_TRY();
-	PAWNS = setPAWNS();	
+	public static final int MAX_NUMBERS = setMAX_NUMBERS();
+	public static final int MAX_TRY = setMAX_TRY();
+	public static final int PAWNS = setPAWNS();
+
 	
-	}
-*/	
 	public static int setMAX_TRY() {
 
 		try {

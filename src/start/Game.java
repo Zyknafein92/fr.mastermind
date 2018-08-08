@@ -114,10 +114,10 @@ public abstract class Game  implements IObservable {
 			} else {
 				for(int i = 0; i < input.length; i++) {
 					value = Character.getNumericValue(userc.charAt(i));
-					if (Character.isDigit(userc.charAt(i)) && value <= GameOptions.PAWNS) {
+					if (Character.isDigit(userc.charAt(i)) && value <= GameOptions.MAX_NUMBERS) {
 						input[i] = value;
 					} else {
-						System.out.println("La valeur : '" + userc.charAt(i) + "' est supérieur à " + GameOptions.PAWNS + " ou ce ne sont pas des chiffres...");
+						System.out.println("La valeur : '" + userc.charAt(i) + "' est supérieur à " + GameOptions.MAX_NUMBERS + " ou ce ne sont pas des chiffres...");
 						badnumbers = true;
 					}
 				}
