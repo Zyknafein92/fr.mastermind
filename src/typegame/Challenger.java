@@ -88,7 +88,7 @@ public class Challenger extends Game  {
 
 			comparePositionA(secret, combinaison);
 			
-			LOGGER.trace("ChallengerMastermind résultat : inPresent :" +isPresent + " inPosition :" +inPosition);
+		//	LOGGER.trace("ChallengerMastermind résultat : inPresent :" +isPresent + " inPosition :" +inPosition);
 			
 			System.out.println(resultat(combinaison, isPresent, inPosition));
 

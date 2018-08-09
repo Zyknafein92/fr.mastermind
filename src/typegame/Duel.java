@@ -56,7 +56,7 @@ public class Duel extends Game{
 			System.out.println("-------------------------");
 
 			if (GameOptions.DEV_MODE == 1) {
-				System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secret));
+				System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secretBot));
 			}
 
 			combiPlayer = this.generateInput();
@@ -122,7 +122,7 @@ public class Duel extends Game{
 			System.out.println("-------------------------");
 
 			if (GameOptions.DEV_MODE == 1) {
-				System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secret));
+				System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secretBot));
 			     }
 			
 			combiPlayer = this.generateInput();	
@@ -162,7 +162,7 @@ public class Duel extends Game{
 
 			comparePositionB(secretPlayer, combinaisonIA);
 			
-			LOGGER.trace("ChallengerMastermind résultat : inPresent :" +isPresent + " inPosition :" +inPosition);
+		//	LOGGER.trace("ChallengerMastermind résultat : inPresent :" +isPresent + " inPosition :" +inPosition);
 			
 			System.out.println(resultat(combinaisonIA,isPresent,inPosition));
 
@@ -213,9 +213,11 @@ public class Duel extends Game{
 	/**
 	 * Boolean qui permet de tester si l'ordinateur trouve ou non la combinaison du joueur.
 	 * 
-	 * @param Tableau d'Integer contenant le secret du joueur.
+	 * @param secretPlayer
+	 * Tableau d'Integer contenant le secret du joueur.
 	 * 
-	 * @param Tableau d'Integer contenant la combinaison de l'ordinateur.
+	 * @param combiBot 
+	 * Tableau d'Integer contenant la combinaison de l'ordinateur.
 	 * 
 	 * @return la valeur du boolean isloose.
 	 * 

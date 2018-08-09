@@ -87,7 +87,7 @@ public class Defenseur extends Game {
 			}
 	
 			int pawnsToAdd = countPresent(secret, testColor); 
-			LOGGER.trace("pawnsToAdd" +pawnsToAdd);
+		//	LOGGER.trace("pawnsToAdd" +pawnsToAdd);
 			
 			addToCombinaison(combinaisonIA, testColor, pawnsToAdd);
 
@@ -104,7 +104,7 @@ public class Defenseur extends Game {
 			
 			comparePositionB(secret, combinaisonIA);
 			
-			LOGGER.trace("DefenseurMastermind résultat : inPresent :" +isPresent + " inPosition :" +inPosition);
+		//	LOGGER.trace("DefenseurMastermind résultat : inPresent :" +isPresent + " inPosition :" +inPosition);
 			
 			System.out.println(resultat(combinaisonIA,isPresent,inPosition));
 
