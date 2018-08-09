@@ -78,10 +78,10 @@ public class Duel extends Game{
 
 
 			if (isLoose(secretPlayer,combiBot) == true) {
-				System.out.println("\nPerdu ! L'ordinateur a trouvé votre combinaison  en "+gameCounter + " tentative(s) ! Son secret était : "+Arrays.toString(secretBot) +"  Retour au menu principal\n");
+				System.out.println("\nPerdu ! L'ordinateur a trouvé votre combinaison  en "+gameCounter + " tentative(s) ! Son secret était : "+Arrays.toString(secretBot));
 			} 
 			else if (isWin(secretBot,combiPlayer) == true) {
-				System.out.println("\nBravo, vous avez trouvé la combinaison de l'ordinateur en "+gameCounter +" tentative(s) !  Retour au menu principal\n");
+				System.out.println("\nBravo, vous avez trouvé la combinaison de l'ordinateur en "+gameCounter +" tentative(s) !");
 			}
 
 			gameCounter++;
@@ -173,11 +173,11 @@ public class Duel extends Game{
 			
 			if (inPosition == GameOptions.PAWNS) {
 
-				System.out.println("\nPerdu ! L'ordinateur a trouvé votre combinaison  en "+gameCounter + " tentative(s) ! Son secret était : "+Arrays.toString(secretBot) +"  Retour au menu principal\n");
+				System.out.println("\nPerdu ! L'ordinateur a trouvé votre combinaison  en "+gameCounter + " tentative(s) ! Son secret était : "+Arrays.toString(secretBot));
 
 			} else if (isWin(secretBot,combiPlayer) == true) {
 
-				System.out.println("\nBravo, vous avez trouvé la combinaison de l'ordinateur en "+gameCounter +" tentative(s) !  Retour au menu principal\n");
+				System.out.println("\nBravo, vous avez trouvé la combinaison de l'ordinateur en "+gameCounter +" tentative(s) !");
 			}
 
 			gameCounter++;

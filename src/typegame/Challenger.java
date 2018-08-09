@@ -53,11 +53,11 @@ public class Challenger extends Game  {
 			System.out.println(resultat(combinaison,soluc));
 
 			if (isWin(secret,combinaison) == true) {
-				System.out.println("Bravo, vous avez gagné en "+gameCounter + " tentative(s) ! Retour au menu principal\n");
+				System.out.println("Bravo, vous avez gagné en "+gameCounter + " tentative(s) !");
 			}else if (gameCounter < GameOptions.MAX_TRY) {
 				System.out.println("Mauvaise combinaison !\n");
 			}else {
-				System.out.println("Vous avez perdu ! Le secret a découvrir était: "+Arrays.toString(secret)+ " Retour au menu principal\n");
+				System.out.println("Vous avez perdu ! Le secret a découvrir était: "+Arrays.toString(secret));
 			}
 			gameCounter++;
 
@@ -93,11 +93,11 @@ public class Challenger extends Game  {
 			System.out.println(resultat(combinaison, isPresent, inPosition));
 
 			if (isWin(secret,combinaison) == true) {
-				System.out.println("Bravo, vous avez gagné en "+gameCounter + " tentative(s) ! Retour au menu principal\n");
+				System.out.println("Bravo, vous avez gagné en "+gameCounter + " tentative(s) !");
 			}else if (gameCounter < GameOptions.MAX_TRY) {
 				System.out.println("Mauvaise combinaison !\n");
 			}else {
-				System.out.println("Vous avez perdu ! Le secret a découvrir était: "+Arrays.toString(secret)+ " Retour au menu principal\n");
+				System.out.println("Vous avez perdu ! Le secret a découvrir était: "+Arrays.toString(secret));
 			}
 
 			gameCounter++;

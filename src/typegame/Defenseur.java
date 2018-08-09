@@ -47,9 +47,9 @@ public class Defenseur extends Game {
 			System.out.println(resultat(combinaison,soluc));
 
 			if (isWin(secret,combinaison) == true) {
-				System.out.println("Perdu ! L'ordinateur a trouvé votre combinaison  en "+gameCounter + " tentative(s) !  Retour au menu principal\n");
+				System.out.println("Perdu ! L'ordinateur a trouvé votre combinaison  en "+gameCounter + " tentative(s) !");
 			} else if (gameCounter >= GameOptions.MAX_TRY) {
-				System.out.println("Vous avez gagné ! L'ordinateur n'a pas trouvé votre combinaison ! Retour au menu principal\n");
+				System.out.println("Vous avez gagné ! L'ordinateur n'a pas trouvé votre combinaison !");
 			}
 			gameCounter++;
 
@@ -113,9 +113,9 @@ public class Defenseur extends Game {
 			}
 
 			if (inPosition == GameOptions.PAWNS) {
-				System.out.println("Perdu ! L'ordinateur a trouvé votre combinaison  en "+gameCounter + " tentative(s) !  Retour au menu principal\n");
+				System.out.println("Perdu ! L'ordinateur a trouvé votre combinaison  en "+gameCounter + " tentative(s) !");
 			}else if (gameCounter >= GameOptions.MAX_TRY) {
-				System.out.println("Vous avez gagné ! L'ordinateur n'a pas trouvé votre combinaison ! Retour au menu principal\n");
+				System.out.println("Vous avez gagné ! L'ordinateur n'a pas trouvé votre combinaison !");
 			}
 
 			gameCounter++;
