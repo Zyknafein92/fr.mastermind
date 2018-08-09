@@ -45,7 +45,7 @@ public class Defenseur extends Game {
 
 			compareDefenseur(this.secret,this.combinaison);
 			
-			LOGGER.trace("DefenseurPlusMoins résultat : inPresent :" +isPresent + " inPosition :" +inPosition);
+			
 			
 			System.out.println(resultat(combinaison,soluc));
 

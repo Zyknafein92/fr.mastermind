@@ -74,7 +74,7 @@ public class Duel extends Game{
 
 			compareDefenseur(secretPlayer,combiBot);
 			
-			LOGGER.trace("DuelPlusMoins résultat : inPresent :" +isPresent + " inPosition :" +inPosition);
+			
 			
 			System.out.println(resultat(combiBot,soluc));
 

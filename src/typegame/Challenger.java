@@ -53,7 +53,7 @@ public class Challenger extends Game  {
 
 			compareChallenger(secret,combinaison);
 			
-            LOGGER.trace("ChallengerPlusMoins résultat : inPresent :" +isPresent + " inPosition :" +inPosition);
+           
 			System.out.println(resultat(combinaison,soluc));
 
 			if (isWin(secret,combinaison) == true) {
