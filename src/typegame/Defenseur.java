@@ -1,7 +1,9 @@
 package typegame;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import option.GameOptions;
 import start.Game;
@@ -16,7 +18,9 @@ import tools.IObserver;
 
 
 public class Defenseur extends Game {
-
+	
+	static final Logger LOGGER = LogManager.getRootLogger();
+	
 	public Defenseur () {
 		super();
 		combinaison = Game.generateBotRoll();
@@ -24,9 +28,9 @@ public class Defenseur extends Game {
 	}
 
 	/**
-	 * 
 	 * Méthode de jeu Defenseur pour le mod +/-.
-	 * 
+	 * Le joueur choisi son secret, puis l'ordinateur va le comparer tour par tour. En fonction du résultat du comparateur,
+	 * il va soit incrémenter, soit décrémenté la valeur des pions.
 	 */
 
 	public void playDefenseurPlusMoins() {
@@ -40,7 +44,9 @@ public class Defenseur extends Game {
 		do {
 
 			compareDefenseur(this.secret,this.combinaison);
-
+			
+			LOGGER.trace("DefenseurPlusMoins résultat : inPresent :" +isPresent + " inPosition :" +inPosition);
+			
 			System.out.println(resultat(combinaison,soluc));
 
 			if (isWin(secret,combinaison) == true) {
@@ -57,6 +63,11 @@ public class Defenseur extends Game {
 
 	/**
 	 * Méthode de jeu Defenseur pour le mode MasterMind. 
+	 * Après avoir initialiser la combinaisonIA, testColor va prendre chaque tour la valeur de panwsValue et être comparé au secret.
+	 * Une variable pawnsToAdd va être incrémenté a chaque fois qu'un nombre de la combinaison est présent dans le secret.
+	 * Cette variable va définir le nombre de pion à ajouter par la méthode addToCombinaison qui ajoutera les valeurs une à une de l'indice
+	 * 0 a l'indice maximum autorisé. Les autres pions qui n'ont pas été modifié prendront la valeur actuelle de pawnsValue.
+	 * Ensuite, le nombre de pion présent, et à la bonne position sont calculés dans les variables inPresent et inPosition.
 	 */
 
 	public void playDefenseurMastermind() {
@@ -77,9 +88,10 @@ public class Defenseur extends Game {
 			for(int i = 0; i < GameOptions.PAWNS; i++) {
 				testColor[i]=pawnsValue;
 			}
-
+	
 			int pawnsToAdd = countPresent(secret, testColor); 
-
+			LOGGER.trace("pawnsToAdd" +pawnsToAdd);
+			
 			addToCombinaison(combinaisonIA, testColor, pawnsToAdd);
 
 			for(int i = 0; i < GameOptions.PAWNS ; i++) {		
@@ -94,6 +106,8 @@ public class Defenseur extends Game {
 
 			
 			comparePositionB(secret, combinaisonIA);
+			
+			LOGGER.trace("DefenseurMastermind résultat : inPresent :" +isPresent + " inPosition :" +inPosition);
 			
 			System.out.println(resultat(combinaisonIA,isPresent,inPosition));
 

@@ -2,6 +2,9 @@ package typegame;
 
 import java.util.Arrays;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import option.GameOptions;
 import start.Game;
 import tools.IObserver;
@@ -14,7 +17,8 @@ import tools.IObserver;
  */
 
 public class Duel extends Game{
-
+	
+	static final Logger LOGGER = LogManager.getRootLogger();
 	protected Integer[] secretBot = new Integer[GameOptions.PAWNS];
 	protected Integer[] combiBot = new Integer[GameOptions.PAWNS];
 	protected Integer[] secretPlayer = new Integer[GameOptions.PAWNS];
@@ -31,7 +35,10 @@ public class Duel extends Game{
 	/**
 	 * 
 	 * Méthode de jeu Duel pour le mod +/-.
-	 * 
+	 * Tour à tour, le joueur et l'ordinateur vont jouer.
+	 * Le joueur va présenter une combinaison qui sera comparé au secret et choisira ou non de suivre les indications offertes par le String Resultat.
+	 * L'ordinateur va utiliser une combinaison aléatoire et va la comparer au secret. 
+	 * Il va ensuite décrémenter, ou incrémenter la valeur des pions pour arriver au secret.
 	 */
 
 	public void playDuelPlusMoins () {
@@ -47,15 +54,13 @@ public class Duel extends Game{
 
 		do {
 
-			/*	if (dev = 1) {
-			System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secretBot));
-			}
-		*/
-
 			System.out.println("\n-------------------------");
 			System.out.println("------ Tour Joueur ------");
 			System.out.println("-------------------------");
 
+			if (GameOptions.DEV_MODE == 1) {
+				System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secret));
+			}
 
 			combiPlayer = this.generateInput();
 
@@ -68,7 +73,9 @@ public class Duel extends Game{
 			System.out.println("-------------------------\n");
 
 			compareDefenseur(secretPlayer,combiBot);
-
+			
+			LOGGER.trace("DuelPlusMoins résultat : inPresent :" +isPresent + " inPosition :" +inPosition);
+			
 			System.out.println(resultat(combiBot,soluc));
 
 
@@ -91,6 +98,14 @@ public class Duel extends Game{
 	/**
 	 * 
 	 * Méthode de jeu Duel pour le mod Mastermind.
+	 * Tour à tour, le joueur et l'ordinateur vont jouer.
+	 * Le joueur va présenter une combinaison qui sera comparé au secret 
+	 * et choisira ou non de suivre les indications offertes par le String Resultat.
+	 * L'ordinateur va initialiser la combinaisonIA a 0 ettestColor va prendre chaque tour la valeur de panwsValue et être comparé au secret.
+	 * Une variable pawnsToAdd va être incrémenté a chaque fois qu'un nombre de la combinaison est présent dans le secret.
+	 * Cette variable va définir le nombre de pion à ajouter par la méthode addToCombinaison qui ajoutera les valeurs une à une de l'indice
+	 * 0 a l'indice maximum autorisé. Les autres pions qui n'ont pas été modifié prendront la valeur actuelle de pawnsValue.
+	 * Ensuite, le nombre de pion présent, et à la bonne position sont calculés dans les variables inPresent et inPosition.
 	 * 
 	 */
 
@@ -103,17 +118,18 @@ public class Duel extends Game{
 		secretPlayer = this.generateInput();
 
 		do {
-			
-		
-			System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secretBot));
-			
+
 			System.out.println("\n-------------------------");
 			System.out.println("------ Tour Joueur ------");
 			System.out.println("-------------------------");
 
-			combiPlayer = this.generateInput();	
+			if (GameOptions.DEV_MODE == 1) {
+				System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secret));
+			     }
 			
-		    comparePositionA(secretBot, combiPlayer);
+			combiPlayer = this.generateInput();	
+
+			comparePositionA(secretBot, combiPlayer);
 			System.out.println(resultat(combiPlayer,isPresent,inPosition));
 
 			System.out.println("\n-------------------------");
@@ -145,15 +161,18 @@ public class Duel extends Game{
 			if(pawnsFound == GameOptions.PAWNS) {
 				movePawns(combinaisonIA, listCombinaison);
 			}
-			
+
 			comparePositionB(secretPlayer, combinaisonIA);
+			
+			LOGGER.trace("ChallengerMastermind résultat : inPresent :" +isPresent + " inPosition :" +inPosition);
+			
 			System.out.println(resultat(combinaisonIA,isPresent,inPosition));
 
 			if (pawnsValue < GameOptions.MAX_NUMBERS) {
 				pawnsValue++;
 			}
 
-			//TODO : A revoir
+			
 			if (inPosition == GameOptions.PAWNS) {
 
 				System.out.println("\nPerdu ! L'ordinateur a trouvé votre combinaison  en "+gameCounter + " tentative(s) ! Son secret était : "+Arrays.toString(secretBot) +"  Retour au menu principal\n");
@@ -208,10 +227,6 @@ public class Duel extends Game{
 		return (Arrays.equals(secretPlayer,combiBot));		
 	}
 
-	//	public boolean isLoose (Integer[] secretPlayer, ArrayList<Integer> combinaisonIA) {
-	//		return combinaisonIA.equals(secretPlayer);
-	//	}
-
 	/**
 	 * @param Met à jour le booleen isloose.
 	 */
@@ -249,10 +264,18 @@ public class Duel extends Game{
 	/**
 	 * @return boolean isloose mis à jour.
 	 */
+	
 	public boolean isLoose() {
 		return isloose;
 	}
-
+	
+	/**
+	 * @return the combiPlayer
+	 */
+	
+	public Integer[] getCombiPlayer() {
+		return combiPlayer;
+	}
 
 	/**
 	 * @param Met à jour le tableau d'Integer contenant le secret de l'ordinateur.
@@ -277,6 +300,13 @@ public class Duel extends Game{
 	public void setSecretPlayer(Integer[] secretPlayer) {
 		this.secretPlayer = secretPlayer;
 	}
+	
+	/**
+	 * @param combiPlayer the combiPlayer to set
+	 */
+	public void setCombiPlayer(Integer[] combiPlayer) {
+		this.combiPlayer = combiPlayer;
+	}
 
 
 	@Override
@@ -293,17 +323,4 @@ public class Duel extends Game{
 
 	}
 
-	/**
-	 * @return the combiPlayer
-	 */
-	public Integer[] getCombiPlayer() {
-		return combiPlayer;
-	}
-
-	/**
-	 * @param combiPlayer the combiPlayer to set
-	 */
-	public void setCombiPlayer(Integer[] combiPlayer) {
-		this.combiPlayer = combiPlayer;
-	}
 }

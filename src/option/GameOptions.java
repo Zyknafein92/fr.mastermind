@@ -12,11 +12,16 @@ public class GameOptions {
 	public static final int MAX_NUMBERS = setMAX_NUMBERS();
 	public static final int MAX_TRY = setMAX_TRY();
 	public static final int PAWNS = setPAWNS();
-
+    public static int DEV_MODE;
+    
+	public GameOptions() {
+		DEV_MODE = 0;
+	}
 	
 	public static int setMAX_TRY() {
 
 		try {
+			
 			InputStream is = new FileInputStream("conf/config.properties");
 			p.load(is);
 			is.close();
@@ -30,6 +35,7 @@ public class GameOptions {
 	public static int setPAWNS() {
 
 		try {
+			
 			InputStream is = new FileInputStream("conf/config.properties");
 			p.load(is);
 			is.close();
@@ -43,6 +49,7 @@ public class GameOptions {
 	public static int setMAX_NUMBERS() {
 
 		try {
+			
 			InputStream is = new FileInputStream("conf/config.properties");
 			p.load(is);
 			is.close();

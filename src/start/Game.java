@@ -28,6 +28,7 @@ import tools.IObserver;
 public abstract class Game  implements IObservable {
 
 	static final Logger LOGGER = LogManager.getRootLogger();
+	
 	Scanner sc = new Scanner(System.in);
 
 	protected int gameCounter; // variable qui represente le nombre de tour jouer.
@@ -143,7 +144,7 @@ public abstract class Game  implements IObservable {
 	 *         
 	 */
 
-	public void compareChallenger(Integer[] secret, Integer[] combinaison) {
+	protected void compareChallenger(Integer[] secret, Integer[] combinaison) {
 
 		for (int i = 0; i < GameOptions.PAWNS; i++) {
 			if (secret[i] < combinaison[i]) {
@@ -167,7 +168,7 @@ public abstract class Game  implements IObservable {
 	 * 
 	 */
 
-	public void compareDefenseur(Integer[] secret, Integer[] combinaison) {
+	protected void compareDefenseur(Integer[] secret, Integer[] combinaison) {
 
 		for (int i = 0; i < combinaison.length; i++) {
 			if (secret[i] > combinaison[i] && combinaison[i] < GameOptions.MAX_NUMBERS) {
@@ -303,7 +304,8 @@ public abstract class Game  implements IObservable {
 
 
 	/**
-	 * addToCombinaison remplace à chaque fois qu'un pion est présent ou à la bonne position représenté par pawnsFound un autre pion à la valeur actuelle.. 
+	 * addToCombinaison remplace à chaque fois qu'un pion est présent ou à la bonne position représenté par pawnsFound, 
+	 * un autre pion à la valeur actuelle.
 	 * Le pion est ajouté à l'indice de "pos" à la valeur actuelle. 
 	 * A chaque ajout, la valeur de pos est incrémenté ainsi que le nombre de pion trouvé.
 	 * 
@@ -320,7 +322,7 @@ public abstract class Game  implements IObservable {
 
 	protected void addToCombinaison (ArrayList<Integer> combinaisonIA, Integer[] testColor, int pawnsToAdd) {
 
-		if(pawnsToAdd > 0 && pos < GameOptions.PAWNS) { //- 1) {
+		if(pawnsToAdd > 0 && pos < GameOptions.PAWNS) {
 			int x = 0;
 			while(pawnsToAdd  > x) {
 				combinaisonIA.set(pos, pawnsValue);
@@ -336,8 +338,6 @@ public abstract class Game  implements IObservable {
 			}
 		}
 	}
-
-
 
 	/**
 	 * 
@@ -356,13 +356,14 @@ public abstract class Game  implements IObservable {
 	protected void movePawns (ArrayList<Integer> combinaisonIA, ArrayList<ArrayList<Integer>> listCombinaison) {
 
 		do {
-
+			// Si J arrive a la valeur 3 -> Incrémente la position de I;
 			if (moveJ > GameOptions.PAWNS - 1) {
 				moveJ = 0;
 				moveI++;	
 			}
-
-			if (moveI > GameOptions.PAWNS - 1) {
+			// Si I arrive à 3 -> I = 0,la liste est shuffle pour permettre de nouvelles combinaisons.
+			
+			if (moveI > GameOptions.PAWNS - 1) {   
 				moveI = 0;
 				Collections.shuffle(combinaisonIA);
 			}
@@ -370,12 +371,8 @@ public abstract class Game  implements IObservable {
 			Collections.swap(combinaisonIA, moveI, moveJ);
 			moveJ++;
 
-
-
 		}while(listCombinaison.contains(combinaisonIA));
-
-
-
+		
 		listCombinaison.add((ArrayList<Integer>) combinaisonIA.clone());
 
 
@@ -398,7 +395,6 @@ public abstract class Game  implements IObservable {
 	protected boolean isWin(Integer[] secret, Integer[] combinaison) {
 		return Arrays.equals(secret, combinaison);
 	}
-
 
 	/**
 	 * resultat affiche un String contenant le numéro de la tentative,la combinaison et le String soluc.
@@ -487,9 +483,7 @@ public abstract class Game  implements IObservable {
 		for (IObserver obs : listObserver) {
 			obs.update();
 		}
-
 	}
-
 }
 
 

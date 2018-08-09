@@ -33,7 +33,7 @@ public class Board implements IObserver {
 	 *  
 	 */
 
-	public void Menu(){
+	protected void Menu(){
 	 
 		System.out.println("------------------------------");
 		System.out.println("- Bienvenue sur MasterNumber -");

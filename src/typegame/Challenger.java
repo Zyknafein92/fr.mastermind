@@ -3,15 +3,15 @@ package typegame;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import com.sun.tracing.dtrace.ArgsAttributes;
+import java.util.Arrays;
 
 import option.GameOptions;
 import start.Game;
-import start.Main;
-import sun.security.util.Length;
 import tools.IObserver;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 /**
@@ -23,7 +23,8 @@ import tools.IObserver;
  */
 
 public class Challenger extends Game  {
-
+	
+	static final Logger LOGGER = LogManager.getRootLogger();
 	private ArrayList<IObserver> listObserver = new ArrayList <IObserver>();
 
 	public Challenger () {
@@ -35,21 +36,24 @@ public class Challenger extends Game  {
 
 	/**
 	 * Méthode de jeu pour le mode challenger +/-.
+	 * L'ordinateur génère automatiquement son secret, ensuite le joueur va proposer une combinaison.
+	 * Cette combinaison va être comparé au secret et les variables isPresent, et inPosition vont être mise à jour.
 	 */
 
 	public void playChallengerPlusMoins() {
 
 		System.out.println(rulesChallenger());
-		
+
 		do {
-			//if () {
-			//System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secret));
-		//	}
-		
+			if (GameOptions.DEV_MODE == 1) {
+				System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secret));
+			}
+
 			this.combinaison = this.generateInput();
 
 			compareChallenger(secret,combinaison);
-
+			
+            LOGGER.trace("ChallengerPlusMoins résultat : inPresent :" +isPresent + " inPosition :" +inPosition);
 			System.out.println(resultat(combinaison,soluc));
 
 			if (isWin(secret,combinaison) == true) {
@@ -68,22 +72,28 @@ public class Challenger extends Game  {
 
 
 	/**
-	 * Méthode de jeu pour le mode challenger Mastermind
+	 * Méthode de jeu pour le mode Challenger Mastermind.
+	 * L'ordinateur génère automatiquement son secret, ensuite le joueur va proposer une combinaison.
+	 * Cette combinaison va être comparé au secret et les variables isPresent, et inPosition vont être mise à jour.
 	 */
 
 	public void playChallengerMastermind() {
 
 		System.out.println(rulesChallenger());
-	
+
 		do {
-			
-			System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secret));
-			
+
+			if (GameOptions.DEV_MODE == 1) {
+				System.out.println("Le secret de l'ordinateur est "+Arrays.toString(secret));
+			}
+
 			this.combinaison = this.generateInput();
-			
-			
+
+
 			comparePositionA(secret, combinaison);
-			System.out.println(Arrays.toString(resultat));
+			
+			LOGGER.trace("ChallengerMastermind résultat : inPresent :" +isPresent + " inPosition :" +inPosition);
+			
 			System.out.println(resultat(combinaison, isPresent, inPosition));
 
 			if (isWin(secret,combinaison) == true) {
