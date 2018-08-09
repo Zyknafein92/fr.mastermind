@@ -3,15 +3,11 @@ package typegame;
 
 
 import java.util.ArrayList;
-
 import java.util.Arrays;
 
 import option.GameOptions;
 import start.Game;
 import tools.IObserver;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 
 /**
@@ -24,7 +20,7 @@ import org.apache.logging.log4j.Logger;
 
 public class Challenger extends Game  {
 	
-	static final Logger LOGGER = LogManager.getRootLogger();
+	
 	private ArrayList<IObserver> listObserver = new ArrayList <IObserver>();
 
 	public Challenger () {

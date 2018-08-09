@@ -27,7 +27,7 @@ import tools.IObserver;
 
 public abstract class Game  implements IObservable {
 
-	static final Logger LOGGER = LogManager.getRootLogger();
+	protected static final Logger LOGGER = LogManager.getRootLogger();
 	
 	Scanner sc = new Scanner(System.in);
 

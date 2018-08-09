@@ -2,9 +2,6 @@ package typegame;
 
 import java.util.Arrays;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import option.GameOptions;
 import start.Game;
 import tools.IObserver;
@@ -18,7 +15,7 @@ import tools.IObserver;
 
 public class Duel extends Game{
 	
-	static final Logger LOGGER = LogManager.getRootLogger();
+	
 	protected Integer[] secretBot = new Integer[GameOptions.PAWNS];
 	protected Integer[] combiBot = new Integer[GameOptions.PAWNS];
 	protected Integer[] secretPlayer = new Integer[GameOptions.PAWNS];

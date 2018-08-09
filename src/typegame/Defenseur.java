@@ -2,9 +2,6 @@ package typegame;
 
 import java.util.Arrays;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import option.GameOptions;
 import start.Game;
 import tools.IObserver;
@@ -19,7 +16,7 @@ import tools.IObserver;
 
 public class Defenseur extends Game {
 	
-	static final Logger LOGGER = LogManager.getRootLogger();
+	
 	
 	public Defenseur () {
 		super();
