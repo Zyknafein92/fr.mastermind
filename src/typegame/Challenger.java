@@ -33,7 +33,7 @@ public class Challenger extends Game  {
 	/**
 	 * Méthode de jeu pour le mode challenger +/-.
 	 * L'ordinateur génère automatiquement son secret, ensuite le joueur va proposer une combinaison.
-	 * Cette combinaison va être comparé au secret et les variables isPresent, et inPosition vont être mise à jour.
+	 * Cette combinaison va être comparée au secret et les variables isPresent, et inPosition vont être mises à jour.
 	 */
 
 	public void playChallengerPlusMoins() {
@@ -70,7 +70,7 @@ public class Challenger extends Game  {
 	/**
 	 * Méthode de jeu pour le mode Challenger Mastermind.
 	 * L'ordinateur génère automatiquement son secret, ensuite le joueur va proposer une combinaison.
-	 * Cette combinaison va être comparé au secret et les variables isPresent, et inPosition vont être mise à jour.
+	 * Cette combinaison va être comparée au secret et les variables isPresent, et inPosition vont être mises à jour.
 	 */
 
 	public void playChallengerMastermind() {

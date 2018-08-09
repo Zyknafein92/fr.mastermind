@@ -26,11 +26,8 @@ public class Board implements IObserver {
 	Scanner sc = new Scanner(System.in);
 	
 	/**
-	 * 
-	 *  Menu est la méthode qui affiche les choix utilisateurs, et permet de lancer grâce au pattern observeur les différents jeux proposés.
+	 *  Menu est la méthode qui affiche les choix de l'utilisateur, et permet de lancer grâce au pattern observeur les différents jeux proposés.
 	 *  A chaque fin de jeu, l'utilisateur est renvoyé içi.
-	 *  
-	 *  
 	 */
 
 	protected void Menu(){

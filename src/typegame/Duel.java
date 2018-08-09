@@ -30,10 +30,10 @@ public class Duel extends Game{
 	}
 
 	/**
-	 * 
 	 * Méthode de jeu Duel pour le mod +/-.
 	 * Tour à tour, le joueur et l'ordinateur vont jouer.
-	 * Le joueur va présenter une combinaison qui sera comparé au secret et choisira ou non de suivre les indications offertes par le String Resultat.
+	 * Le joueur va présenter une combinaison qui sera comparée au secret 
+	 * et choisira ou non de suivre les indications offertes par le String Resultat.
 	 * L'ordinateur va utiliser une combinaison aléatoire et va la comparer au secret. 
 	 * Il va ensuite décrémenter, ou incrémenter la valeur des pions pour arriver au secret.
 	 */
@@ -95,13 +95,14 @@ public class Duel extends Game{
 	/**
 	 * 
 	 * Méthode de jeu Duel pour le mod Mastermind.
+	 * 
 	 * Tour à tour, le joueur et l'ordinateur vont jouer.
-	 * Le joueur va présenter une combinaison qui sera comparé au secret 
+	 * Le joueur va présenter une combinaison qui sera comparée au secret 
 	 * et choisira ou non de suivre les indications offertes par le String Resultat.
-	 * L'ordinateur va initialiser la combinaisonIA a 0 ettestColor va prendre chaque tour la valeur de panwsValue et être comparé au secret.
-	 * Une variable pawnsToAdd va être incrémenté a chaque fois qu'un nombre de la combinaison est présent dans le secret.
-	 * Cette variable va définir le nombre de pion à ajouter par la méthode addToCombinaison qui ajoutera les valeurs une à une de l'indice
-	 * 0 a l'indice maximum autorisé. Les autres pions qui n'ont pas été modifié prendront la valeur actuelle de pawnsValue.
+	 * L'ordinateur va initialiser la combinaisonIA à 0 et testColor va prendre chaque tour la valeur de panwsValue et être comparée au secret.
+	 * Une variable pawnsToAdd va être incrémentée a chaque fois qu'un nombre de la combinaison est présent dans le secret.
+	 * Cette variable va définir le nombre de pions à ajouter par la méthode addToCombinaison qui ajoutera les valeurs une à une de l'indice
+	 * 0 a l'indice maximum autorisé. Les autres pions qui n'ont pas été modifiés prendront la valeur actuelle de pawnsValue.
 	 * Ensuite, le nombre de pion présent, et à la bonne position sont calculés dans les variables inPresent et inPosition.
 	 * 
 	 */

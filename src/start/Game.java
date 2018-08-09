@@ -18,8 +18,8 @@ import tools.IObserver;
 /**
  * 
  * Game est la classe qui regroupe les méthodes communes, et les attributs
- * communs de tous les jeux. Ceci inclut : les méthodes de comparaisons, ajouts
- * et déplacements des pions, l'affichage de résultat
+ * communs de tous les jeux. Ceci inclus les méthodes de comparaison, les ajouts
+ * et déplacements des pions, l'affichage du résultat.
  * 
  * @author Zyk
  *
@@ -31,8 +31,8 @@ public abstract class Game  implements IObservable {
 	
 	Scanner sc = new Scanner(System.in);
 
-	protected int gameCounter; // variable qui represente le nombre de tour jouer.
-	protected int isPresent;   // variable qui represente le nombre de pion présent.
+	protected int gameCounter; // variable qui represente le nombre de tours joués.
+	protected int isPresent;   // variable qui represente le nombre de pions présents.
 	protected int inPosition;  // variable qui represente les pions à la bonne position.
 	protected int pawnsValue;  // variable qui represente la valeur actuelle du pion.
 	protected int pawnsFound;  // variable qui represente le nombre de pion trouvé.
@@ -43,15 +43,15 @@ public abstract class Game  implements IObservable {
 	protected String[] soluc;  // String qui contient des indications  + - = dans le jeu.
 	protected Integer[] combinaison; // Tableau d'Integer qui contient la combinaison.
 	protected Integer[] secret;      // Tableau d'Integer qui contient le secret.
-	protected Integer[] testColor;   // Tableau d'Integer qui contient la valeur panwsValue à testé.
-	protected int[] resultat;        // Tableau d'Integer qui contient le resultat (indice 0 : inPosition / indice 1: isPresent).
+	protected Integer[] testColor;   // Tableau d'Integer qui contient la valeur panwsValue à tester.
+	protected int[] resultat;        // Tableau d'Integer qui contient le résultat (indice 0 : inPosition / indice 1: isPresent).
 	protected ArrayList<Integer> combinaisonIA; //ArrayList d'Integer qui contient la combinaison de l'IA pour le mode Mastermind Duel et Defenseur.
-	protected ArrayList<ArrayList<Integer>> listCombinaison; //ArrayList des combinaisons testé par l'ordinateur dans Mastermind Duel et Defenseur.
+	protected ArrayList<ArrayList<Integer>> listCombinaison; //ArrayList des combinaisons testées par l'ordinateur dans Mastermind Duel et Defenseur.
 	protected ArrayList<IObserver> listObserver;
-	protected boolean iswin; // boolean qui renvoit true si le joueur actuelle gagne la partie.
+	protected boolean iswin; // boolean qui renvoie true si le joueur actuel gagne la partie.
 
 	/**
-	 * Constructeur de Game qui contient la majoritée des variables utilisées lors des jeux.
+	 * Constructeur de Game qui contient la majorité des variables utilisées lors des jeux.
 	 */
 
 	public Game () {
@@ -224,8 +224,8 @@ public abstract class Game  implements IObservable {
 
 	/**
 	 * Méthode qui compare le tableau d'Integer secret, et le tableau d'Integer combinaison.
-	 * A chaque fois que la combinaison est égale au secret, la valeur inPosition est incrémenté,
-	 * Si la valeur est présente, mais n'est pas à la bonne position, isPresent est incrémenté.
+	 * A chaque fois que la combinaison est égale au secret, la valeur inPosition est incrémentée,
+	 * Si la valeur est présente, mais n'est pas à la bonne position, isPresent est incrémentée.
 	 * 
 	 * @param secret
 	 *  Tableau d'Integer contenant le secret.
@@ -263,8 +263,8 @@ public abstract class Game  implements IObservable {
 
 	/**
 	 * Méthode qui compare le tableau d'Integer secret, et l'ArrayList d'Integer combinaisonIA.
-	 * A chaque fois que la combinaison est égale au secret, la valeur inPosition est incrémenté,
-	 * Si la valeur est présente, mais n'est pas à la bonne position, isPresent est incrémenté.
+	 * A chaque fois que la combinaison est égale au secret, la valeur inPosition est incrémentée,
+	 * Si la valeur est présente, mais n'est pas à la bonne position, isPresent est incrémentée.
 	 * La création d'un Hashset permet d'éviter les doubles ajouts en cas de présence d'un nombre similaire.
 	 * 
 	 * @param secret
@@ -304,10 +304,10 @@ public abstract class Game  implements IObservable {
 
 
 	/**
-	 * addToCombinaison remplace à chaque fois qu'un pion est présent ou à la bonne position représenté par pawnsFound, 
+	 * addToCombinaison remplace à chaque fois qu'un pion est présent ou à la bonne position représentée par pawnsFound, 
 	 * un autre pion à la valeur actuelle.
 	 * Le pion est ajouté à l'indice de "pos" à la valeur actuelle. 
-	 * A chaque ajout, la valeur de pos est incrémenté ainsi que le nombre de pion trouvé.
+	 * A chaque ajout, la valeur de pos est incrémentée ainsi que le nombre de pion trouvé.
 	 * 
 	 * @param combinaisonIA
 	 *  ArrayList qui contient la combinaison de l'ordinateur.
@@ -348,7 +348,7 @@ public abstract class Game  implements IObservable {
 	 * ArrayList qui contient la combinaison de l'ordinateur.
 	 * 
 	 * @param listCombinaison
-	 * ArrayList contenant les combinaisons déjà tenté par l'ordinateur.
+	 * ArrayList contenant les combinaisons déjà tentées par l'ordinateur.
 	 * 
 	 */
 
@@ -397,7 +397,7 @@ public abstract class Game  implements IObservable {
 	}
 
 	/**
-	 * resultat affiche un String contenant le numéro de la tentative,la combinaison et le String soluc.
+	 * resultat affiche un String contenant le numéro de la tentative, la combinaison et le String soluc.
 	 * 
 	 * @param combinaison
 	 *  Tableau d'Integer qui contient la combinaison.
@@ -421,18 +421,18 @@ public abstract class Game  implements IObservable {
 
 	/**
 	 * Méthode qui affiche un String informant le joueur du résultat de sa dernière tentative.
-	 * Le nombre de tentative (gameCounter), la combinaison testée, et le résultat avec les pions présent, et bien placé,
-	 * ou seulement les nombres bien placé si il n'y a pas de nombre présent.
+	 * Le nombre de tentative (gameCounter), la combinaison testée, et le résultat avec les pions présents, et bien placés,
+	 * ou seulement les nombres bien placés si il n'y a pas de nombre présent.
 	 * @param secret
 	 * Tableau d'Integer contenant le secret.
 	 * @param combinaison
-	 * Tableau d'Integer contenant la combinaison joué.
+	 * Tableau d'Integer contenant la combinaison jouée.
 	 * @param isPresent
-	 * variable qui represente le nombre de pion mal placé.
+	 * variable qui represente le nombre de pions mal placés.
 	 * @param inPosition
-	 * variable qui représente le nombre de pion bien placé.
+	 * variable qui représente le nombre de pions bien placés.
 	 * @return
-	 * String contenant la tentative actuelle ainsi que sa combinaison, le nombre de pion présent et à la bonne position.
+	 * String contenant la tentative actuelle ainsi que sa combinaison, le nombre de pions présents et à la bonne position.
 	 */
 
 	protected String resultat(Integer[] combinaison, int isPresent, int inPosition) {
@@ -447,19 +447,19 @@ public abstract class Game  implements IObservable {
 
 	/**
 	 * Méthode qui affiche un String informant le joueur du résultat de sa dernière tentative.
-	 * Le nombre de tentative (gameCounter), la combinaison testée, et le résultat avec les pions présent, et bien placé,
-	 * ou seulement les nombres bien placé si il n'y a pas de nombre présent.
+	 * Le nombre de tentative (gameCounter), la combinaison testée, et le résultat avec les pions présents, et bien placés,
+	 * ou seulement les nombres bien placés si il n'y a pas de nombre présent.
 	 * 
 	 * @param combinaisonIA
 	 * ArrayList d'Integer contenant la combinaison de l'ordinateur.
 	 * @param secret
 	 * Tableau d'Integer contenant le secret.
 	 * @param isPresent
-	 * variable qui represente le nombre de pion mal placé.
+	 * variable qui represente le nombre de pions mal placés.
 	 * @param inPosition
-	 * variable qui représente le nombre de pion bien placé.
+	 * variable qui représente le nombre de pions bien placés.
 	 * @return
-	 * String contenant la tentative actuelle ainsi que sa combinaison, le nombre de pion présent et à la bonne position.
+	 * String contenant la tentative actuelle ainsi que sa combinaison, le nombre de pions présents et à la bonne position.
 	 */
 
 	protected String resultat(ArrayList<Integer> combinaisonIA,int isPresent, int inPosition) {

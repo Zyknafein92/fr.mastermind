@@ -27,7 +27,7 @@ public class Defenseur extends Game {
 	/**
 	 * Méthode de jeu Defenseur pour le mod +/-.
 	 * Le joueur choisi son secret, puis l'ordinateur va le comparer tour par tour. En fonction du résultat du comparateur,
-	 * il va soit incrémenter, soit décrémenté la valeur des pions.
+	 * il va soit incrémenter, soit décrémenter la valeur des pions.
 	 */
 
 	public void playDefenseurPlusMoins() {
@@ -60,10 +60,10 @@ public class Defenseur extends Game {
 
 	/**
 	 * Méthode de jeu Defenseur pour le mode MasterMind. 
-	 * Après avoir initialiser la combinaisonIA, testColor va prendre chaque tour la valeur de panwsValue et être comparé au secret.
-	 * Une variable pawnsToAdd va être incrémenté a chaque fois qu'un nombre de la combinaison est présent dans le secret.
-	 * Cette variable va définir le nombre de pion à ajouter par la méthode addToCombinaison qui ajoutera les valeurs une à une de l'indice
-	 * 0 a l'indice maximum autorisé. Les autres pions qui n'ont pas été modifié prendront la valeur actuelle de pawnsValue.
+	 * Après avoir initialisé la combinaisonIA, testColor va prendre chaque tour la valeur de panwsValue et être comparé au secret.
+	 * Une variable pawnsToAdd va être incrémentée a chaque fois qu'un nombre de la combinaison est présent dans le secret.
+	 * Cette variable va définir le nombre de pions à ajouter par la méthode addToCombinaison qui ajoutera les valeurs une à une de l'indice
+	 * 0 a l'indice maximum autorisé. Les autres pions qui n'ont pas été modifiés prendront la valeur actuelle de pawnsValue.
 	 * Ensuite, le nombre de pion présent, et à la bonne position sont calculés dans les variables inPresent et inPosition.
 	 */
 
