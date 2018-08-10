@@ -150,11 +150,7 @@ public class Duel extends Game{
 
 			addToCombinaison(combinaisonIA, testColor, pawnsToAdd);
 
-			for(int i = 0; i < GameOptions.PAWNS ; i++) {		
-				if( pos <= i) {
-					combinaisonIA.set(i, pawnsValue);
-				}
-			}
+			
 
 			if(pawnsFound == GameOptions.PAWNS) {
 				movePawns(combinaisonIA, listCombinaison);
