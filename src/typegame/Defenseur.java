@@ -20,7 +20,7 @@ public class Defenseur extends Game {
 	
 	public Defenseur () {
 		super();
-		combinaison = Game.generateBotRoll();
+		combinaison = Game.generateBotRoll(); // uniquement pour le mode Defenseur.
 		moveI = moveJ = 0;
 	}
 
